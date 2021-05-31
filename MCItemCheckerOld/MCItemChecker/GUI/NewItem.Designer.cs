@@ -37,6 +37,7 @@
             this.bAddItem = new System.Windows.Forms.Button();
             this.lvSubItems = new System.Windows.Forms.ListView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tbNewItemName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -72,7 +73,6 @@
             this.cbsearchtype = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lvitems = new System.Windows.Forms.ListView();
-            this.label5 = new System.Windows.Forms.Label();
             this.TabNewItem.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -115,6 +115,7 @@
             this.tbAddAmount.Name = "tbAddAmount";
             this.tbAddAmount.Size = new System.Drawing.Size(75, 20);
             this.tbAddAmount.TabIndex = 106;
+            this.tbAddAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbAddAmount_KeyPress);
             // 
             // tbRemoveAmount
             // 
@@ -175,6 +176,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(489, 479);
             this.panel2.TabIndex = 102;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(13, 99);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(264, 13);
+            this.label5.TabIndex = 126;
+            this.label5.Text = "The following items are required to craft the given item:";
             // 
             // label4
             // 
@@ -441,6 +452,7 @@
             this.bclearsearch.TabIndex = 122;
             this.bclearsearch.Text = "Clear";
             this.bclearsearch.UseVisualStyleBackColor = true;
+            this.bclearsearch.Click += new System.EventHandler(this.BClearSearch_Click);
             // 
             // bsearchitem
             // 
@@ -450,6 +462,7 @@
             this.bsearchitem.TabIndex = 121;
             this.bsearchitem.Text = "Search Item";
             this.bsearchitem.UseVisualStyleBackColor = true;
+            this.bsearchitem.Click += new System.EventHandler(this.BFindItem_Click);
             // 
             // label1
             // 
@@ -518,16 +531,6 @@
             this.lvitems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvItems_KeyDown);
             this.lvitems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Lvitems_MouseDoubleClick);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 99);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(264, 13);
-            this.label5.TabIndex = 126;
-            this.label5.Text = "The following items are required to craft the given item:";
-            // 
             // NewItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -552,7 +555,6 @@
             this.Name = "NewItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "NewItem";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewItem_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewItem_FormClosed);
             this.Load += new System.EventHandler(this.NewItem_Load);
             this.TabNewItem.ResumeLayout(false);

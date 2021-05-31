@@ -39,8 +39,8 @@ namespace MCItemChecker
             UpdateTypeControls();
             UpdateModPackControls();
 
-            cbsearchmodpack.SelectedItem = "-";
-            cbsearchtype.SelectedItem = "-";
+            cbsearchmodpack.SelectedItem = ItemChecker.NonDefinedChar;
+            cbsearchtype.SelectedItem = ItemChecker.NonDefinedChar;
 
             ClearNewItem();
 
@@ -111,22 +111,22 @@ namespace MCItemChecker
         }
         private void NewItem_Load(object sender, EventArgs e)
             => UpdateItemList(m_itemchecker.ItemList);
-        private void UpdateItemList(IEnumerable<Item> Items)
-            => GUIControl.UpdateItemListView(lvitems, Items);
+        private void UpdateItemList(IEnumerable<Item> items)
+        {
+            lvitems.Items.Clear();
+
+            lvitems.InsertCollection(items, (i) =>
+            { return new ListViewItem(new[] { i.ItemName, i.Type, i.ModPack }); });
+        }
 
         private void UpdateSubItems(Dictionary<Item, double> subitemlist)
         {
             lvSubItems.Items.Clear();
-            foreach (KeyValuePair<Item, double> pair in subitemlist)
+
+            lvSubItems.InsertCollection(subitemlist, (x) =>
             {
-                var item = new ListViewItem(new[] {
-                    pair.Key.ItemID.ToString(), pair.Key.ItemName,
-                    Math.Round(pair.Value, 3).ToString(), pair.Key.Type
-                })
-                { Tag = pair };
-                lvSubItems.Items.Add(item);
-                item = null;
-            }
+                return new ListViewItem(new[] { x.Key.ItemName, Math.Round(x.Value, 3).ToString(), x.Key.Type });
+            });
         }
 
         private void AddNewItem(Item item = null)
@@ -196,7 +196,7 @@ namespace MCItemChecker
                 return;
 
             var listviewItems = listview.GetSelectedListViewItems();
-            foreach(var lvItem in listviewItems)
+            foreach (var lvItem in listviewItems)
             {
                 if (!(lvItem.Tag is Item item))
                     continue;
@@ -210,21 +210,16 @@ namespace MCItemChecker
             => AddNewItem(m_moditem);
         private void BFindItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tbsearchname.Text))
-            {
-                MessageBox.Show("Enter an Item Name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            GUIControl.UpdateItemListView(lvitems, FindItem());
+            UpdateItemList(FindItem());
         }
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
-            cbsearchtype.SelectedValue = "-";
-            cbsearchmodpack.SelectedValue = "-";
+            cbsearchtype.SelectedItem = ItemChecker.NonDefinedChar;
+            cbsearchmodpack.SelectedItem = ItemChecker.NonDefinedChar;
             UpdateItemList(m_itemchecker.ItemList);
         }
+
         private void BAddSubItem_Click(object sender, EventArgs e)
         {
             if (lvitems.SelectedItems.Count == 0)
@@ -235,6 +230,12 @@ namespace MCItemChecker
 
             AddSubItem(lvitems.GetSelectedMCItem());
         }
+        private void TbAddAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                BAddSubItem_Click(sender, e);
+        }
+
         private void BRemoveSubItem_Click(object sender, EventArgs e)
         {
             if (lvSubItems.SelectedItems.Count == 0)
@@ -244,6 +245,11 @@ namespace MCItemChecker
             }
 
             Removesubitem(lvSubItems.GetSelectedMCSubItem());
+        }
+        private void TbRemoveAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                BRemoveSubItem_Click(sender, e);
         }
 
         private void AddSubItem(Item item)
@@ -313,15 +319,15 @@ namespace MCItemChecker
 
         private void ClearNewItem()
         {
-            cbNewItemModpack.SelectedItem = "-";
-            cbNewItemType.SelectedItem = "-";
+            cbNewItemModpack.SelectedItem = ItemChecker.NonDefinedChar;
+            cbNewItemType.SelectedItem = ItemChecker.NonDefinedChar;
 
             tbNewItemName.Text = "";
             m_subItems.Clear();
             lvSubItems.Items.Clear();
 
             lmoditem.Visible = false;
-            lmoditemname.Text = "-";
+            lmoditemname.Text = ItemChecker.NonDefinedChar;
             lmoditemname.Visible = false;
 
             m_modifyingItem = false;
@@ -359,16 +365,11 @@ namespace MCItemChecker
             if (e.KeyChar == (char)13)
                 BFindItem_Click(sender, e);
         }
-        private void TbSearchId_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                BFindItem_Click(sender, e);
-        }
 
         private void TbSearchName_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(tbsearchname.Text))
-                GUIControl.UpdateItemListView(lvitems, FindItem());
+                UpdateItemList(FindItem());
         }
         private IEnumerable<Item> FindItem()
         {
@@ -392,8 +393,6 @@ namespace MCItemChecker
         private void SetModificationItem(Item item)
         {
             m_moditem = item ?? throw new ArgumentNullException(nameof(item));
-
-            //ClearNewItem();
 
             m_modifyingItem = true;
             m_subItems = item.Recipe;
@@ -438,7 +437,7 @@ namespace MCItemChecker
                 return;
             }
 
-            if (lbmodpacks.SelectedValue.ToString() == "-")
+            if (lbmodpacks.SelectedItems[0].ToString() == ItemChecker.NonDefinedChar)
             {
                 GUIControl.InfoMessage("Cannot delete default value.");
                 return;
@@ -481,7 +480,7 @@ namespace MCItemChecker
                 return;
             }
 
-            if (lbtype.SelectedValue.ToString() == "-")
+            if (lbtype.SelectedItems[0].ToString() == ItemChecker.NonDefinedChar)
             {
                 GUIControl.InfoMessage("Cannot delete default value.");
                 return;
@@ -508,13 +507,6 @@ namespace MCItemChecker
         }
         private void BModpackAdd_Click(object sender, EventArgs e)
             => Addmodpack();
-
-        private void NewItem_FormClosing(object sender, FormClosingEventArgs e)
-            => UpdateMainForm();
-        private void UpdateMainForm()
-        {
-            m_mainform.UpdateItemList(m_itemchecker.ItemList);
-        }
 
         private void TbNewItemName_KeyPress(object sender, KeyPressEventArgs e)
         {

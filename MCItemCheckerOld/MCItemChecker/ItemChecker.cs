@@ -10,6 +10,8 @@ namespace MCItemChecker
     [Serializable]
     public class ItemChecker
     {
+        internal const string NonDefinedChar = "-";
+
         public IEnumerable<Item> ItemList
             => m_items.Values;
         public IEnumerable<string> ModPacks
@@ -29,8 +31,8 @@ namespace MCItemChecker
 
         public ItemChecker()
         {
-            m_modpacks.Add("-");
-            m_itemTypes.Add("-");
+            m_modpacks.Add(NonDefinedChar);
+            m_itemTypes.Add(NonDefinedChar);
         }
 
 
@@ -126,10 +128,10 @@ namespace MCItemChecker
             if (!string.IsNullOrWhiteSpace(itemname))
                 result = result.Where(x => x.ItemName.ToLower().Contains(itemname.ToLower()));
 
-            if (!string.IsNullOrWhiteSpace(type) && type != "-")
+            if (!string.IsNullOrWhiteSpace(type) && type != NonDefinedChar)
                 result = result.Where(x => x.Type == type);
 
-            if (!string.IsNullOrWhiteSpace(modpack) && modpack != "-")
+            if (!string.IsNullOrWhiteSpace(modpack) && modpack != NonDefinedChar)
                 result = result.Where(x => x.ModPack == modpack);
 
             if (craftingneed != null)

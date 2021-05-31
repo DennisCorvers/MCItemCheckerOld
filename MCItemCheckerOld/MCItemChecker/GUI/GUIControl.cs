@@ -34,32 +34,6 @@ namespace MCItemChecker
             listView.Sort();
         }
 
-        public static bool UpdateItemListView(ListView listview, IEnumerable<Item> itemlist = null)
-        {
-            if (listview != null)
-            {
-                listview.Items.Clear();
-                if (itemlist != null)
-                {
-                    foreach (Item i in itemlist)
-                    {
-                        var item = new ListViewItem(new[] { i.ItemName, i.Type, i.ModPack })
-                        { Tag = i };
-                        listview.Items.Add(item);
-                    }
-                }
-                else
-                {
-                    var item = new ListViewItem(new[] { "No Results", "", "" });
-                    listview.Items.Add(item);
-                    item = null;
-                }
-                return true;
-            }
-
-            return false;
-        }
-
         public static void UpdateControl(IEnumerable<string> list, ListView listview)
         {
             listview.Items.Clear();

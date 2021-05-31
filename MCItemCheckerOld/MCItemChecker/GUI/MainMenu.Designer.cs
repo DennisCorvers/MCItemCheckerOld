@@ -52,9 +52,9 @@
             this.cbBase = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.numAmount = new System.Windows.Forms.NumericUpDown();
-            this.lcalcitemname = new System.Windows.Forms.Label();
+            this.lCalculatedItemName = new System.Windows.Forms.Label();
             this.bcalculateclear = new System.Windows.Forms.Button();
-            this.lvcalculateitems = new System.Windows.Forms.ListView();
+            this.lvCalculatedItems = new System.Windows.Forms.ListView();
             this.bfilter = new System.Windows.Forms.Button();
             this.cbfiltertype = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -278,9 +278,9 @@
             this.TabCalculate.Controls.Add(this.cbBase);
             this.TabCalculate.Controls.Add(this.label9);
             this.TabCalculate.Controls.Add(this.numAmount);
-            this.TabCalculate.Controls.Add(this.lcalcitemname);
+            this.TabCalculate.Controls.Add(this.lCalculatedItemName);
             this.TabCalculate.Controls.Add(this.bcalculateclear);
-            this.TabCalculate.Controls.Add(this.lvcalculateitems);
+            this.TabCalculate.Controls.Add(this.lvCalculatedItems);
             this.TabCalculate.Controls.Add(this.bfilter);
             this.TabCalculate.Controls.Add(this.cbfiltertype);
             this.TabCalculate.Controls.Add(this.label11);
@@ -336,15 +336,15 @@
             0});
             this.numAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumAmount_KeyPressed);
             // 
-            // lcalcitemname
+            // lCalculatedItemName
             // 
-            this.lcalcitemname.AutoSize = true;
-            this.lcalcitemname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lcalcitemname.Location = new System.Drawing.Point(109, 13);
-            this.lcalcitemname.Name = "lcalcitemname";
-            this.lcalcitemname.Size = new System.Drawing.Size(74, 13);
-            this.lcalcitemname.TabIndex = 121;
-            this.lcalcitemname.Text = "<itemname>";
+            this.lCalculatedItemName.AutoSize = true;
+            this.lCalculatedItemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lCalculatedItemName.Location = new System.Drawing.Point(109, 13);
+            this.lCalculatedItemName.Name = "lCalculatedItemName";
+            this.lCalculatedItemName.Size = new System.Drawing.Size(11, 13);
+            this.lCalculatedItemName.TabIndex = 121;
+            this.lCalculatedItemName.Text = " ";
             // 
             // bcalculateclear
             // 
@@ -354,19 +354,19 @@
             this.bcalculateclear.TabIndex = 117;
             this.bcalculateclear.Text = "Clear";
             this.bcalculateclear.UseVisualStyleBackColor = true;
-            this.bcalculateclear.Click += new System.EventHandler(this.BCalculateClear_Click);
+            this.bcalculateclear.Click += new System.EventHandler(this.BCalculateReset_Click);
             // 
-            // lvcalculateitems
+            // lvCalculatedItems
             // 
-            this.lvcalculateitems.FullRowSelect = true;
-            this.lvcalculateitems.HideSelection = false;
-            this.lvcalculateitems.Location = new System.Drawing.Point(23, 36);
-            this.lvcalculateitems.Name = "lvcalculateitems";
-            this.lvcalculateitems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lvcalculateitems.Size = new System.Drawing.Size(458, 344);
-            this.lvcalculateitems.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvcalculateitems.TabIndex = 120;
-            this.lvcalculateitems.UseCompatibleStateImageBehavior = false;
+            this.lvCalculatedItems.FullRowSelect = true;
+            this.lvCalculatedItems.HideSelection = false;
+            this.lvCalculatedItems.Location = new System.Drawing.Point(23, 36);
+            this.lvCalculatedItems.Name = "lvCalculatedItems";
+            this.lvCalculatedItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lvCalculatedItems.Size = new System.Drawing.Size(458, 344);
+            this.lvCalculatedItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvCalculatedItems.TabIndex = 120;
+            this.lvCalculatedItems.UseCompatibleStateImageBehavior = false;
             // 
             // bfilter
             // 
@@ -548,9 +548,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numAmount;
-        private System.Windows.Forms.Label lcalcitemname;
+        private System.Windows.Forms.Label lCalculatedItemName;
         private System.Windows.Forms.Button bcalculateclear;
-        private System.Windows.Forms.ListView lvcalculateitems;
+        private System.Windows.Forms.ListView lvCalculatedItems;
         private System.Windows.Forms.Button bfilter;
         private System.Windows.Forms.ComboBox cbfiltertype;
         private System.Windows.Forms.Label label11;

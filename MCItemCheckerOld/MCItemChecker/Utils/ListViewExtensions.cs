@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MCItemChecker.Utils
@@ -26,6 +27,20 @@ namespace MCItemChecker.Utils
                 lvItems.Add(selectedItems[i]);
 
             return lvItems;
+        }
+
+        public static void InsertCollection<T>(this ListView listview, IEnumerable<T> itemlist, Func<T, ListViewItem> listviewFactory)
+        {
+            if (listview == null)
+                throw new ArgumentNullException(nameof(listview));
+
+            foreach (var item in itemlist)
+            {
+                var lvItem = listviewFactory(item);
+                lvItem.Tag = item;
+
+                listview.Items.Add(lvItem);
+            }
         }
     }
 }

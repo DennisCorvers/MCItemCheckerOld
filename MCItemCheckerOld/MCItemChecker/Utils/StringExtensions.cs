@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace MCItemChecker.Utils
 {
@@ -22,9 +23,8 @@ namespace MCItemChecker.Utils
 
         public static bool FractionToDouble(this string fraction, out double result)
         {
-
-            if (double.TryParse(fraction, out result))
-            { return true; }
+            if (double.TryParse(fraction, NumberStyles.AllowDecimalPoint, CultureInfo.GetCultureInfo("en-US"), out result))
+                return true;
 
             string[] split = fraction.Split(new char[] { ' ', '/' });
 
