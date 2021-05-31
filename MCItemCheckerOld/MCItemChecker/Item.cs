@@ -64,12 +64,39 @@ namespace MCItemChecker
             m_recipe = other.m_recipe;
         }
 
+
         public bool Equals(Item other)
         {
-            if (other == null)
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (other is null)
                 return false;
 
             return other.ItemID == ItemID;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Item);
+        }
+
+        public override int GetHashCode()
+        {
+            return m_itemId;
+        }
+
+        public static bool operator ==(Item left, Item right)
+        {
+            if (left is null)
+                return right is null;
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Item left, Item right)
+        {
+            return !(left == right);
         }
     }
 }
