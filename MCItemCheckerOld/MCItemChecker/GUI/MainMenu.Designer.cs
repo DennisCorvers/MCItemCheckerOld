@@ -138,33 +138,33 @@
             // newItemToolStripMenuItem
             // 
             this.newItemToolStripMenuItem.Name = "newItemToolStripMenuItem";
-            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newItemToolStripMenuItem.Text = "Manage Items";
             this.newItemToolStripMenuItem.Click += new System.EventHandler(this.ManageItemsToolStripMenuItem_Click);
             // 
             // manageModpacksToolStripMenuItem
             // 
             this.manageModpacksToolStripMenuItem.Name = "manageModpacksToolStripMenuItem";
-            this.manageModpacksToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.manageModpacksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manageModpacksToolStripMenuItem.Text = "Manage Modpacks";
             this.manageModpacksToolStripMenuItem.Click += new System.EventHandler(this.ManageModPackToolStripMenuItem_Click);
             // 
             // manageItemTypesToolStripMenuItem
             // 
             this.manageItemTypesToolStripMenuItem.Name = "manageItemTypesToolStripMenuItem";
-            this.manageItemTypesToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.manageItemTypesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.manageItemTypesToolStripMenuItem.Text = "Manage Item Types";
             this.manageItemTypesToolStripMenuItem.Click += new System.EventHandler(this.ManageItemTypeToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // deleteItemToolStripMenuItem
             // 
             this.deleteItemToolStripMenuItem.Name = "deleteItemToolStripMenuItem";
-            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteItemToolStripMenuItem.Text = "Delete Item";
             this.deleteItemToolStripMenuItem.Click += new System.EventHandler(this.DeleteItem);
             // 
@@ -201,7 +201,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 438);
+            this.label5.Location = new System.Drawing.Point(15, 441);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 53;
@@ -209,7 +209,7 @@
             // 
             // tbsearchname
             // 
-            this.tbsearchname.Location = new System.Drawing.Point(85, 435);
+            this.tbsearchname.Location = new System.Drawing.Point(82, 438);
             this.tbsearchname.Name = "tbsearchname";
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 54;
@@ -219,7 +219,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(45, 464);
+            this.label7.Location = new System.Drawing.Point(42, 467);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 57;
@@ -229,7 +229,7 @@
             // 
             this.cbsearchmodpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbsearchmodpack.FormattingEnabled = true;
-            this.cbsearchmodpack.Location = new System.Drawing.Point(85, 488);
+            this.cbsearchmodpack.Location = new System.Drawing.Point(82, 491);
             this.cbsearchmodpack.Name = "cbsearchmodpack";
             this.cbsearchmodpack.Size = new System.Drawing.Size(296, 21);
             this.cbsearchmodpack.Sorted = true;
@@ -239,7 +239,7 @@
             // 
             this.cbsearchtype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbsearchtype.FormattingEnabled = true;
-            this.cbsearchtype.Location = new System.Drawing.Point(85, 461);
+            this.cbsearchtype.Location = new System.Drawing.Point(82, 464);
             this.cbsearchtype.Name = "cbsearchtype";
             this.cbsearchtype.Size = new System.Drawing.Size(296, 21);
             this.cbsearchtype.TabIndex = 58;
@@ -247,7 +247,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(23, 491);
+            this.label8.Location = new System.Drawing.Point(20, 494);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 59;
@@ -255,7 +255,7 @@
             // 
             // bclearsearch
             // 
-            this.bclearsearch.Location = new System.Drawing.Point(244, 525);
+            this.bclearsearch.Location = new System.Drawing.Point(241, 528);
             this.bclearsearch.Name = "bclearsearch";
             this.bclearsearch.Size = new System.Drawing.Size(75, 23);
             this.bclearsearch.TabIndex = 80;
@@ -265,7 +265,7 @@
             // 
             // bsearchitem
             // 
-            this.bsearchitem.Location = new System.Drawing.Point(67, 525);
+            this.bsearchitem.Location = new System.Drawing.Point(64, 528);
             this.bsearchitem.Name = "bsearchitem";
             this.bsearchitem.Size = new System.Drawing.Size(75, 23);
             this.bsearchitem.TabIndex = 79;
@@ -424,7 +424,12 @@
             // 
             this.numAmount.Location = new System.Drawing.Point(140, 416);
             this.numAmount.Maximum = new decimal(new int[] {
-            10000,
+            -2147483648,
+            0,
+            0,
+            0});
+            this.numAmount.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -436,7 +441,7 @@
             0,
             0,
             0});
-            this.numAmount.ValueChanged += new System.EventHandler(this.NumAmount_ValueChanged);
+            this.numAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumAmount_KeyPressed);
             // 
             // lcalcitemname
             // 

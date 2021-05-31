@@ -29,6 +29,7 @@ namespace MCItemChecker
             GUIControl.UpdateItemListView(lvitems, _itemchecker.ItemList);
 
             lvitems.ListViewItemSorter = new ListViewComparer();
+            lvcalculateitems.ListViewItemSorter = new ListViewComparer();
 
             Initlvitems();
             Initlvsubitems();
@@ -43,7 +44,7 @@ namespace MCItemChecker
             litemname.Text = "";
             litemtype.Text = "";
             lmodpack.Text = "";
-            GUIControl.Sort(lvitems, 1, SortOrder.Descending);
+            GUIControl.Sort(lvitems, 0, SortOrder.Ascending);
         }
 
         public void UpdateModPackControls()
@@ -81,83 +82,33 @@ namespace MCItemChecker
 
         private void Initlvsubitems()
         {
-            ColumnHeader headerid, headername, headeramount, headertype;
-            headerid = new ColumnHeader();
-            headername = new ColumnHeader();
-            headeramount = new ColumnHeader();
-            headertype = new ColumnHeader();
             lvsubitems.Scrollable = true;
             lvsubitems.View = View.Details;
 
-            headerid.Text = "ID";
-            headerid.TextAlign = HorizontalAlignment.Left;
-            headerid.Width = 30;
-            headername.Text = "Name";
-            headername.TextAlign = HorizontalAlignment.Left;
-            headername.Width = 160;
-            headeramount.Text = "Amount";
-            headeramount.TextAlign = HorizontalAlignment.Left;
-            headeramount.Width = 100;
-            headertype.Text = "Type";
-            headertype.TextAlign = HorizontalAlignment.Left;
-            headertype.Width = 0;
-            lvsubitems.Columns.Add(headerid);
-            lvsubitems.Columns.Add(headername);
-            lvsubitems.Columns.Add(headeramount);
-            lvsubitems.Columns.Add(headertype);
+            var headers = lvsubitems.Columns;
+            headers.Add("Name", 250, HorizontalAlignment.Left);
+            headers.Add("Amount", 100, HorizontalAlignment.Left);
+            headers.Add("Type", 100, HorizontalAlignment.Left);
         }
         private void Initlvitems()
         {
-            ColumnHeader headerid, headername, headertype, headermodpack;
-            headerid = new ColumnHeader();
-            headername = new ColumnHeader();
-            headertype = new ColumnHeader();
-            headermodpack = new ColumnHeader();
             lvitems.Scrollable = true;
             lvitems.View = View.Details;
 
-            headerid.Text = "ID";
-            headerid.TextAlign = HorizontalAlignment.Left;
-            headerid.Width = 30;
-            headername.Text = "Name";
-            headername.TextAlign = HorizontalAlignment.Left;
-            headername.Width = 240;
-            headertype.Text = "Type";
-            headertype.TextAlign = HorizontalAlignment.Left;
-            headertype.Width = 40;
-            headermodpack.Text = "ModPack";
-            headermodpack.TextAlign = HorizontalAlignment.Left;
-            headermodpack.Width = 40;
-            lvitems.Columns.Add(headerid);
-            lvitems.Columns.Add(headername);
-            lvitems.Columns.Add(headertype);
-            lvitems.Columns.Add(headermodpack);
+            var headers = lvitems.Columns;
+            headers.Add("Name", 275, HorizontalAlignment.Left);
+            headers.Add("Type", 125, HorizontalAlignment.Left);
+            headers.Add("ModPack", 125, HorizontalAlignment.Left);
         }
         private void Initlvcalculateitems()
         {
-            ColumnHeader headerid, headername, headertype, headeramount;
-            headerid = new ColumnHeader();
-            headername = new ColumnHeader();
-            headertype = new ColumnHeader();
-            headeramount = new ColumnHeader();
             lvcalculateitems.Scrollable = true;
             lvcalculateitems.View = View.Details;
-            headerid.Text = "ID";
-            headerid.TextAlign = HorizontalAlignment.Left;
-            headerid.Width = 30;
-            headername.Text = "Name";
-            headername.TextAlign = HorizontalAlignment.Left;
-            headername.Width = 195;
-            headertype.Text = "Type";
-            headertype.TextAlign = HorizontalAlignment.Left;
-            headertype.Width = 0;
-            headeramount.Text = "Amount";
-            headeramount.TextAlign = HorizontalAlignment.Left;
-            headeramount.Width = 75;
-            lvcalculateitems.Columns.Add(headerid);
-            lvcalculateitems.Columns.Add(headername);
-            lvcalculateitems.Columns.Add(headertype);
-            lvcalculateitems.Columns.Add(headeramount);
+
+            var headers = lvcalculateitems.Columns;
+            headers.Add("Name", 250, HorizontalAlignment.Left);
+            headers.Add("Amount", 100, HorizontalAlignment.Left);
+            headers.Add("Type", 100, HorizontalAlignment.Left);
         }
 
         private void LoadItemInfo(ListView listview)
@@ -269,10 +220,7 @@ namespace MCItemChecker
         }
 
         private void TbSearchName_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tbsearchname.Text))
-                FindItem();
-        }
+            => FindItem();
         private void LvCalculateItems_Click(object sender, EventArgs e)
         {
             if (lvitems.SelectedItems.Count <= 0)
@@ -302,11 +250,14 @@ namespace MCItemChecker
                     lvcalculateitems.Items.Add(lvitem);
                 }
 
-                GUIControl.Sort(lvcalculateitems, 1, SortOrder.Descending);
+                GUIControl.Sort(lvcalculateitems, 0, SortOrder.Ascending);
             }
         }
-        private void NumAmount_ValueChanged(object sender, EventArgs e)
-            => LvCalculateItems_Click(sender, e);
+        private void NumAmount_KeyPressed(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                LvCalculateItems_Click(sender, e);
+        }
 
         private void BCalculateClear_Click(object sender, EventArgs e)
         {

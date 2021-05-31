@@ -42,14 +42,14 @@ namespace MCItemChecker
                 {
                     foreach (Item i in itemlist)
                     {
-                        var item = new ListViewItem(new[] { i.ItemID.ToString(), i.ItemName, i.Type, i.ModPack })
+                        var item = new ListViewItem(new[] { i.ItemName, i.Type, i.ModPack })
                         { Tag = i };
                         listview.Items.Add(item);
                     }
                 }
                 else
                 {
-                    var item = new ListViewItem(new[] { "", "No Results", "", "" });
+                    var item = new ListViewItem(new[] { "No Results", "", "" });
                     listview.Items.Add(item);
                     item = null;
                 }
@@ -78,6 +78,39 @@ namespace MCItemChecker
             combobox.Items.Clear();
             foreach (string s in list)
                 combobox.Items.Add(s);
+        }
+
+        public static void ListViewSizeChanged(object sender, EventArgs e)
+        {
+            bool Resizing = false;
+            // Don't allow overlapping of SizeChanged calls
+            if (!Resizing)
+            {
+                // Set the resizing flag
+                Resizing = true;
+
+                ListView listView = sender as ListView;
+                if (listView != null)
+                {
+                    float totalColumnWidth = 0;
+
+                    // Get the sum of all column tags
+                    for (int i = 0; i < listView.Columns.Count; i++)
+                        totalColumnWidth += Convert.ToInt32(listView.Columns[i].Width);
+
+                    // Calculate the percentage of space each column should 
+                    // occupy in reference to the other columns and then set the 
+                    // width of the column to that percentage of the visible space.
+                    for (int i = 0; i < listView.Columns.Count; i++)
+                    {
+                        float colPercentage = (Convert.ToInt32(listView.Columns[i].Tag) / totalColumnWidth);
+                        listView.Columns[i].Width = (int)(colPercentage * listView.ClientRectangle.Width);
+                    }
+                }
+            }
+
+            // Clear the resizing flag
+            Resizing = false;
         }
 
         public static void InfoMessage(string message)

@@ -99,7 +99,7 @@ namespace MCItemChecker
             lvitems.Columns.Add(headertype);
             lvitems.Columns.Add(headermodpack);
 
-            GUIControl.Sort(lvitems, 1, SortOrder.Descending);
+            GUIControl.Sort(lvitems, 0, SortOrder.Descending);
         }
         private void Initlvsubitems()
         {

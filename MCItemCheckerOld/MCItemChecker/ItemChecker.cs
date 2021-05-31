@@ -18,11 +18,13 @@ namespace MCItemChecker
             => m_itemTypes;
 
         private readonly Dictionary<int, Item> m_items = new Dictionary<int, Item>();
+        private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
         private readonly HashSet<string> m_modpacks = new HashSet<string>();
         private readonly HashSet<string> m_itemTypes = new HashSet<string>();
 
         private int m_lastItemId = 0;
-        private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
+
+        [NonSerialized]
         private Dictionary<Item, double> CraftingRecipe;
 
         public ItemChecker()
