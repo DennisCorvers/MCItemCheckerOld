@@ -54,7 +54,6 @@ namespace MCItemChecker
             return false;
         }
 
-
         public bool AddNewModPack(string modpack)
         {
             if (ModPacks.Contains(modpack))
@@ -109,7 +108,7 @@ namespace MCItemChecker
                     return false;
             }
 
-            if (m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
+            if (newItem.ItemName != oldItem.ItemName && m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
                 return false;
 
             m_itemNameLookup.Remove(oldItem.ItemName.ToLower());

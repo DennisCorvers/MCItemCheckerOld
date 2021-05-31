@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MCItemChecker.Utils;
 
 namespace MCItemChecker
 {
     [Serializable]
+    [DebuggerDisplay("Name = {ItemName}")]
     public class Item : IEquatable<Item>
     {
 #pragma warning disable IDE0032

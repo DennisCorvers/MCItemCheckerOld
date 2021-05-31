@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,19 +37,17 @@
             this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageModpacksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageItemTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lvitems = new System.Windows.Forms.ListView();
+            this.lvExItems = new System.Windows.Forms.ListView();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbsearchname = new System.Windows.Forms.TextBox();
+            this.tbSearchName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbsearchmodpack = new System.Windows.Forms.ComboBox();
-            this.cbsearchtype = new System.Windows.Forms.ComboBox();
+            this.cbSearchModpack = new System.Windows.Forms.ComboBox();
+            this.cbSearchType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.bclearsearch = new System.Windows.Forms.Button();
-            this.bsearchitem = new System.Windows.Forms.Button();
+            this.bClearSearch = new System.Windows.Forms.Button();
+            this.bSearchItem = new System.Windows.Forms.Button();
             this.TabItemInfo = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.litemtype = new System.Windows.Forms.Label();
@@ -80,14 +77,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
             this.SuspendLayout();
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1077, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
             // menuStrip2
             // 
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -96,7 +85,7 @@
             this.exportToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(1077, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(1084, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -112,14 +101,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit To Main Menu";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -128,12 +117,10 @@
             this.itemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newItemToolStripMenuItem,
             this.manageModpacksToolStripMenuItem,
-            this.manageItemTypesToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.deleteItemToolStripMenuItem});
+            this.manageItemTypesToolStripMenuItem});
             this.itemsToolStripMenuItem.Name = "itemsToolStripMenuItem";
-            this.itemsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.itemsToolStripMenuItem.Text = "Items";
+            this.itemsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.itemsToolStripMenuItem.Text = "Item Database";
             // 
             // newItemToolStripMenuItem
             // 
@@ -156,18 +143,6 @@
             this.manageItemTypesToolStripMenuItem.Text = "Manage Item Types";
             this.manageItemTypesToolStripMenuItem.Click += new System.EventHandler(this.ManageItemTypeToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // deleteItemToolStripMenuItem
-            // 
-            this.deleteItemToolStripMenuItem.Name = "deleteItemToolStripMenuItem";
-            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteItemToolStripMenuItem.Text = "Delete Item";
-            this.deleteItemToolStripMenuItem.Click += new System.EventHandler(this.DeleteItem);
-            // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -179,24 +154,23 @@
             // exportToTextToolStripMenuItem
             // 
             this.exportToTextToolStripMenuItem.Name = "exportToTextToolStripMenuItem";
-            this.exportToTextToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exportToTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToTextToolStripMenuItem.Text = "Export To Text";
             this.exportToTextToolStripMenuItem.Click += new System.EventHandler(this.ExportToTextToolStripMenuItem_Click);
             // 
-            // lvitems
+            // lvExItems
             // 
-            this.lvitems.FullRowSelect = true;
-            this.lvitems.HideSelection = false;
-            this.lvitems.Location = new System.Drawing.Point(12, 27);
-            this.lvitems.Name = "lvitems";
-            this.lvitems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lvitems.Size = new System.Drawing.Size(536, 402);
-            this.lvitems.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvitems.TabIndex = 9;
-            this.lvitems.UseCompatibleStateImageBehavior = false;
-            this.lvitems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
-            this.lvitems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
-            this.lvitems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvItems_KeyDown);
+            this.lvExItems.FullRowSelect = true;
+            this.lvExItems.HideSelection = false;
+            this.lvExItems.Location = new System.Drawing.Point(12, 27);
+            this.lvExItems.Name = "lvExItems";
+            this.lvExItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lvExItems.Size = new System.Drawing.Size(536, 402);
+            this.lvExItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvExItems.TabIndex = 9;
+            this.lvExItems.UseCompatibleStateImageBehavior = false;
+            this.lvExItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
+            this.lvExItems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
             // 
             // label5
             // 
@@ -207,14 +181,14 @@
             this.label5.TabIndex = 53;
             this.label5.Text = "Item Name:";
             // 
-            // tbsearchname
+            // tbSearchName
             // 
-            this.tbsearchname.Location = new System.Drawing.Point(82, 438);
-            this.tbsearchname.Name = "tbsearchname";
-            this.tbsearchname.Size = new System.Drawing.Size(296, 20);
-            this.tbsearchname.TabIndex = 54;
-            this.tbsearchname.TextChanged += new System.EventHandler(this.TbSearchName_TextChanged);
-            this.tbsearchname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchNname_KeyPress);
+            this.tbSearchName.Location = new System.Drawing.Point(82, 438);
+            this.tbSearchName.Name = "tbSearchName";
+            this.tbSearchName.Size = new System.Drawing.Size(296, 20);
+            this.tbSearchName.TabIndex = 54;
+            this.tbSearchName.TextChanged += new System.EventHandler(this.TbSearchName_TextChanged);
+            this.tbSearchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchNname_KeyPress);
             // 
             // label7
             // 
@@ -225,24 +199,24 @@
             this.label7.TabIndex = 57;
             this.label7.Text = "Type:";
             // 
-            // cbsearchmodpack
+            // cbSearchModpack
             // 
-            this.cbsearchmodpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbsearchmodpack.FormattingEnabled = true;
-            this.cbsearchmodpack.Location = new System.Drawing.Point(82, 491);
-            this.cbsearchmodpack.Name = "cbsearchmodpack";
-            this.cbsearchmodpack.Size = new System.Drawing.Size(296, 21);
-            this.cbsearchmodpack.Sorted = true;
-            this.cbsearchmodpack.TabIndex = 60;
+            this.cbSearchModpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSearchModpack.FormattingEnabled = true;
+            this.cbSearchModpack.Location = new System.Drawing.Point(82, 491);
+            this.cbSearchModpack.Name = "cbSearchModpack";
+            this.cbSearchModpack.Size = new System.Drawing.Size(296, 21);
+            this.cbSearchModpack.Sorted = true;
+            this.cbSearchModpack.TabIndex = 60;
             // 
-            // cbsearchtype
+            // cbSearchType
             // 
-            this.cbsearchtype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbsearchtype.FormattingEnabled = true;
-            this.cbsearchtype.Location = new System.Drawing.Point(82, 464);
-            this.cbsearchtype.Name = "cbsearchtype";
-            this.cbsearchtype.Size = new System.Drawing.Size(296, 21);
-            this.cbsearchtype.TabIndex = 58;
+            this.cbSearchType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSearchType.FormattingEnabled = true;
+            this.cbSearchType.Location = new System.Drawing.Point(82, 464);
+            this.cbSearchType.Name = "cbSearchType";
+            this.cbSearchType.Size = new System.Drawing.Size(296, 21);
+            this.cbSearchType.TabIndex = 58;
             // 
             // label8
             // 
@@ -253,25 +227,25 @@
             this.label8.TabIndex = 59;
             this.label8.Text = "ModPack:";
             // 
-            // bclearsearch
+            // bClearSearch
             // 
-            this.bclearsearch.Location = new System.Drawing.Point(241, 528);
-            this.bclearsearch.Name = "bclearsearch";
-            this.bclearsearch.Size = new System.Drawing.Size(75, 23);
-            this.bclearsearch.TabIndex = 80;
-            this.bclearsearch.Text = "Clear";
-            this.bclearsearch.UseVisualStyleBackColor = true;
-            this.bclearsearch.Click += new System.EventHandler(this.BClearSearch_Click);
+            this.bClearSearch.Location = new System.Drawing.Point(241, 528);
+            this.bClearSearch.Name = "bClearSearch";
+            this.bClearSearch.Size = new System.Drawing.Size(75, 23);
+            this.bClearSearch.TabIndex = 80;
+            this.bClearSearch.Text = "Clear";
+            this.bClearSearch.UseVisualStyleBackColor = true;
+            this.bClearSearch.Click += new System.EventHandler(this.BClearSearch_Click);
             // 
-            // bsearchitem
+            // bSearchItem
             // 
-            this.bsearchitem.Location = new System.Drawing.Point(64, 528);
-            this.bsearchitem.Name = "bsearchitem";
-            this.bsearchitem.Size = new System.Drawing.Size(75, 23);
-            this.bsearchitem.TabIndex = 79;
-            this.bsearchitem.Text = "Search Item";
-            this.bsearchitem.UseVisualStyleBackColor = true;
-            this.bsearchitem.Click += new System.EventHandler(this.BFindItem_Click);
+            this.bSearchItem.Location = new System.Drawing.Point(64, 528);
+            this.bSearchItem.Name = "bSearchItem";
+            this.bSearchItem.Size = new System.Drawing.Size(75, 23);
+            this.bSearchItem.TabIndex = 79;
+            this.bSearchItem.Text = "Search Item";
+            this.bSearchItem.UseVisualStyleBackColor = true;
+            this.bSearchItem.Click += new System.EventHandler(this.BFindItem_Click);
             // 
             // TabItemInfo
             // 
@@ -373,7 +347,7 @@
             // 
             this.tabControl.Controls.Add(this.TabItemInfo);
             this.tabControl.Controls.Add(this.TabCalculate);
-            this.tabControl.Location = new System.Drawing.Point(554, 27);
+            this.tabControl.Location = new System.Drawing.Point(561, 27);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(511, 521);
@@ -516,22 +490,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 560);
-            this.Controls.Add(this.bclearsearch);
-            this.Controls.Add(this.bsearchitem);
+            this.ClientSize = new System.Drawing.Size(1084, 561);
+            this.Controls.Add(this.bClearSearch);
+            this.Controls.Add(this.bSearchItem);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbsearchname);
+            this.Controls.Add(this.tbSearchName);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.cbsearchmodpack);
-            this.Controls.Add(this.cbsearchtype);
+            this.Controls.Add(this.cbSearchModpack);
+            this.Controls.Add(this.cbSearchType);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.lvitems);
+            this.Controls.Add(this.lvExItems);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1100, 600);
+            this.MinimumSize = new System.Drawing.Size(1100, 600);
             this.Name = "MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -551,24 +525,21 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ListView lvitems;
+        private System.Windows.Forms.ListView lvExItems;
         private System.Windows.Forms.ToolStripMenuItem itemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbsearchname;
+        private System.Windows.Forms.TextBox tbSearchName;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbsearchmodpack;
-        private System.Windows.Forms.ComboBox cbsearchtype;
+        private System.Windows.Forms.ComboBox cbSearchModpack;
+        private System.Windows.Forms.ComboBox cbSearchType;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button bclearsearch;
-        private System.Windows.Forms.Button bsearchitem;
-        private System.Windows.Forms.ToolStripMenuItem deleteItemToolStripMenuItem;
+        private System.Windows.Forms.Button bClearSearch;
+        private System.Windows.Forms.Button bSearchItem;
         private System.Windows.Forms.TabPage TabItemInfo;
         private System.Windows.Forms.ListView lvsubitems;
         private System.Windows.Forms.Label litemtype;
@@ -590,7 +561,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStripMenuItem manageModpacksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageItemTypesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToTextToolStripMenuItem;

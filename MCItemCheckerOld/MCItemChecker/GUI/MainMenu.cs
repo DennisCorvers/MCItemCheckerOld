@@ -26,9 +26,9 @@ namespace MCItemChecker
 
             InitializeComponent();
             Text = Path.GetFileName(Properties.Settings.Default.FilePath) + " - MCItemChecker";
-            GUIControl.UpdateItemListView(lvitems, _itemchecker.ItemList);
+            GUIControl.UpdateItemListView(lvExItems, _itemchecker.ItemList);
 
-            lvitems.ListViewItemSorter = new ListViewComparer();
+            lvExItems.ListViewItemSorter = new ListViewComparer();
             lvcalculateitems.ListViewItemSorter = new ListViewComparer();
 
             Initlvitems();
@@ -38,23 +38,23 @@ namespace MCItemChecker
             UpdateModPackControls();
             UpdateItemTypeControls();
             cbfiltertype.SelectedItem = "-";
-            cbsearchmodpack.SelectedItem = "-";
-            cbsearchtype.SelectedItem = "-";
+            cbSearchModpack.SelectedItem = "-";
+            cbSearchType.SelectedItem = "-";
 
             litemname.Text = "";
             litemtype.Text = "";
             lmodpack.Text = "";
-            GUIControl.Sort(lvitems, 0, SortOrder.Ascending);
+            GUIControl.Sort(lvExItems, 0, SortOrder.Ascending);
         }
 
         public void UpdateModPackControls()
         {
-            GUIControl.UpdateControl(_itemchecker.ModPacks, cbsearchmodpack);
+            GUIControl.UpdateControl(_itemchecker.ModPacks, cbSearchModpack);
         }
 
         public void UpdateItemTypeControls()
         {
-            GUIControl.UpdateControl(_itemchecker.Types, cbsearchtype);
+            GUIControl.UpdateControl(_itemchecker.Types, cbSearchType);
             GUIControl.UpdateControl(_itemchecker.Types, cbfiltertype);
         }
 
@@ -77,7 +77,7 @@ namespace MCItemChecker
 
         public void UpdateItemList(IEnumerable<Item> Items)
         {
-            GUIControl.UpdateItemListView(lvitems, Items);
+            GUIControl.UpdateItemListView(lvExItems, Items);
         }
 
         private void Initlvsubitems()
@@ -92,10 +92,10 @@ namespace MCItemChecker
         }
         private void Initlvitems()
         {
-            lvitems.Scrollable = true;
-            lvitems.View = View.Details;
+            lvExItems.Scrollable = true;
+            lvExItems.View = View.Details;
 
-            var headers = lvitems.Columns;
+            var headers = lvExItems.Columns;
             headers.Add("Name", 275, HorizontalAlignment.Left);
             headers.Add("Type", 125, HorizontalAlignment.Left);
             headers.Add("ModPack", 125, HorizontalAlignment.Left);
@@ -176,54 +176,29 @@ namespace MCItemChecker
 
         private void FindItem()
         {
-            string name = tbsearchname.Text;
-            string type = cbsearchtype.SelectedItem?.ToString();
-            string modpack = cbsearchmodpack.SelectedItem?.ToString();
+            string name = tbSearchName.Text;
+            string type = cbSearchType.SelectedItem?.ToString();
+            string modpack = cbSearchModpack.SelectedItem?.ToString();
 
             var foundItmes = _itemchecker.FindItem(name, type, modpack);
 
-            GUIControl.UpdateItemListView(lvitems, foundItmes);
+            GUIControl.UpdateItemListView(lvExItems, foundItmes);
         }
 
         private void BClearSearch_Click(object sender, EventArgs e)
         {
-            tbsearchname.Text = "";
-            cbsearchtype.SelectedItem = "-";
-            cbsearchmodpack.SelectedItem = "-";
+            tbSearchName.Text = "";
+            cbSearchType.SelectedItem = "-";
+            cbSearchModpack.SelectedItem = "-";
 
-            GUIControl.UpdateItemListView(lvitems, _itemchecker.ItemList);
-        }
-        private void DeleteItem(object sender, EventArgs e)
-        {
-            if (lvitems.SelectedItems.Count == 0)
-            {
-                GUIControl.InfoMessage("Select an item for deletion first.");
-                return;
-            }
-
-            var item = lvitems.GetSelectedMCItem();
-
-            if (_itemchecker.DeleteItem(item.ItemID))
-                lvitems.Items.Remove(lvitems.SelectedItems[0]);
-        }
-        private void LvItems_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                DialogResult result = MessageBox.Show("Are you sure you want to delete this item?", "Item Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-
-                if (result != DialogResult.Yes)
-                    return;
-
-                DeleteItem(sender, e);
-            }
+            GUIControl.UpdateItemListView(lvExItems, _itemchecker.ItemList);
         }
 
         private void TbSearchName_TextChanged(object sender, EventArgs e)
             => FindItem();
         private void LvCalculateItems_Click(object sender, EventArgs e)
         {
-            if (lvitems.SelectedItems.Count <= 0)
+            if (lvExItems.SelectedItems.Count <= 0)
                 return;
 
 
@@ -231,13 +206,13 @@ namespace MCItemChecker
 
             if (tabControl.SelectedTab == TabItemInfo)
             {
-                LoadItemInfo(lvitems);
+                LoadItemInfo(lvExItems);
                 return;
             }
 
             if (tabControl.SelectedTab == TabCalculate)
             {
-                var item = lvitems.GetSelectedMCItem();
+                var item = lvExItems.GetSelectedMCItem();
                 lcalcitemname.Text = item.ItemName;
                 lvcalculateitems.Items.Clear();
 

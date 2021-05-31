@@ -31,17 +31,18 @@ namespace MCItemChecker
             m_itemchecker = IC;
             m_mainform = mainform;
             lvitems.ListViewItemSorter = new ListViewComparer();
-            tbadd.Text = "1";
-            tbremove.Text = "1";
+            tbAddAmount.Text = "1";
+            tbRemoveAmount.Text = "1";
 
             Text = m_mainform.Text;
 
             UpdateTypeControls();
             UpdateModPackControls();
-            cbmodpack.SelectedItem = "-";
+
             cbsearchmodpack.SelectedItem = "-";
             cbsearchtype.SelectedItem = "-";
-            cbtype.SelectedItem = "-";
+
+            ClearNewItem();
 
             Initlvitems();
             Initlvsubitems();
@@ -50,84 +51,52 @@ namespace MCItemChecker
         public NewItem(ItemChecker IC, MainMenu mainform, string tabname)
             : this(IC, mainform)
         {
-            if (tabname == "Items")
-            { tabControl1.SelectedTab = TabNewItem; }
-            else if (tabname == "Modpack")
-            { tabControl1.SelectedTab = TabModPack; }
-            else if (tabname == "Types")
-            { tabControl1.SelectedTab = TabType; }
-        }
-
-        private void UpdateTypeControls()
-        {
-            GUIControl.UpdateControl(m_itemchecker.Types, cbsearchtype);
-            GUIControl.UpdateControl(m_itemchecker.Types, cbtype);
-            GUIControl.UpdateControl(m_itemchecker.Types, lbtype);
-        }
-
-        private void UpdateModPackControls()
-        {
-            GUIControl.UpdateControl(m_itemchecker.ModPacks, cbmodpack);
-            GUIControl.UpdateControl(m_itemchecker.ModPacks, cbsearchmodpack);
-            GUIControl.UpdateControl(m_itemchecker.ModPacks, lbmodpacks);
+            switch (tabname)
+            {
+                case "Items": tabControl1.SelectedTab = TabNewItem; break;
+                case "Modpack": tabControl1.SelectedTab = TabModPack; break;
+                case "Types": tabControl1.SelectedTab = TabType; break;
+            }
         }
 
         private void Initlvitems()
         {
-            ColumnHeader headerid, headername, headertype, headermodpack;
-            headerid = new ColumnHeader();
-            headername = new ColumnHeader();
-            headertype = new ColumnHeader();
-            headermodpack = new ColumnHeader();
             lvitems.Scrollable = true;
             lvitems.View = View.Details;
 
-            headerid.Text = "ID";
-            headerid.TextAlign = HorizontalAlignment.Left;
-            headerid.Width = 30;
-            headername.Text = "Name";
-            headername.TextAlign = HorizontalAlignment.Left;
-            headername.Width = 200;
-            headertype.Text = "Type";
-            headertype.TextAlign = HorizontalAlignment.Left;
-            headertype.Width = 10;
-            headermodpack.Text = "ModPack";
-            headermodpack.TextAlign = HorizontalAlignment.Left;
-            headermodpack.Width = 10;
-            lvitems.Columns.Add(headerid);
-            lvitems.Columns.Add(headername);
-            lvitems.Columns.Add(headertype);
-            lvitems.Columns.Add(headermodpack);
+            var headers = lvitems.Columns;
+            headers.Add("Name", 275, HorizontalAlignment.Left);
+            headers.Add("Type", 125, HorizontalAlignment.Left);
+            headers.Add("ModPack", 125, HorizontalAlignment.Left);
 
-            GUIControl.Sort(lvitems, 0, SortOrder.Descending);
+            GUIControl.Sort(lvitems, 0, SortOrder.Ascending);
         }
         private void Initlvsubitems()
         {
-            ColumnHeader headerid, headername, headeramount, headertype;
-            headerid = new ColumnHeader();
-            headername = new ColumnHeader();
-            headeramount = new ColumnHeader();
-            headertype = new ColumnHeader();
-            lvsubitems.Scrollable = true;
-            lvsubitems.View = View.Details;
+            lvSubItems.Scrollable = true;
+            lvSubItems.View = View.Details;
 
-            headerid.Text = "ID";
-            headerid.TextAlign = HorizontalAlignment.Left;
-            headerid.Width = 30;
-            headername.Text = "Name";
-            headername.TextAlign = HorizontalAlignment.Left;
-            headername.Width = 180;
-            headeramount.Text = "Amount";
-            headeramount.TextAlign = HorizontalAlignment.Left;
-            headeramount.Width = 50;
-            headertype.Text = "Type";
-            headertype.TextAlign = HorizontalAlignment.Left;
-            headertype.Width = 0;
-            lvsubitems.Columns.Add(headerid);
-            lvsubitems.Columns.Add(headername);
-            lvsubitems.Columns.Add(headeramount);
-            lvsubitems.Columns.Add(headertype);
+            var headers = lvSubItems.Columns;
+            headers.Add("Name", 250, HorizontalAlignment.Left);
+            headers.Add("Type", 100, HorizontalAlignment.Left);
+            headers.Add("ModPack", 100, HorizontalAlignment.Left);
         }
+
+        private void UpdateModPackControls()
+        {
+            var modpacks = m_itemchecker.ModPacks;
+            GUIControl.UpdateControl(modpacks, cbNewItemModpack);
+            GUIControl.UpdateControl(modpacks, cbsearchmodpack);
+            GUIControl.UpdateControl(modpacks, lbmodpacks);
+        }
+        private void UpdateTypeControls()
+        {
+            var itemTypes = m_itemchecker.Types;
+            GUIControl.UpdateControl(itemTypes, cbNewItemType);
+            GUIControl.UpdateControl(itemTypes, cbsearchtype);
+            GUIControl.UpdateControl(itemTypes, lbtype);
+        }
+
         private void LvItems_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (!(sender is ListView listView))
@@ -147,7 +116,7 @@ namespace MCItemChecker
 
         private void UpdateSubItems(Dictionary<Item, double> subitemlist)
         {
-            lvsubitems.Items.Clear();
+            lvSubItems.Items.Clear();
             foreach (KeyValuePair<Item, double> pair in subitemlist)
             {
                 var item = new ListViewItem(new[] {
@@ -155,7 +124,7 @@ namespace MCItemChecker
                     Math.Round(pair.Value, 3).ToString(), pair.Key.Type
                 })
                 { Tag = pair };
-                lvsubitems.Items.Add(item);
+                lvSubItems.Items.Add(item);
                 item = null;
             }
         }
@@ -164,27 +133,33 @@ namespace MCItemChecker
         {
             Dictionary<Item, double> subitems = new Dictionary<Item, double>(m_subItems);
 
-            if (tbitemname.Text.Trim().Length == 0)
+            if (string.IsNullOrWhiteSpace(tbNewItemName.Text))
             {
-                MessageBox.Show("Enter an Item Name first");
+                GUIControl.InfoMessage("Enter an Item Name first");
                 return;
             }
 
             Item newItem = new Item(
-                tbitemname.Text,
-                cbtype.SelectedItem.ToString(),
-                cbmodpack.SelectedItem.ToString(),
+                tbNewItemName.Text,
+                cbNewItemType.SelectedItem.ToString(),
+                cbNewItemModpack.SelectedItem.ToString(),
                 subitems);
 
             if (m_modifyingItem == true && item != null)
             {
                 if (!m_itemchecker.EditItem(newItem, item))
+                {
                     GUIControl.InfoMessage("Unable to edit item. Make sure the name is unique.");
+                    return;
+                }
             }
             else
             {
                 if (!m_itemchecker.AddNewItem(newItem))
+                {
                     GUIControl.InfoMessage("Unable add a new item. Make sure the name is unique.");
+                    return;
+                }
             }
 
             UpdateItemList(m_itemchecker.ItemList);
@@ -193,31 +168,21 @@ namespace MCItemChecker
 
         private void LvItems_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            ListView lv = (ListView)sender;
+
+            if (e.KeyCode == Keys.Delete && lv.SelectedItems.Count > 0)
             {
-                if (!(sender is ListView))
-                    return;
-
-                ListView lv = (ListView)sender;
-
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this item?", "Item Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
                 if (result == DialogResult.Yes && m_itemchecker.DeleteItem(lv.GetSelectedMCItem().ItemID))
                 {
-                    try
-                    {
-                        lv.Items.Remove(lv.SelectedItems[0]);
-                    }
-                    catch
-                    {
-                        GUIControl.UpdateItemListView(lv, m_itemchecker.ItemList);
-                    }
+                    lv.Items.Remove(lv.SelectedItems[0]);
                 }
             }
         }
 
         private void BAdd_Click(object sender, EventArgs e)
             => AddNewItem(m_moditem);
-
         private void BFindItem_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbsearchname.Text))
@@ -228,16 +193,13 @@ namespace MCItemChecker
 
             GUIControl.UpdateItemListView(lvitems, FindItem());
         }
-
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
-            tbsearchid.Text = "";
             cbsearchtype.SelectedValue = "-";
             cbsearchmodpack.SelectedValue = "-";
             UpdateItemList(m_itemchecker.ItemList);
         }
-
         private void BAddSubItem_Click(object sender, EventArgs e)
         {
             if (lvitems.SelectedItems.Count == 0)
@@ -248,25 +210,35 @@ namespace MCItemChecker
 
             AddSubItem(lvitems.GetSelectedMCItem());
         }
-
-        private void AddSubItem(Item item)
+        private void BRemoveSubItem_Click(object sender, EventArgs e)
         {
-            if (tbadd.Text == "")
-                tbadd.Text = "1";
-
-            if (!tbadd.Text.FractionToDouble(out double amount))
+            if (lvSubItems.SelectedItems.Count == 0)
             {
-                tbadd.Text = "";
+                GUIControl.InfoMessage("Select an item to remove first.");
                 return;
             }
 
-            if (amount < 0 || amount == 0)
+            Removesubitem(lvSubItems.GetSelectedMCSubItem());
+        }
+
+        private void AddSubItem(Item item)
+        {
+            if (tbAddAmount.Text == "")
+                tbAddAmount.Text = "1";
+
+            if (!tbAddAmount.Text.FractionToDouble(out double amount))
+            {
+                tbAddAmount.Text = "";
+                return;
+            }
+
+            if (amount <= 0)
             {
                 GUIControl.InfoMessage("Enter an amount first.");
                 return;
             }
 
-            if (item.ItemName.ToLower() == tbitemname.Text.ToLower())
+            if (item.ItemName.ToLower() == tbNewItemName.Text.ToLower())
             {
                 GUIControl.InfoMessage("Can't add an item to itself.");
                 return;
@@ -283,60 +255,55 @@ namespace MCItemChecker
                 UpdateSubItems(m_subItems);
             }
 
-            tbadd.Text = "1";
-        }
-
-        private void BRemoveSubItem_Click(object sender, EventArgs e)
-        {
-            if (lvsubitems.SelectedItems.Count == 0)
-            {
-                GUIControl.InfoMessage("Select an item to remove first.");
-                return;
-            }
-
-            Removesubitem(lvsubitems.GetSelectedMCSubItem());
+            tbAddAmount.Text = "1";
         }
 
         private void Removesubitem(KeyValuePair<Item, double> subItem)
         {
-            if (tbadd.Text == "")
-                tbadd.Text = "1";
+            if (tbAddAmount.Text == "")
+                tbAddAmount.Text = "1";
 
-            if (!tbadd.Text.FractionToDouble(out double amount))
+            if (!tbAddAmount.Text.FractionToDouble(out double amount))
             {
-                tbadd.Text = "";
+                tbAddAmount.Text = "";
                 return;
             }
 
-            if (amount < 0 || amount == 0)
+            if (amount <= 0)
             {
                 GUIControl.InfoMessage("Enter an amount first.");
                 return;
             }
 
             double newvalue = subItem.Value - amount;
-            if (newvalue < 0 || newvalue == 0)
+            if (newvalue <= 0)
                 m_subItems.Remove(subItem.Key);
             else
                 m_subItems[subItem.Key] = subItem.Value - amount;
 
             UpdateSubItems(m_subItems);
 
-            tbremove.Text = "1";
+            tbRemoveAmount.Text = "1";
         }
 
         private void ClearNewItem()
         {
-            tbitemid.Text = "";
-            tbitemname.Text = "";
+            cbNewItemModpack.SelectedItem = "-";
+            cbNewItemType.SelectedItem = "-";
+
+            tbNewItemName.Text = "";
             m_subItems.Clear();
-            lvsubitems.Items.Clear();
+            lvSubItems.Items.Clear();
+
             lmoditem.Visible = false;
             lmoditemname.Text = "-";
             lmoditemname.Visible = false;
+
             m_modifyingItem = false;
             m_moditem = null;
+            bCreateItem.Text = "Create";
         }
+
 
         private void BClear_Click(object sender, EventArgs e)
             => ClearNewItem();
@@ -346,10 +313,10 @@ namespace MCItemChecker
             if (e.KeyCode != Keys.Delete)
                 return;
 
-            if (lvsubitems.SelectedItems.Count == 0)
+            if (lvSubItems.SelectedItems.Count == 0)
                 GUIControl.InfoMessage("Select an item for deletion first.");
 
-            var tpair = lvsubitems.GetSelectedMCSubItem();
+            var tpair = lvSubItems.GetSelectedMCSubItem();
             m_subItems.Remove(tpair.Key);
             UpdateSubItems(m_subItems);
         }
@@ -399,24 +366,35 @@ namespace MCItemChecker
                 return;
             }
 
-            ClearNewItem();
-            m_moditem = lvitems.GetSelectedMCItem();
-            tbitemid.Text = Convert.ToString(m_moditem.ItemID);
-            tbitemname.Text = m_moditem.ItemName;
-            cbmodpack.SelectedItem = m_moditem.ModPack;
-            cbtype.SelectedItem = m_moditem.Type;
+            SetModificationItem(lvitems.GetSelectedMCItem());
+        }
 
-            UpdateSubItems(m_moditem.Recipe);
-            m_subItems = new Dictionary<Item, double>(m_moditem.Recipe);
+        private void SetModificationItem(Item item)
+        {
+            m_moditem = item ?? throw new ArgumentNullException(nameof(item));
+
+            //ClearNewItem();
+
+            m_modifyingItem = true;
+            m_subItems = item.Recipe;
+
+            // Set controls
+            tbNewItemName.Text = item.ItemName;
+            cbNewItemModpack.SelectedItem = item.ModPack;
+            cbNewItemType.SelectedItem = item.Type;
+            UpdateSubItems(item.Recipe);
+
             lmoditem.Visible = true;
             lmoditemname.Visible = true;
             lmoditemname.Text = m_moditem.ItemName;
-            m_modifyingItem = true;
+
+            bCreateItem.Text = "Save";
         }
 
         private void Addmodpack()
         {
-            if (tbmodpackname.Text.Trim().Length == 0)
+
+            if (string.IsNullOrWhiteSpace(tbmodpackname.Text))
             {
                 GUIControl.InfoMessage("Enter a modpack name first.");
                 return;
@@ -432,7 +410,7 @@ namespace MCItemChecker
             tbmodpackname.Text = "";
             m_mainform.UpdateModPackControls();
         }
-        private void BModPackSelete_Click(object sender, EventArgs e)
+        private void BModPackDelete_Click(object sender, EventArgs e)
         {
             if (lbmodpacks.SelectedItems.Count == 0)
             {
@@ -459,7 +437,7 @@ namespace MCItemChecker
 
         private void AddType()
         {
-            if (tbtype.Text.Trim().Length == 0)
+            if (string.IsNullOrWhiteSpace(tbtype.Text))
             {
                 GUIControl.InfoMessage("Enter a type name first.");
                 return;
@@ -513,7 +491,6 @@ namespace MCItemChecker
 
         private void NewItem_FormClosing(object sender, FormClosingEventArgs e)
             => UpdateMainForm();
-
         private void UpdateMainForm()
         {
             m_mainform.UpdateItemList(m_itemchecker.ItemList);
