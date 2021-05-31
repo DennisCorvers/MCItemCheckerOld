@@ -141,7 +141,7 @@ namespace MCItemChecker
             Close();
         }
         private void NewItem_Load(object sender, EventArgs e)
-            => UpdateItemList(m_itemchecker.Items.Values);
+            => UpdateItemList(m_itemchecker.ItemList);
         private void UpdateItemList(IEnumerable<Item> Items)
             => GUIControl.UpdateItemListView(lvitems, Items);
 
@@ -187,7 +187,7 @@ namespace MCItemChecker
                     GUIControl.InfoMessage("Unable add a new item. Make sure the name is unique.");
             }
 
-            UpdateItemList(m_itemchecker.Items.Values);
+            UpdateItemList(m_itemchecker.ItemList);
             ClearNewItem();
         }
 
@@ -209,7 +209,7 @@ namespace MCItemChecker
                     }
                     catch
                     {
-                        GUIControl.UpdateItemListView(lv, m_itemchecker.Items.Values);
+                        GUIControl.UpdateItemListView(lv, m_itemchecker.ItemList);
                     }
                 }
             }
@@ -235,7 +235,7 @@ namespace MCItemChecker
             tbsearchid.Text = "";
             cbsearchtype.SelectedValue = "-";
             cbsearchmodpack.SelectedValue = "-";
-            UpdateItemList(m_itemchecker.Items.Values);
+            UpdateItemList(m_itemchecker.ItemList);
         }
 
         private void BAddSubItem_Click(object sender, EventArgs e)
@@ -516,7 +516,7 @@ namespace MCItemChecker
 
         private void UpdateMainForm()
         {
-            m_mainform.UpdateItemList(m_itemchecker.Items.Values);
+            m_mainform.UpdateItemList(m_itemchecker.ItemList);
         }
     }
 }

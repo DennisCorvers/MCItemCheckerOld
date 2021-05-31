@@ -26,7 +26,7 @@ namespace MCItemChecker
 
             InitializeComponent();
             Text = Path.GetFileName(Properties.Settings.Default.FilePath) + " - MCItemChecker";
-            GUIControl.UpdateItemListView(lvitems, _itemchecker.Items.Values);
+            GUIControl.UpdateItemListView(lvitems, _itemchecker.ItemList);
 
             lvitems.ListViewItemSorter = new ListViewComparer();
 
@@ -40,7 +40,6 @@ namespace MCItemChecker
             cbsearchmodpack.SelectedItem = "-";
             cbsearchtype.SelectedItem = "-";
 
-            litemid.Text = "";
             litemname.Text = "";
             litemtype.Text = "";
             lmodpack.Text = "";
@@ -65,8 +64,10 @@ namespace MCItemChecker
             {
                 foreach (KeyValuePair<Item, double> pair in item.Recipe)
                 {
-                    var Subitem = new ListViewItem(new[] { pair.Key.ItemID.ToString(), pair.Key.ItemName, pair.Value.ToString(), pair.Key.Type });
-                    Subitem.Tag = pair.Key;
+                    var Subitem = new ListViewItem(new[] { pair.Key.ItemID.ToString(), pair.Key.ItemName, pair.Value.ToString(), pair.Key.Type })
+                    {
+                        Tag = pair.Key
+                    };
                     lvsubitems.Items.Add(Subitem);
                     item = null;
                 }
@@ -163,7 +164,6 @@ namespace MCItemChecker
         {
             var item = listview.GetSelectedMCItem();
 
-            litemid.Text = Convert.ToString(item.ItemID);
             litemname.Text = item.ItemName;
             litemtype.Text = item.Type;
             lmodpack.Text = item.ModPack;
@@ -210,36 +210,21 @@ namespace MCItemChecker
         private void LvSubItems_DoubleClick(object sender, EventArgs e)
             => LoadItemInfo(lvsubitems);
         private void BFindItem_Click(object sender, EventArgs e)
-            => FindItemPress();
+            => FindItem();
 
         private void TbSearchNname_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
-                FindItemPress();
+                FindItem();
         }
         private void TbSearchId_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
-                FindItemPress();
-        }
-
-        /// <summary>
-        /// Handles manual click events to find items.
-        /// </summary>
-        private void FindItemPress()
-        {
-            if (string.IsNullOrWhiteSpace(tbsearchname.Text))
-            {
-                GUIControl.InfoMessage("Enter an Item Name or Item ID first.");
-                return;
-            }
-
-            FindItem();
+                FindItem();
         }
 
         private void FindItem()
         {
-            tbsearchid.Text.ToInt(out int searchID);
             string name = tbsearchname.Text;
             string type = cbsearchtype.SelectedItem?.ToString();
             string modpack = cbsearchmodpack.SelectedItem?.ToString();
@@ -252,11 +237,10 @@ namespace MCItemChecker
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
-            tbsearchid.Text = "";
             cbsearchtype.SelectedItem = "-";
-            cbsearchmodpack.SelectedItem = 0;
+            cbsearchmodpack.SelectedItem = "-";
 
-            GUIControl.UpdateItemListView(lvitems, _itemchecker.Items.Values);
+            GUIControl.UpdateItemListView(lvitems, _itemchecker.ItemList);
         }
         private void DeleteItem(object sender, EventArgs e)
         {
@@ -343,7 +327,7 @@ namespace MCItemChecker
             Task task = new Task(() =>
             {
                 var exporter = new RecipeExporter();
-                exporter.WriteToFile(_itemchecker.Items.Values);
+                exporter.WriteToFile(_itemchecker.ItemList);
             });
 
             task.Start();

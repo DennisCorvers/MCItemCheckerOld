@@ -77,14 +77,14 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // openFileToolStripMenuItem
             // 
             this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.openFileToolStripMenuItem.Text = "Open File";
-            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.OpenFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -96,14 +96,14 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem1
             // 
             this.saveAsToolStripMenuItem1.Name = "saveAsToolStripMenuItem1";
             this.saveAsToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.saveAsToolStripMenuItem1.Text = "Save As...";
-            this.saveAsToolStripMenuItem1.Click += new System.EventHandler(this.saveAsToolStripMenuItem1_Click);
+            this.saveAsToolStripMenuItem1.Click += new System.EventHandler(this.SaveAsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
@@ -115,7 +115,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // bresume
             // 
@@ -126,7 +126,7 @@
             this.bresume.TabIndex = 1;
             this.bresume.Text = "Resume";
             this.bresume.UseVisualStyleBackColor = false;
-            this.bresume.Click += new System.EventHandler(this.bresume_Click);
+            this.bresume.Click += new System.EventHandler(this.Bresume_Click);
             // 
             // bExit
             // 
@@ -136,7 +136,7 @@
             this.bExit.TabIndex = 2;
             this.bExit.Text = "Exit";
             this.bExit.UseVisualStyleBackColor = true;
-            this.bExit.Click += new System.EventHandler(this.bExit_Click);
+            this.bExit.Click += new System.EventHandler(this.BExit_Click);
             // 
             // label1
             // 

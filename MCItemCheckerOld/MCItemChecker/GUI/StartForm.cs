@@ -56,13 +56,13 @@ namespace MCItemChecker
         /// <param name="i">The ItemChecker Class</param>
         public void GoToMainForm(ItemChecker i)
         {
-            if (i == null || i.Items == null)
+            if (i == null)
             {
                 MessageBox.Show("The .item file wasn''t loaded properly, try re-opening", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Mainform = new MainMenu(ItemC, this);
-            this.Hide();
+            Hide();
             Mainform.Show();
         }
 
@@ -71,7 +71,7 @@ namespace MCItemChecker
         /// Creates a new itemchecker class when the data class doesn't specify it's location.
         /// </summary>
         /// <returns>returns false when the itemchecker file couldn't be loaded or created</returns>
-        private Boolean CheckItemCheckerFile()
+        private bool CheckItemCheckerFile()
         {
             //Checks if the Filename field is empty.
             if (Properties.Settings.Default.FilePath == null || Properties.Settings.Default.FilePath == "")
@@ -104,9 +104,11 @@ namespace MCItemChecker
         /// <returns></returns>
         private bool CreateNeworRenameFile(ItemChecker ic)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "ItemList File|*.item";
-            saveFileDialog.Title = "Save an .Item File";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "ItemList File|*.item",
+                Title = "Save an .Item File"
+            };
             var result = saveFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -142,31 +144,31 @@ namespace MCItemChecker
 
         public void UpdateItemC(ItemChecker I)
         {
-            this.ItemC = I;
+            ItemC = I;
         }
 
-        private void bExit_Click(object sender, EventArgs e)
+        private void BExit_Click(object sender, EventArgs e)
         {
             ExitApplication();
         }
 
-        private void bresume_Click(object sender, EventArgs e)
+        private void Bresume_Click(object sender, EventArgs e)
         {
             if (CheckItemCheckerFile())
             { GoToMainForm(ItemC); }
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ItemC = new ItemChecker();
             if (CreateNeworRenameFile(ItemC))
             { GoToMainForm(this.ItemC); }
         }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitApplication();
         }
-        private void saveAsToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (ItemC == null)
             {
@@ -176,18 +178,20 @@ namespace MCItemChecker
             else
             { CreateNeworRenameFile(ItemC); }
         }
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ItemC == null)
             { MessageBox.Show("You haven't made any changes yet." + Environment.NewLine + "If you want to rename or relocate, choose 'SaveAs'", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
             else
             { DataStream.SaveFile(ItemC, Properties.Settings.Default.FilePath); }
         }
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openfiledialog = new OpenFileDialog();
-            openfiledialog.Filter = "ItemList File|*.item";
-            openfiledialog.Title = "Opening an .Item File...";
+            OpenFileDialog openfiledialog = new OpenFileDialog
+            {
+                Filter = "ItemList File|*.item",
+                Title = "Opening an .Item File..."
+            };
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
                 ItemChecker tempitemchecker = DataStream.OpenFile<ItemChecker>(openfiledialog.FileName);

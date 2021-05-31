@@ -10,10 +10,16 @@ namespace MCItemChecker
     [Serializable]
     public class ItemChecker
     {
-        public readonly Dictionary<int, Item> Items = new Dictionary<int, Item>();
+        public IEnumerable<Item> ItemList
+            => m_items.Values;
+        public IEnumerable<string> ModPacks
+            => m_modpacks;
+        public IEnumerable<string> Types
+            => m_itemTypes;
 
-        public readonly HashSet<string> ModPacks = new HashSet<string>();
-        public readonly HashSet<string> Types = new HashSet<string>();
+        private readonly Dictionary<int, Item> m_items = new Dictionary<int, Item>();
+        private readonly HashSet<string> m_modpacks = new HashSet<string>();
+        private readonly HashSet<string> m_itemTypes = new HashSet<string>();
 
         private int m_lastItemId = 0;
         private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
@@ -21,26 +27,26 @@ namespace MCItemChecker
 
         public ItemChecker()
         {
-            ModPacks.Add("-");
-            Types.Add("-");
+            m_modpacks.Add("-");
+            m_itemTypes.Add("-");
         }
 
 
         public bool AddNewType(string type)
         {
-            if (Types.Contains(type))
+            if (m_itemTypes.Contains(type))
             {
                 return false;
             }
-            Types.Add(type.ToFirstLetterUpperCase());
+            m_itemTypes.Add(type.ToFirstLetterUpperCase());
             return true;
         }
 
         public bool DeleteType(string type)
         {
-            if (Types.Contains(type))
+            if (m_itemTypes.Contains(type))
             {
-                Types.Remove(type);
+                m_itemTypes.Remove(type);
                 return true;
             }
             return false;
@@ -54,7 +60,7 @@ namespace MCItemChecker
                 return false;
             }
 
-            ModPacks.Add(modpack.ToFirstLetterUpperCase());
+            m_modpacks.Add(modpack.ToFirstLetterUpperCase());
             return true;
         }
 
@@ -62,7 +68,7 @@ namespace MCItemChecker
         {
             if (ModPacks.Contains(modpack))
             {
-                ModPacks.Remove(modpack);
+                m_modpacks.Remove(modpack);
                 return true;
             }
             return false;
@@ -75,7 +81,7 @@ namespace MCItemChecker
                 return false;
 
             item.ItemID = m_lastItemId++;
-            Items.Add(m_lastItemId, item);
+            m_items.Add(m_lastItemId, item);
 
             m_itemNameLookup.Add(item.ItemName.ToLower());
 
@@ -84,8 +90,11 @@ namespace MCItemChecker
 
         public bool DeleteItem(int itemId)
         {
-            if (Items.TryGetValue(itemId, out Item value))
+            if (m_items.TryGetValue(itemId, out Item value))
+            {
                 m_itemNameLookup.Remove(value.ItemName.ToLower());
+                m_items.Remove(itemId);
+            }
 
             return value != null;
         }
@@ -94,7 +103,7 @@ namespace MCItemChecker
         {
             if (!m_itemNameLookup.Contains(oldItem.ItemName.ToLower()))
             {
-                if (Items.ContainsKey(newItem.ItemID))
+                if (m_items.ContainsKey(newItem.ItemID))
                     return false;
             }
 
@@ -110,7 +119,7 @@ namespace MCItemChecker
 
         public IEnumerable<Item> FindItem(string itemname = null, string type = null, string modpack = null, Dictionary<Item, double> craftingneed = null)
         {
-            IEnumerable<Item> result = Items.Values;
+            IEnumerable<Item> result = m_items.Values;
 
             if (!string.IsNullOrWhiteSpace(itemname))
                 result = result.Where(x => x.ItemName.ToLower().Contains(itemname.ToLower()));
