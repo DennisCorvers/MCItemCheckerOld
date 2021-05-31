@@ -57,7 +57,8 @@ namespace MCItemChecker.Utils
 
         public static string ToFirstLetterUpperCase(this string value)
         {
-            return Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
+            string name = Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
+            return Regex.Replace(name, @"\s+", " ", RegexOptions.Multiline);
         }
     }
 }

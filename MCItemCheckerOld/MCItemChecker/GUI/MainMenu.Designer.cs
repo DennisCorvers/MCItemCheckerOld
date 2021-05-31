@@ -29,17 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageModpacksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageItemTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lvExItems = new System.Windows.Forms.ListView();
+            this.lvItems = new System.Windows.Forms.ListView();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSearchName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,108 +59,37 @@
             this.cbfiltertype = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.menuStrip2.SuspendLayout();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageModpacksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageItemTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.TabItemInfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.TabCalculate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
+            this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip2
+            // lvItems
             // 
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.itemsToolStripMenuItem,
-            this.exportToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(1084, 24);
-            this.menuStrip2.TabIndex = 1;
-            this.menuStrip2.Text = "menuStrip2";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Exit To Main Menu";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
-            // 
-            // itemsToolStripMenuItem
-            // 
-            this.itemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newItemToolStripMenuItem,
-            this.manageModpacksToolStripMenuItem,
-            this.manageItemTypesToolStripMenuItem});
-            this.itemsToolStripMenuItem.Name = "itemsToolStripMenuItem";
-            this.itemsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.itemsToolStripMenuItem.Text = "Item Database";
-            // 
-            // newItemToolStripMenuItem
-            // 
-            this.newItemToolStripMenuItem.Name = "newItemToolStripMenuItem";
-            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newItemToolStripMenuItem.Text = "Manage Items";
-            this.newItemToolStripMenuItem.Click += new System.EventHandler(this.ManageItemsToolStripMenuItem_Click);
-            // 
-            // manageModpacksToolStripMenuItem
-            // 
-            this.manageModpacksToolStripMenuItem.Name = "manageModpacksToolStripMenuItem";
-            this.manageModpacksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.manageModpacksToolStripMenuItem.Text = "Manage Modpacks";
-            this.manageModpacksToolStripMenuItem.Click += new System.EventHandler(this.ManageModPackToolStripMenuItem_Click);
-            // 
-            // manageItemTypesToolStripMenuItem
-            // 
-            this.manageItemTypesToolStripMenuItem.Name = "manageItemTypesToolStripMenuItem";
-            this.manageItemTypesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.manageItemTypesToolStripMenuItem.Text = "Manage Item Types";
-            this.manageItemTypesToolStripMenuItem.Click += new System.EventHandler(this.ManageItemTypeToolStripMenuItem_Click);
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportToTextToolStripMenuItem});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.exportToolStripMenuItem.Text = "Export";
-            // 
-            // exportToTextToolStripMenuItem
-            // 
-            this.exportToTextToolStripMenuItem.Name = "exportToTextToolStripMenuItem";
-            this.exportToTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportToTextToolStripMenuItem.Text = "Export To Text";
-            this.exportToTextToolStripMenuItem.Click += new System.EventHandler(this.ExportToTextToolStripMenuItem_Click);
-            // 
-            // lvExItems
-            // 
-            this.lvExItems.FullRowSelect = true;
-            this.lvExItems.HideSelection = false;
-            this.lvExItems.Location = new System.Drawing.Point(12, 27);
-            this.lvExItems.Name = "lvExItems";
-            this.lvExItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lvExItems.Size = new System.Drawing.Size(536, 402);
-            this.lvExItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvExItems.TabIndex = 9;
-            this.lvExItems.UseCompatibleStateImageBehavior = false;
-            this.lvExItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
-            this.lvExItems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
+            this.lvItems.FullRowSelect = true;
+            this.lvItems.HideSelection = false;
+            this.lvItems.Location = new System.Drawing.Point(12, 27);
+            this.lvItems.Name = "lvItems";
+            this.lvItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lvItems.Size = new System.Drawing.Size(536, 402);
+            this.lvItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvItems.TabIndex = 9;
+            this.lvItems.UseCompatibleStateImageBehavior = false;
+            this.lvItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
+            this.lvItems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
             // 
             // label5
             // 
@@ -420,9 +339,10 @@
             // lcalcitemname
             // 
             this.lcalcitemname.AutoSize = true;
-            this.lcalcitemname.Location = new System.Drawing.Point(81, 13);
+            this.lcalcitemname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lcalcitemname.Location = new System.Drawing.Point(109, 13);
             this.lcalcitemname.Name = "lcalcitemname";
-            this.lcalcitemname.Size = new System.Drawing.Size(64, 13);
+            this.lcalcitemname.Size = new System.Drawing.Size(74, 13);
             this.lcalcitemname.TabIndex = 121;
             this.lcalcitemname.Text = "<itemname>";
             // 
@@ -482,9 +402,90 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(20, 13);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 13);
+            this.label12.Size = new System.Drawing.Size(83, 13);
             this.label12.TabIndex = 113;
-            this.label12.Text = "Viewing:";
+            this.label12.Text = "Viewing Item:";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.exitToolStripMenuItem.Text = "Exit To Main Menu";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // itemsToolStripMenuItem
+            // 
+            this.itemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newItemToolStripMenuItem,
+            this.manageModpacksToolStripMenuItem,
+            this.manageItemTypesToolStripMenuItem});
+            this.itemsToolStripMenuItem.Name = "itemsToolStripMenuItem";
+            this.itemsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.itemsToolStripMenuItem.Text = "Item Database";
+            // 
+            // newItemToolStripMenuItem
+            // 
+            this.newItemToolStripMenuItem.Name = "newItemToolStripMenuItem";
+            this.newItemToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.newItemToolStripMenuItem.Text = "Manage Items";
+            this.newItemToolStripMenuItem.Click += new System.EventHandler(this.ManageItemsToolStripMenuItem_Click);
+            // 
+            // manageModpacksToolStripMenuItem
+            // 
+            this.manageModpacksToolStripMenuItem.Name = "manageModpacksToolStripMenuItem";
+            this.manageModpacksToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.manageModpacksToolStripMenuItem.Text = "Manage Modpacks";
+            this.manageModpacksToolStripMenuItem.Click += new System.EventHandler(this.ManageModPackToolStripMenuItem_Click);
+            // 
+            // manageItemTypesToolStripMenuItem
+            // 
+            this.manageItemTypesToolStripMenuItem.Name = "manageItemTypesToolStripMenuItem";
+            this.manageItemTypesToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.manageItemTypesToolStripMenuItem.Text = "Manage Item Types";
+            this.manageItemTypesToolStripMenuItem.Click += new System.EventHandler(this.ManageItemTypeToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToTextToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // exportToTextToolStripMenuItem
+            // 
+            this.exportToTextToolStripMenuItem.Name = "exportToTextToolStripMenuItem";
+            this.exportToTextToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.exportToTextToolStripMenuItem.Text = "Export To Text";
+            this.exportToTextToolStripMenuItem.Click += new System.EventHandler(this.ExportToTextToolStripMenuItem_Click);
+            // 
+            // menuStrip2
+            // 
+            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.itemsToolStripMenuItem,
+            this.exportToolStripMenuItem});
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Size = new System.Drawing.Size(1084, 24);
+            this.menuStrip2.TabIndex = 1;
+            this.menuStrip2.Text = "menuStrip2";
             // 
             // MainMenu
             // 
@@ -499,7 +500,7 @@
             this.Controls.Add(this.cbSearchModpack);
             this.Controls.Add(this.cbSearchType);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.lvExItems);
+            this.Controls.Add(this.lvItems);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -510,8 +511,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.menuStrip2.ResumeLayout(false);
-            this.menuStrip2.PerformLayout();
             this.TabItemInfo.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -519,19 +518,15 @@
             this.TabCalculate.ResumeLayout(false);
             this.TabCalculate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAmount)).EndInit();
+            this.menuStrip2.ResumeLayout(false);
+            this.menuStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.MenuStrip menuStrip2;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ListView lvExItems;
-        private System.Windows.Forms.ToolStripMenuItem itemsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
+        private System.Windows.Forms.ListView lvItems;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbSearchName;
         private System.Windows.Forms.Label label7;
@@ -559,12 +554,18 @@
         private System.Windows.Forms.Button bfilter;
         private System.Windows.Forms.ComboBox cbfiltertype;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox cbBase;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageModpacksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageItemTypesToolStripMenuItem;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToTextToolStripMenuItem;
-        private System.Windows.Forms.CheckBox cbBase;
+        private System.Windows.Forms.MenuStrip menuStrip2;
     }
 }
 

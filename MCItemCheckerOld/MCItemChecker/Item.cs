@@ -44,13 +44,10 @@ namespace MCItemChecker
 
         public Item(string itemname, string type, string modpack, Dictionary<Item, double> recipe)
         {
-            if (recipe == null)
-                throw new ArgumentException(nameof(recipe));
-
             ItemName = itemname;
             m_itemType = type;
             m_modpack = modpack;
-            m_recipe = new Dictionary<Item, double>();
+            m_recipe = recipe ?? throw new ArgumentException(nameof(recipe));
         }
 
         public void CopyFrom(Item other)

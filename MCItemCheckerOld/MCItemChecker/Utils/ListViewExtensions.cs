@@ -16,5 +16,16 @@ namespace MCItemChecker.Utils
             ListView.SelectedListViewItemCollection listviewselect = listview.SelectedItems;
             return (KeyValuePair<Item, double>)listviewselect[0].Tag;
         }
+
+        public static IEnumerable<ListViewItem> GetSelectedListViewItems(this ListView listview)
+        {
+            var selectedItems = listview.SelectedItems;
+            List<ListViewItem> lvItems = new List<ListViewItem>(selectedItems.Count);
+
+            for (int i = selectedItems.Count - 1; i >= 0; i--)
+                lvItems.Add(selectedItems[i]);
+
+            return lvItems;
+        }
     }
 }

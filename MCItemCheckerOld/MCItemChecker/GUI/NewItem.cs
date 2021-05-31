@@ -170,14 +170,39 @@ namespace MCItemChecker
         {
             ListView lv = (ListView)sender;
 
-            if (e.KeyCode == Keys.Delete && lv.SelectedItems.Count > 0)
-            {
-                DialogResult result = MessageBox.Show("Are you sure you want to delete this item?", "Item Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (lv.SelectedItems.Count == 0)
+                return;
 
-                if (result == DialogResult.Yes && m_itemchecker.DeleteItem(lv.GetSelectedMCItem().ItemID))
-                {
-                    lv.Items.Remove(lv.SelectedItems[0]);
-                }
+            switch (e.KeyCode)
+            {
+                case Keys.Delete:
+                    DeleteItems(lv);
+                    return;
+
+                case Keys.E:
+                    e.SuppressKeyPress = true;
+                    SetModificationItem(lvitems.GetSelectedMCItem());
+                    tbNewItemName.Select();
+                    return;
+            }
+        }
+
+        private void DeleteItems(ListView listview)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete  the selected item(s)?", "Item Deletion",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            var listviewItems = listview.GetSelectedListViewItems();
+            foreach(var lvItem in listviewItems)
+            {
+                if (!(lvItem.Tag is Item item))
+                    continue;
+
+                if (m_itemchecker.DeleteItem(item.ItemID))
+                    listview.Items.Remove(lvItem);
             }
         }
 
@@ -324,11 +349,6 @@ namespace MCItemChecker
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
             => Close();
 
-        private void LvDoubleClick(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedTab == TabNewItem)
-                BAddSubItem_Click(sender, e);
-        }
         private void TbItemName_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
@@ -494,6 +514,18 @@ namespace MCItemChecker
         private void UpdateMainForm()
         {
             m_mainform.UpdateItemList(m_itemchecker.ItemList);
+        }
+
+        private void TbNewItemName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                AddNewItem(m_moditem);
+        }
+
+        private void Lvitems_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (tabControl1.SelectedTab == TabNewItem)
+                BAddSubItem_Click(sender, e);
         }
     }
 }

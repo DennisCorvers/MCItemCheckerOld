@@ -72,6 +72,7 @@
             this.cbsearchtype = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lvitems = new System.Windows.Forms.ListView();
+            this.label5 = new System.Windows.Forms.Label();
             this.TabNewItem.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -146,10 +147,10 @@
             // 
             this.lvSubItems.FullRowSelect = true;
             this.lvSubItems.HideSelection = false;
-            this.lvSubItems.Location = new System.Drawing.Point(132, 98);
+            this.lvSubItems.Location = new System.Drawing.Point(132, 122);
             this.lvSubItems.Name = "lvSubItems";
             this.lvSubItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lvSubItems.Size = new System.Drawing.Size(456, 307);
+            this.lvSubItems.Size = new System.Drawing.Size(456, 283);
             this.lvSubItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvSubItems.TabIndex = 101;
             this.lvSubItems.UseCompatibleStateImageBehavior = false;
@@ -159,6 +160,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.tbNewItemName);
             this.panel2.Controls.Add(this.label7);
@@ -189,6 +191,7 @@
             this.tbNewItemName.Name = "tbNewItemName";
             this.tbNewItemName.Size = new System.Drawing.Size(296, 20);
             this.tbNewItemName.TabIndex = 122;
+            this.tbNewItemName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbNewItemName_KeyPress);
             // 
             // label7
             // 
@@ -512,6 +515,18 @@
             this.lvitems.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvitems.TabIndex = 114;
             this.lvitems.UseCompatibleStateImageBehavior = false;
+            this.lvitems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvItems_KeyDown);
+            this.lvitems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Lvitems_MouseDoubleClick);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(13, 99);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(264, 13);
+            this.label5.TabIndex = 126;
+            this.label5.Text = "The following items are required to craft the given item:";
             // 
             // NewItem
             // 
@@ -535,6 +550,7 @@
             this.MaximumSize = new System.Drawing.Size(1200, 600);
             this.MinimumSize = new System.Drawing.Size(1200, 600);
             this.Name = "NewItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "NewItem";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewItem_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewItem_FormClosed);
@@ -600,5 +616,6 @@
         private System.Windows.Forms.ComboBox cbNewItemModpack;
         private System.Windows.Forms.ComboBox cbNewItemType;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
     }
 }

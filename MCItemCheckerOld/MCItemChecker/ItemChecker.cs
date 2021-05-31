@@ -81,11 +81,12 @@ namespace MCItemChecker
             if (m_itemNameLookup.Contains(item.ItemName.ToLower()))
                 return false;
 
-            item.ItemID = m_lastItemId++;
+            item.ItemID = m_lastItemId;
             m_items.Add(m_lastItemId, item);
 
             m_itemNameLookup.Add(item.ItemName.ToLower());
 
+            m_lastItemId++;
             return true;
         }
 

@@ -26,9 +26,8 @@ namespace MCItemChecker
 
             InitializeComponent();
             Text = Path.GetFileName(Properties.Settings.Default.FilePath) + " - MCItemChecker";
-            GUIControl.UpdateItemListView(lvExItems, _itemchecker.ItemList);
 
-            lvExItems.ListViewItemSorter = new ListViewComparer();
+            lvItems.ListViewItemSorter = new ListViewComparer();
             lvcalculateitems.ListViewItemSorter = new ListViewComparer();
 
             Initlvitems();
@@ -44,7 +43,9 @@ namespace MCItemChecker
             litemname.Text = "";
             litemtype.Text = "";
             lmodpack.Text = "";
-            GUIControl.Sort(lvExItems, 0, SortOrder.Ascending);
+
+            GUIControl.UpdateItemListView(lvItems, _itemchecker.ItemList);
+            GUIControl.Sort(lvItems, 0, SortOrder.Ascending);
         }
 
         public void UpdateModPackControls()
@@ -77,7 +78,7 @@ namespace MCItemChecker
 
         public void UpdateItemList(IEnumerable<Item> Items)
         {
-            GUIControl.UpdateItemListView(lvExItems, Items);
+            GUIControl.UpdateItemListView(lvItems, Items);
         }
 
         private void Initlvsubitems()
@@ -92,10 +93,10 @@ namespace MCItemChecker
         }
         private void Initlvitems()
         {
-            lvExItems.Scrollable = true;
-            lvExItems.View = View.Details;
-
-            var headers = lvExItems.Columns;
+            lvItems.Scrollable = true;
+            lvItems.View = View.Details;
+            
+            var headers = lvItems.Columns;
             headers.Add("Name", 275, HorizontalAlignment.Left);
             headers.Add("Type", 125, HorizontalAlignment.Left);
             headers.Add("ModPack", 125, HorizontalAlignment.Left);
@@ -182,7 +183,7 @@ namespace MCItemChecker
 
             var foundItmes = _itemchecker.FindItem(name, type, modpack);
 
-            GUIControl.UpdateItemListView(lvExItems, foundItmes);
+            GUIControl.UpdateItemListView(lvItems, foundItmes);
         }
 
         private void BClearSearch_Click(object sender, EventArgs e)
@@ -191,14 +192,14 @@ namespace MCItemChecker
             cbSearchType.SelectedItem = "-";
             cbSearchModpack.SelectedItem = "-";
 
-            GUIControl.UpdateItemListView(lvExItems, _itemchecker.ItemList);
+            GUIControl.UpdateItemListView(lvItems, _itemchecker.ItemList);
         }
 
         private void TbSearchName_TextChanged(object sender, EventArgs e)
             => FindItem();
         private void LvCalculateItems_Click(object sender, EventArgs e)
         {
-            if (lvExItems.SelectedItems.Count <= 0)
+            if (lvItems.SelectedItems.Count <= 0)
                 return;
 
 
@@ -206,13 +207,13 @@ namespace MCItemChecker
 
             if (tabControl.SelectedTab == TabItemInfo)
             {
-                LoadItemInfo(lvExItems);
+                LoadItemInfo(lvItems);
                 return;
             }
 
             if (tabControl.SelectedTab == TabCalculate)
             {
-                var item = lvExItems.GetSelectedMCItem();
+                var item = lvItems.GetSelectedMCItem();
                 lcalcitemname.Text = item.ItemName;
                 lvcalculateitems.Items.Clear();
 
