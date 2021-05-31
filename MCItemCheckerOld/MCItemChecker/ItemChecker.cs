@@ -11,6 +11,7 @@ namespace MCItemChecker
     public class ItemChecker
     {
         internal const string NonDefinedChar = "-";
+        private const int MaxRecursionCount = 128;
 
         public IEnumerable<Item> ItemList
             => m_items.Values;
@@ -25,9 +26,6 @@ namespace MCItemChecker
         private readonly HashSet<string> m_itemTypes = new HashSet<string>();
 
         private int m_lastItemId = 0;
-
-        [NonSerialized]
-        private Dictionary<Item, double> CraftingRecipe;
 
         public ItemChecker()
         {
@@ -140,48 +138,39 @@ namespace MCItemChecker
             return result;
         }
 
-        private void CraftingList(Dictionary<Item, double> recipe, double amount, ref Dictionary<Item, double> CraftingRecipe)
+        private void CalculateItemRecipe(Item item, double amount, bool isBaseItem, Dictionary<Item, double> craftingRecipe, int recursionCount)
         {
-            double Tamount = 0;
-            foreach (KeyValuePair<Item, double> pair in recipe)
+            if (++recursionCount >= MaxRecursionCount)
+                return;
+
+            foreach (var pair in item.Recipe)
             {
-                if (CraftingRecipe.ContainsKey(pair.Key))
+                if (isBaseItem)
                 {
-                    CraftingRecipe[pair.Key] += pair.Value * amount;
+                    if (pair.Key.Recipe.Count <= 0)
+                    {
+                        AddToRecipe(pair);
+                        continue;
+                    }
                 }
                 else
                 {
-                    CraftingRecipe.Add(pair.Key, (pair.Value * amount));
+                    AddToRecipe(pair);
+
+                    if (pair.Key.Recipe.Count <= 0)
+                        continue;
                 }
 
-                if (pair.Key.Recipe.Count <= 0)
-                    continue;
-
-                Tamount = pair.Value * amount;
-                CraftingList(pair.Key.Recipe, Tamount, ref CraftingRecipe);
+                amount *= pair.Value;
+                CalculateItemRecipe(pair.Key, amount, isBaseItem, craftingRecipe, recursionCount);
             }
-        }
 
-        private void CraftingListBase(Dictionary<Item, double> recipe, double amount, ref Dictionary<Item, double> CraftingRecipe)
-        {
-            double Tamount = 0;
-            foreach (KeyValuePair<Item, double> pair in recipe)
+            void AddToRecipe(KeyValuePair<Item, double> recipeItem)
             {
-                if (pair.Key.Recipe.Count <= 0)
-                {
-                    if (CraftingRecipe.ContainsKey(pair.Key))
-                    {
-                        CraftingRecipe[pair.Key] += pair.Value * amount;
-                    }
-                    else
-                    {
-                        CraftingRecipe.Add(pair.Key, pair.Value * amount);
-                    }
-
-                    continue;
-                }
-                Tamount = pair.Value * amount;
-                CraftingListBase(pair.Key.Recipe, Tamount, ref CraftingRecipe);
+                if (craftingRecipe.ContainsKey(recipeItem.Key))
+                    craftingRecipe[recipeItem.Key] += recipeItem.Value * amount;
+                else
+                    craftingRecipe.Add(recipeItem.Key, recipeItem.Value * amount);
             }
         }
 
@@ -190,20 +179,13 @@ namespace MCItemChecker
         /// </summary>
         /// <param name="item">The item that needs to be calculated upon.</param>
         /// <param name="amount">The amount of the specified item.</param>
-        /// <returns>Returns a dictionary filled with items needed to craft the required item.</returns>
         public Dictionary<Item, double> CalculateRecipe(Item item, double amount, bool returnbase = false)
         {
-            CraftingRecipe = null;
-            CraftingRecipe = new Dictionary<Item, double>();
+            var recipe = new Dictionary<Item, double>();
 
-            if (returnbase)
-            {
-                CraftingListBase(item.Recipe, amount, ref CraftingRecipe);
-                return CraftingRecipe;
-            }
+            CalculateItemRecipe(item, amount, returnbase, recipe, 0);
 
-            CraftingList(item.Recipe, amount, ref CraftingRecipe);
-            return CraftingRecipe;
+            return recipe;
         }
     }
 }
