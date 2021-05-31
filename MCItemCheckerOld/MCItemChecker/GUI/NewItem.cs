@@ -395,7 +395,7 @@ namespace MCItemChecker
             m_moditem = item ?? throw new ArgumentNullException(nameof(item));
 
             m_modifyingItem = true;
-            m_subItems = item.Recipe;
+            m_subItems = new Dictionary<Item, double>(item.Recipe);
 
             // Set controls
             tbNewItemName.Text = item.ItemName;
