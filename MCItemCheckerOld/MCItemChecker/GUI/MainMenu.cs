@@ -61,9 +61,9 @@ namespace MCItemChecker
         private void UpdateSubItems(Item item)
         {
             lvsubitems.Items.Clear();
-            if (item.Craftingneed != null)
+            if (item.Recipe != null)
             {
-                foreach (KeyValuePair<Item, double> pair in item.Craftingneed)
+                foreach (KeyValuePair<Item, double> pair in item.Recipe)
                 {
                     var Subitem = new ListViewItem(new[] { pair.Key.ItemID.ToString(), pair.Key.ItemName, pair.Value.ToString(), pair.Key.Type });
                     Subitem.Tag = pair.Key;

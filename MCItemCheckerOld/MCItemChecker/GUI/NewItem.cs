@@ -162,7 +162,7 @@ namespace MCItemChecker
 
         private void AddNewItem(Item item = null)
         {
-            Dictionary<Item, double> Tsubitems = new Dictionary<Item, double>(m_subItems);
+            Dictionary<Item, double> subitems = new Dictionary<Item, double>(m_subItems);
 
             if (tbitemname.Text.Trim().Length == 0)
             {
@@ -174,29 +174,17 @@ namespace MCItemChecker
                 tbitemname.Text,
                 cbtype.SelectedItem.ToString(),
                 cbmodpack.SelectedItem.ToString(),
-                Tsubitems);
+                subitems);
 
             if (m_modifyingItem == true && item != null)
             {
-                try
-                {
-                    m_itemchecker.EditItem(newItem, item);
-                }
-                catch
-                {
-                    MessageBox.Show("Unable to edit item. Make sure the name is unique.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                if (!m_itemchecker.EditItem(newItem, item))
+                    GUIControl.InfoMessage("Unable to edit item. Make sure the name is unique.");
             }
             else
             {
-                try
-                {
-                    m_itemchecker.AddNewItem(newItem);
-                }
-                catch
-                {
-                    MessageBox.Show("Unable add a new item. Make sure the name is unique.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                if (!m_itemchecker.AddNewItem(newItem))
+                    GUIControl.InfoMessage("Unable add a new item. Make sure the name is unique.");
             }
 
             UpdateItemList(m_itemchecker.Items.Values);
@@ -418,8 +406,8 @@ namespace MCItemChecker
             cbmodpack.SelectedItem = m_moditem.ModPack;
             cbtype.SelectedItem = m_moditem.Type;
 
-            UpdateSubItems(m_moditem.Craftingneed);
-            m_subItems = new Dictionary<Item, double>(m_moditem.Craftingneed);
+            UpdateSubItems(m_moditem.Recipe);
+            m_subItems = new Dictionary<Item, double>(m_moditem.Recipe);
             lmoditem.Visible = true;
             lmoditemname.Visible = true;
             lmoditemname.Text = m_moditem.ItemName;

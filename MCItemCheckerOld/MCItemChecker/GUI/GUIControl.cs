@@ -19,6 +19,7 @@ namespace MCItemChecker
         }
         public static void Sort(ListView listView, int index, SortOrder sortOrder)
         {
+            return;
             if (listView == null) return;
             var comparer = (ListViewComparer)listView.ListViewItemSorter;
 

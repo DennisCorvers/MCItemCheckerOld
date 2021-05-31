@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCItemChecker.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace MCItemChecker
             {
                 return false;
             }
-            Types.Add(type);
+            Types.Add(type.ToFirstLetterUpperCase());
             return true;
         }
 
@@ -52,7 +53,8 @@ namespace MCItemChecker
             {
                 return false;
             }
-            ModPacks.Add(modpack);
+
+            ModPacks.Add(modpack.ToFirstLetterUpperCase());
             return true;
         }
 
@@ -88,19 +90,22 @@ namespace MCItemChecker
             return value != null;
         }
 
-        public void EditItem(Item newItem, Item oldItem)
+        public bool EditItem(Item newItem, Item oldItem)
         {
             if (!m_itemNameLookup.Contains(oldItem.ItemName.ToLower()))
             {
                 if (Items.ContainsKey(newItem.ItemID))
-                    throw new InvalidOperationException("Old name doesn't exist but item is a known item.");
+                    return false;
             }
 
             if (m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
-                throw new InvalidOperationException("Item name already exists.");
+                return false;
 
             m_itemNameLookup.Remove(oldItem.ItemName.ToLower());
             m_itemNameLookup.Add(newItem.ItemName.ToLower());
+            oldItem.CopyFrom(newItem);
+
+            return true;
         }
 
         public IEnumerable<Item> FindItem(string itemname = null, string type = null, string modpack = null, Dictionary<Item, double> craftingneed = null)
@@ -117,7 +122,7 @@ namespace MCItemChecker
                 result = result.Where(x => x.ModPack == modpack);
 
             if (craftingneed != null)
-                result = result.Where(x => x.Craftingneed == craftingneed);
+                result = result.Where(x => x.Recipe == craftingneed);
 
             return result;
         }
@@ -136,11 +141,11 @@ namespace MCItemChecker
                     CraftingRecipe.Add(pair.Key, (pair.Value * amount));
                 }
 
-                if (pair.Key.Craftingneed.Count <= 0)
+                if (pair.Key.Recipe.Count <= 0)
                     continue;
 
                 Tamount = pair.Value * amount;
-                CraftingList(pair.Key.Craftingneed, Tamount, ref CraftingRecipe);
+                CraftingList(pair.Key.Recipe, Tamount, ref CraftingRecipe);
             }
         }
 
@@ -149,7 +154,7 @@ namespace MCItemChecker
             double Tamount = 0;
             foreach (KeyValuePair<Item, double> pair in recipe)
             {
-                if (pair.Key.Craftingneed.Count <= 0)
+                if (pair.Key.Recipe.Count <= 0)
                 {
                     if (CraftingRecipe.ContainsKey(pair.Key))
                     {
@@ -163,7 +168,7 @@ namespace MCItemChecker
                     continue;
                 }
                 Tamount = pair.Value * amount;
-                CraftingListBase(pair.Key.Craftingneed, Tamount, ref CraftingRecipe);
+                CraftingListBase(pair.Key.Recipe, Tamount, ref CraftingRecipe);
             }
         }
 
@@ -180,11 +185,11 @@ namespace MCItemChecker
 
             if (returnbase)
             {
-                CraftingListBase(item.Craftingneed, amount, ref CraftingRecipe);
+                CraftingListBase(item.Recipe, amount, ref CraftingRecipe);
                 return CraftingRecipe;
             }
 
-            CraftingList(item.Craftingneed, amount, ref CraftingRecipe);
+            CraftingList(item.Recipe, amount, ref CraftingRecipe);
             return CraftingRecipe;
         }
     }
