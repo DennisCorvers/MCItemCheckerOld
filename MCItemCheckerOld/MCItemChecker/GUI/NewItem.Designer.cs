@@ -83,7 +83,7 @@
             // 
             // TabNewItem
             // 
-            this.TabNewItem.BackColor = System.Drawing.Color.Transparent;
+            this.TabNewItem.BackColor = System.Drawing.Color.White;
             this.TabNewItem.Controls.Add(this.bImportmodify);
             this.TabNewItem.Controls.Add(this.tbAddAmount);
             this.TabNewItem.Controls.Add(this.tbRemoveAmount);
@@ -101,12 +101,14 @@
             // 
             // bImportmodify
             // 
+            this.bImportmodify.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bImportmodify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bImportmodify.Location = new System.Drawing.Point(19, 285);
             this.bImportmodify.Name = "bImportmodify";
             this.bImportmodify.Size = new System.Drawing.Size(75, 23);
             this.bImportmodify.TabIndex = 107;
             this.bImportmodify.Text = "Modify >>";
-            this.bImportmodify.UseVisualStyleBackColor = true;
+            this.bImportmodify.UseVisualStyleBackColor = false;
             this.bImportmodify.Click += new System.EventHandler(this.BImportModify_Click);
             // 
             // tbAddAmount
@@ -126,27 +128,32 @@
             // 
             // bRemoveItem
             // 
+            this.bRemoveItem.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bRemoveItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bRemoveItem.Location = new System.Drawing.Point(19, 159);
             this.bRemoveItem.Name = "bRemoveItem";
             this.bRemoveItem.Size = new System.Drawing.Size(75, 23);
             this.bRemoveItem.TabIndex = 104;
             this.bRemoveItem.Text = "<< Remove";
-            this.bRemoveItem.UseVisualStyleBackColor = true;
+            this.bRemoveItem.UseVisualStyleBackColor = false;
             this.bRemoveItem.Click += new System.EventHandler(this.BRemoveSubItem_Click);
             // 
             // bAddItem
             // 
+            this.bAddItem.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bAddItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bAddItem.Location = new System.Drawing.Point(19, 74);
             this.bAddItem.Name = "bAddItem";
             this.bAddItem.Size = new System.Drawing.Size(75, 23);
             this.bAddItem.TabIndex = 103;
             this.bAddItem.Text = "Add >>";
-            this.bAddItem.UseVisualStyleBackColor = true;
+            this.bAddItem.UseVisualStyleBackColor = false;
             this.bAddItem.Click += new System.EventHandler(this.BAddSubItem_Click);
             // 
             // lvSubItems
             // 
             this.lvSubItems.FullRowSelect = true;
+            this.lvSubItems.GridLines = true;
             this.lvSubItems.HideSelection = false;
             this.lvSubItems.Location = new System.Drawing.Point(132, 122);
             this.lvSubItems.Name = "lvSubItems";
@@ -160,6 +167,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
@@ -264,22 +272,26 @@
             // 
             // bDiscard
             // 
+            this.bDiscard.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bDiscard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bDiscard.Location = new System.Drawing.Point(282, 411);
             this.bDiscard.Name = "bDiscard";
             this.bDiscard.Size = new System.Drawing.Size(75, 23);
             this.bDiscard.TabIndex = 77;
             this.bDiscard.Text = "Discard";
-            this.bDiscard.UseVisualStyleBackColor = true;
+            this.bDiscard.UseVisualStyleBackColor = false;
             this.bDiscard.Click += new System.EventHandler(this.BClear_Click);
             // 
             // bCreateItem
             // 
+            this.bCreateItem.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bCreateItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bCreateItem.Location = new System.Drawing.Point(147, 411);
             this.bCreateItem.Name = "bCreateItem";
             this.bCreateItem.Size = new System.Drawing.Size(75, 23);
             this.bCreateItem.TabIndex = 62;
             this.bCreateItem.Text = "Create";
-            this.bCreateItem.UseVisualStyleBackColor = true;
+            this.bCreateItem.UseVisualStyleBackColor = false;
             this.bCreateItem.Click += new System.EventHandler(this.BAdd_Click);
             // 
             // tabControl1
@@ -295,7 +307,7 @@
             // 
             // TabModPack
             // 
-            this.TabModPack.BackColor = System.Drawing.Color.Transparent;
+            this.TabModPack.BackColor = System.Drawing.Color.White;
             this.TabModPack.Controls.Add(this.bmodpackdelete);
             this.TabModPack.Controls.Add(this.lbmodpacks);
             this.TabModPack.Controls.Add(this.bmodpackadd);
@@ -310,12 +322,14 @@
             // 
             // bmodpackdelete
             // 
+            this.bmodpackdelete.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bmodpackdelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bmodpackdelete.Location = new System.Drawing.Point(264, 341);
             this.bmodpackdelete.Name = "bmodpackdelete";
             this.bmodpackdelete.Size = new System.Drawing.Size(75, 23);
             this.bmodpackdelete.TabIndex = 20;
             this.bmodpackdelete.Text = "Delete";
-            this.bmodpackdelete.UseVisualStyleBackColor = true;
+            this.bmodpackdelete.UseVisualStyleBackColor = false;
             this.bmodpackdelete.Click += new System.EventHandler(this.BModPackDelete_Click);
             // 
             // lbmodpacks
@@ -330,12 +344,15 @@
             // 
             // bmodpackadd
             // 
+            this.bmodpackadd.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bmodpackadd.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.bmodpackadd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bmodpackadd.Location = new System.Drawing.Point(433, 65);
             this.bmodpackadd.Name = "bmodpackadd";
             this.bmodpackadd.Size = new System.Drawing.Size(75, 23);
             this.bmodpackadd.TabIndex = 19;
             this.bmodpackadd.Text = "Add";
-            this.bmodpackadd.UseVisualStyleBackColor = true;
+            this.bmodpackadd.UseVisualStyleBackColor = false;
             this.bmodpackadd.Click += new System.EventHandler(this.BModpackAdd_Click);
             // 
             // tbmodpackname
@@ -357,7 +374,7 @@
             // 
             // TabType
             // 
-            this.TabType.BackColor = System.Drawing.Color.Transparent;
+            this.TabType.BackColor = System.Drawing.Color.White;
             this.TabType.Controls.Add(this.bdeletetype);
             this.TabType.Controls.Add(this.lbtype);
             this.TabType.Controls.Add(this.baddtype);
@@ -372,12 +389,15 @@
             // 
             // bdeletetype
             // 
+            this.bdeletetype.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bdeletetype.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.bdeletetype.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bdeletetype.Location = new System.Drawing.Point(264, 341);
             this.bdeletetype.Name = "bdeletetype";
             this.bdeletetype.Size = new System.Drawing.Size(75, 23);
             this.bdeletetype.TabIndex = 25;
             this.bdeletetype.Text = "Delete";
-            this.bdeletetype.UseVisualStyleBackColor = true;
+            this.bdeletetype.UseVisualStyleBackColor = false;
             this.bdeletetype.Click += new System.EventHandler(this.BTypeDelete_Click);
             // 
             // lbtype
@@ -392,12 +412,14 @@
             // 
             // baddtype
             // 
+            this.baddtype.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.baddtype.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.baddtype.Location = new System.Drawing.Point(433, 65);
             this.baddtype.Name = "baddtype";
             this.baddtype.Size = new System.Drawing.Size(75, 23);
             this.baddtype.TabIndex = 24;
             this.baddtype.Text = "Add";
-            this.baddtype.UseVisualStyleBackColor = true;
+            this.baddtype.UseVisualStyleBackColor = false;
             this.baddtype.Click += new System.EventHandler(this.BAddType_Click);
             // 
             // tbtype
@@ -430,7 +452,7 @@
             // 
             // windowToolStripMenuItem
             // 
-            this.windowToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.windowToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.closeToolStripMenuItem});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
@@ -440,12 +462,13 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // bclearsearch
             // 
+            this.bclearsearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bclearsearch.Location = new System.Drawing.Point(241, 528);
             this.bclearsearch.Name = "bclearsearch";
             this.bclearsearch.Size = new System.Drawing.Size(75, 23);
@@ -456,6 +479,7 @@
             // 
             // bsearchitem
             // 
+            this.bsearchitem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bsearchitem.Location = new System.Drawing.Point(64, 528);
             this.bsearchitem.Name = "bsearchitem";
             this.bsearchitem.Size = new System.Drawing.Size(75, 23);
@@ -467,6 +491,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(15, 441);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
@@ -483,6 +510,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(42, 467);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 13);
@@ -511,6 +541,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(20, 494);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
@@ -520,6 +553,7 @@
             // lvitems
             // 
             this.lvitems.FullRowSelect = true;
+            this.lvitems.GridLines = true;
             this.lvitems.HideSelection = false;
             this.lvitems.Location = new System.Drawing.Point(12, 27);
             this.lvitems.Name = "lvitems";
@@ -535,6 +569,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1184, 561);
             this.Controls.Add(this.bclearsearch);
             this.Controls.Add(this.bsearchitem);

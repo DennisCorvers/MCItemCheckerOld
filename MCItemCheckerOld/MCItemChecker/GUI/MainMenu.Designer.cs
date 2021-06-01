@@ -80,6 +80,7 @@
             // lvItems
             // 
             this.lvItems.FullRowSelect = true;
+            this.lvItems.GridLines = true;
             this.lvItems.HideSelection = false;
             this.lvItems.Location = new System.Drawing.Point(12, 27);
             this.lvItems.Name = "lvItems";
@@ -94,6 +95,8 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(15, 441);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
@@ -112,6 +115,8 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(42, 467);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
@@ -120,6 +125,7 @@
             // 
             // cbSearchModpack
             // 
+            this.cbSearchModpack.BackColor = System.Drawing.Color.DarkRed;
             this.cbSearchModpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSearchModpack.FormattingEnabled = true;
             this.cbSearchModpack.Location = new System.Drawing.Point(82, 491);
@@ -140,6 +146,8 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(20, 494);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
@@ -148,26 +156,33 @@
             // 
             // bClearSearch
             // 
-            this.bClearSearch.Location = new System.Drawing.Point(241, 528);
+            this.bClearSearch.BackColor = System.Drawing.Color.White;
+            this.bClearSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.bClearSearch.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.bClearSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bClearSearch.Location = new System.Drawing.Point(271, 526);
             this.bClearSearch.Name = "bClearSearch";
             this.bClearSearch.Size = new System.Drawing.Size(75, 23);
             this.bClearSearch.TabIndex = 80;
             this.bClearSearch.Text = "Clear";
-            this.bClearSearch.UseVisualStyleBackColor = true;
+            this.bClearSearch.UseVisualStyleBackColor = false;
             this.bClearSearch.Click += new System.EventHandler(this.BClearSearch_Click);
             // 
             // bSearchItem
             // 
-            this.bSearchItem.Location = new System.Drawing.Point(64, 528);
+            this.bSearchItem.BackColor = System.Drawing.Color.White;
+            this.bSearchItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSearchItem.Location = new System.Drawing.Point(94, 526);
             this.bSearchItem.Name = "bSearchItem";
             this.bSearchItem.Size = new System.Drawing.Size(75, 23);
             this.bSearchItem.TabIndex = 79;
             this.bSearchItem.Text = "Search Item";
-            this.bSearchItem.UseVisualStyleBackColor = true;
+            this.bSearchItem.UseVisualStyleBackColor = false;
             this.bSearchItem.Click += new System.EventHandler(this.BFindItem_Click);
             // 
             // TabItemInfo
             // 
+            this.TabItemInfo.BackColor = System.Drawing.Color.White;
             this.TabItemInfo.Controls.Add(this.panel1);
             this.TabItemInfo.Controls.Add(this.lvsubitems);
             this.TabItemInfo.Location = new System.Drawing.Point(4, 22);
@@ -176,7 +191,6 @@
             this.TabItemInfo.Size = new System.Drawing.Size(503, 495);
             this.TabItemInfo.TabIndex = 0;
             this.TabItemInfo.Text = "Item Info";
-            this.TabItemInfo.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -252,6 +266,7 @@
             // lvsubitems
             // 
             this.lvsubitems.FullRowSelect = true;
+            this.lvsubitems.GridLines = true;
             this.lvsubitems.HideSelection = false;
             this.lvsubitems.Location = new System.Drawing.Point(20, 100);
             this.lvsubitems.Name = "lvsubitems";
@@ -348,17 +363,20 @@
             // 
             // bcalculateclear
             // 
+            this.bcalculateclear.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.bcalculateclear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bcalculateclear.Location = new System.Drawing.Point(350, 454);
             this.bcalculateclear.Name = "bcalculateclear";
             this.bcalculateclear.Size = new System.Drawing.Size(75, 23);
             this.bcalculateclear.TabIndex = 117;
             this.bcalculateclear.Text = "Clear";
-            this.bcalculateclear.UseVisualStyleBackColor = true;
+            this.bcalculateclear.UseVisualStyleBackColor = false;
             this.bcalculateclear.Click += new System.EventHandler(this.BCalculateReset_Click);
             // 
             // lvCalculatedItems
             // 
             this.lvCalculatedItems.FullRowSelect = true;
+            this.lvCalculatedItems.GridLines = true;
             this.lvCalculatedItems.HideSelection = false;
             this.lvCalculatedItems.Location = new System.Drawing.Point(23, 36);
             this.lvCalculatedItems.Name = "lvCalculatedItems";
@@ -370,12 +388,14 @@
             // 
             // bfilter
             // 
+            this.bfilter.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.bfilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bfilter.Location = new System.Drawing.Point(116, 454);
             this.bfilter.Name = "bfilter";
             this.bfilter.Size = new System.Drawing.Size(75, 23);
             this.bfilter.TabIndex = 116;
             this.bfilter.Text = "Filter";
-            this.bfilter.UseVisualStyleBackColor = true;
+            this.bfilter.UseVisualStyleBackColor = false;
             this.bfilter.Click += new System.EventHandler(this.BFilter_Click);
             // 
             // cbfiltertype
@@ -408,6 +428,7 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -431,6 +452,7 @@
             // 
             // itemsToolStripMenuItem
             // 
+            this.itemsToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.itemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newItemToolStripMenuItem,
             this.manageModpacksToolStripMenuItem,
@@ -462,6 +484,7 @@
             // 
             // exportToolStripMenuItem
             // 
+            this.exportToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportToTextToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
@@ -477,6 +500,7 @@
             // 
             // menuStrip2
             // 
+            this.menuStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.itemsToolStripMenuItem,
@@ -491,6 +515,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1084, 561);
             this.Controls.Add(this.bClearSearch);
             this.Controls.Add(this.bSearchItem);
@@ -503,6 +529,7 @@
             this.Controls.Add(this.lvItems);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip2);
+            this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1100, 600);

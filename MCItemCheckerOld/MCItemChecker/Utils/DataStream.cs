@@ -77,26 +77,13 @@ namespace MCItemChecker.Utils
             return true;
         }
 
-        /// <summary>
-        /// Loads a file specified by the filepath.
-        /// </summary>
-        /// <param name="filepath">The path of the file</param>
-        /// <returns>Returns the loaded file as an object</returns>
         public static T OpenFile<T>(string filepath)
         {
             IFormatter formatter = new BinaryFormatter();
-            try
+            using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    T file = (T)formatter.Deserialize(stream);
-                    return file;
-                }
-            }
-            catch (Exception ex)
-            {
-                ThrowErrorMessage(ex);
-                return default(T);
+                T file = (T)formatter.Deserialize(stream);
+                return file;
             }
         }
 

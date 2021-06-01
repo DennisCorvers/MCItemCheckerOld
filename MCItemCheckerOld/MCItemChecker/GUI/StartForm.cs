@@ -14,64 +14,40 @@ namespace MCItemChecker
 {
     public partial class StartForm : Form
     {
-        /// <summary>
-        /// ItemChecker Class (Contains all the game items)
-        /// </summary>
-        private ItemChecker ItemC;
-        /// <summary>
-        /// Form2 Class
-        /// </summary>
-        private MainMenu Mainform;
-        /// <summary>
-        /// Default directory where the programs data will be stored
-        /// </summary>
-        private string DefaultDirectory;
-        /// <summary>
-        /// The complete file path of the programs data file
-        /// </summary>
-        private string DefaultFilePath;
+        private string m_defaultDirectory;
+        private string m_defaultFilePath;
 
-
-        /// <summary>
-        /// Checks if the mainform was saved before exit.
-        /// </summary>
         public StartForm()
         {
-       
             InitializeComponent();
 
-            DefaultDirectory = DataStream.CurrentDir() + "\\MCItemCheckerData";
-            DefaultFilePath = DefaultDirectory + "\\Data.mci";
+            m_defaultDirectory = DataStream.CurrentDir() + "\\MCItemCheckerData";
+            m_defaultFilePath = m_defaultDirectory + "\\Data.mci";
 
             if (Properties.Settings.Default.FilePath == null || Properties.Settings.Default.FilePath == "")
-            { tbpath.Text = "No file selected!"; }
+                tbpath.Text = "No file selected!";
             else
-            { tbpath.Text = Properties.Settings.Default.FilePath; }
+                tbpath.Text = Properties.Settings.Default.FilePath;
         }
 
-        /// <summary>
-        /// Initialises the Form1 class.
-        /// </summary>
-        /// <param name="d">The Data Class</param>
-        /// <param name="i">The ItemChecker Class</param>
-        public void GoToMainForm(ItemChecker i)
+        private void GoToMainForm(ItemChecker file)
         {
-            if (i == null)
+            if (file == null)
             {
                 MessageBox.Show("The .item file wasn''t loaded properly, try re-opening", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Mainform = new MainMenu(ItemC, this);
+
+            var mainMenu = new MainMenu(file);
             Hide();
-            Mainform.Show();
+
+            mainMenu.ShowDialog();
+
+            // Control will be returned here...
+            Show();
         }
 
-        /// <summary>
-        /// Tries to load the itemchecker class based on the information from the data class.
-        /// Creates a new itemchecker class when the data class doesn't specify it's location.
-        /// </summary>
-        /// <returns>returns false when the itemchecker file couldn't be loaded or created</returns>
-        private bool CheckItemCheckerFile()
+        private ItemChecker LoadItemCheckerDatabase()
         {
             //Checks if the Filename field is empty.
             if (Properties.Settings.Default.FilePath == null || Properties.Settings.Default.FilePath == "")
@@ -79,30 +55,75 @@ namespace MCItemChecker
                 DialogResult dialogResult = MessageBox.Show("No .item file was found!" + Environment.NewLine + "Do tou want to create a new file?", "No File Found!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    ItemC = new ItemChecker();
-                    return CreateNeworRenameFile(ItemC);
+                    var file = new ItemChecker();
+                    if (TrySaveFile(file))
+                        return file;
                 }
             }
             else
             {
-                //Tries to load the itemchecker file into the itemchecker class.
-                ItemChecker tempitemchecker = DataStream.OpenFile<ItemChecker>(Properties.Settings.Default.FilePath);
-                if (tempitemchecker != null)
-                {
-                    ItemC = tempitemchecker;
-                    return true;
-                }
-                return false;
+                if (TryLoadDatabase(Properties.Settings.Default.FilePath, out ItemChecker file))
+                    return file;
             }
-            return false;
+
+            return null;
         }
 
-        /// <summary>
-        /// Method used to create, replace or rename an .item file.
-        /// </summary>
-        /// <param name="ic"></param>
-        /// <returns></returns>
-        private bool CreateNeworRenameFile(ItemChecker ic)
+        private void ExitApplication()
+        {
+            Application.Exit();
+        }
+
+        private void UpdateFilePath(string FilePath)
+        {
+            Properties.Settings.Default.FilePath = FilePath;
+            Properties.Settings.Default.Save();
+        }
+
+        private void BExit_Click(object sender, EventArgs e)
+        {
+            ExitApplication();
+        }
+
+        private void Bresume_Click(object sender, EventArgs e)
+        {
+            GoToMainForm(LoadItemCheckerDatabase());
+        }
+
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ItemChecker file = new ItemChecker();
+            if (TrySaveFile(file))
+                GoToMainForm(file);
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitApplication();
+        }
+
+        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openfiledialog = new OpenFileDialog()
+            {
+                Filter = "ItemList File|*.item",
+                Title = "Opening an .Item File..."
+            })
+            {
+                if (openfiledialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (TryLoadDatabase(openfiledialog.FileName, out ItemChecker file))
+                    {
+                        UpdateFilePath(openfiledialog.FileName);
+                        tbpath.Text = Properties.Settings.Default.FilePath;
+
+                        GoToMainForm(file);
+                    }
+                }
+            }
+        }
+
+        private bool TrySaveFile(ItemChecker ic)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -116,94 +137,26 @@ namespace MCItemChecker
                 tbpath.Text = Properties.Settings.Default.FilePath;
             }
             if (result == DialogResult.Cancel)
-            { return false; }
+                return false;
 
-            //Tries to create a new Itemchecker file with the user specified filename.
-            if (!DataStream.SaveFile(ic, Properties.Settings.Default.FilePath))
-            { return false; }
-            else
-            { return true; }
+            return DataStream.SaveFile(ic, Properties.Settings.Default.FilePath);
         }
 
-        /// <summary>
-        /// Exits the application.
-        /// </summary>
-        private void ExitApplication()
+        private bool TryLoadDatabase(string path, out ItemChecker file)
         {
-            Application.Exit();
-        }
+            file = null;
 
-        /// <summary>
-        /// Updates the filepath of the current ItemChecker file
-        /// </summary>
-        private void UpdateFilePath(string FilePath)
-        {
-            Properties.Settings.Default.FilePath = FilePath;
-            Properties.Settings.Default.Save();
-        }
-
-        public void UpdateItemC(ItemChecker I)
-        {
-            ItemC = I;
-        }
-
-        private void BExit_Click(object sender, EventArgs e)
-        {
-            ExitApplication();
-        }
-
-        private void Bresume_Click(object sender, EventArgs e)
-        {
-            if (CheckItemCheckerFile())
-            { GoToMainForm(ItemC); }
-        }
-
-        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ItemC = new ItemChecker();
-            if (CreateNeworRenameFile(ItemC))
-            { GoToMainForm(this.ItemC); }
-        }
-        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExitApplication();
-        }
-        private void SaveAsToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (ItemC == null)
+            try
             {
-                if (CheckItemCheckerFile())
-                { CreateNeworRenameFile(ItemC); }
+                file = DataStream.OpenFile<ItemChecker>(path);
+                return true;
             }
-            else
-            { CreateNeworRenameFile(ItemC); }
-        }
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ItemC == null)
-            { MessageBox.Show("You haven't made any changes yet." + Environment.NewLine + "If you want to rename or relocate, choose 'SaveAs'", "", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-            else
-            { DataStream.SaveFile(ItemC, Properties.Settings.Default.FilePath); }
-        }
-        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openfiledialog = new OpenFileDialog
+            catch (Exception e)
             {
-                Filter = "ItemList File|*.item",
-                Title = "Opening an .Item File..."
-            };
-            if (openfiledialog.ShowDialog() == DialogResult.OK)
-            {
-                ItemChecker tempitemchecker = DataStream.OpenFile<ItemChecker>(openfiledialog.FileName);
-                if (tempitemchecker != null)
-                {
-                    ItemC = tempitemchecker;
-                    UpdateFilePath(openfiledialog.FileName);
-                    tbpath.Text = Properties.Settings.Default.FilePath;
-                    GoToMainForm(ItemC);
-                }
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            openfiledialog.Dispose();
+
+            return false;
         }
     }
 }

@@ -16,12 +16,9 @@ namespace MCItemChecker
     public partial class MainMenu : Form
     {
         private ItemChecker _itemchecker;
-        private NewItem _newItemForm;
-        private StartForm _startForm;
 
-        public MainMenu(ItemChecker ItemC, StartForm startform)
+        public MainMenu(ItemChecker ItemC)
         {
-            _startForm = startform;
             _itemchecker = ItemC;
 
             InitializeComponent();
@@ -125,15 +122,11 @@ namespace MCItemChecker
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _startForm.UpdateItemC(_itemchecker);
             Close();
-            _startForm.Show();
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _startForm.UpdateItemC(_itemchecker);
             SaveToolStripMenuItem_Click(sender, e);
-            _startForm.Show();
         }
         private void LvItems_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -150,8 +143,8 @@ namespace MCItemChecker
 
         private void DisplayNewItemForm(string tab)
         {
-            _newItemForm = new NewItem(_itemchecker, this, tab);
-            _newItemForm.ShowDialog();
+            var newItemForm = new NewItem(_itemchecker, this, tab);
+            newItemForm.ShowDialog();
 
             UpdateItemList();
         }
