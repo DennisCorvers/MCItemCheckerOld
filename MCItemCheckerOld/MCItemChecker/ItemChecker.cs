@@ -10,8 +10,8 @@ namespace MCItemChecker
     [Serializable]
     public class ItemChecker
     {
-        internal const string NonDefinedChar = "-";
-        private const int MaxRecursionCount = 128;
+        internal const string DefaultName = "-";
+        internal const int MaxRecursionCount = 128;
 
         public IEnumerable<Item> ItemList
             => m_items.Values;
@@ -29,8 +29,8 @@ namespace MCItemChecker
 
         public ItemChecker()
         {
-            m_modpacks.Add(NonDefinedChar);
-            m_itemTypes.Add(NonDefinedChar);
+            m_modpacks.Add(DefaultName);
+            m_itemTypes.Add(DefaultName);
         }
 
 
@@ -53,7 +53,7 @@ namespace MCItemChecker
                 foreach (var item in m_items.Values)
                 {
                     if (item.Type == type)
-                        item.Type = NonDefinedChar;
+                        item.Type = DefaultName;
                 }
                 return true;
             }
@@ -81,7 +81,7 @@ namespace MCItemChecker
                 foreach (var item in m_items.Values)
                 {
                     if (item.ModPack == modpack)
-                        item.ModPack = NonDefinedChar;
+                        item.ModPack = DefaultName;
                 }
 
                 return true;
@@ -143,10 +143,10 @@ namespace MCItemChecker
             if (!string.IsNullOrWhiteSpace(itemname))
                 result = result.Where(x => x.ItemName.ToLower().Contains(itemname.ToLower()));
 
-            if (!string.IsNullOrWhiteSpace(type) && type != NonDefinedChar)
+            if (!string.IsNullOrWhiteSpace(type) && type != DefaultName)
                 result = result.Where(x => x.Type == type);
 
-            if (!string.IsNullOrWhiteSpace(modpack) && modpack != NonDefinedChar)
+            if (!string.IsNullOrWhiteSpace(modpack) && modpack != DefaultName)
                 result = result.Where(x => x.ModPack == modpack);
 
             if (craftingneed != null)

@@ -10,8 +10,6 @@ namespace MCItemChecker
 {
     public static class RecipeExporter
     {
-        private const int MaxRecursionCount = 128;
-
         public static void WriteToFile(IEnumerable<Item> items)
         {
             //Creates a path with a file name
@@ -55,7 +53,7 @@ namespace MCItemChecker
             if (item.Recipe.Count <= 0)
                 return;
 
-            if (count++ >= MaxRecursionCount)
+            if (count++ >= ItemChecker.MaxRecursionCount)
                 return;
 
             //Adds Main item

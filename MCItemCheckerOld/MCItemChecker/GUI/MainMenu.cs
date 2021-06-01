@@ -33,9 +33,9 @@ namespace MCItemChecker
 
             UpdateModPackControls();
             UpdateItemTypeControls();
-            cbfiltertype.SelectedItem = ItemChecker.NonDefinedChar;
-            cbSearchModpack.SelectedItem = ItemChecker.NonDefinedChar;
-            cbSearchType.SelectedItem = ItemChecker.NonDefinedChar;
+            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
+            cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
+            cbSearchType.SelectedItem = ItemChecker.DefaultName;
 
             litemname.Text = "";
             litemtype.Text = "";
@@ -195,7 +195,7 @@ namespace MCItemChecker
             var selectedType = cbfiltertype.SelectedItem.ToString();
             IEnumerable<KeyValuePair<Item, double>> calculatedItems = _itemchecker.CalculateRecipe(baseItem, amount, cbBase.Checked);
 
-            if (selectedType != ItemChecker.NonDefinedChar)
+            if (selectedType != ItemChecker.DefaultName)
                 calculatedItems = calculatedItems.Where(x => x.Key.Type == selectedType);
 
             lvCalculatedItems.InsertCollection(calculatedItems, (x) =>
@@ -209,8 +209,8 @@ namespace MCItemChecker
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbSearchName.Text = "";
-            cbSearchType.SelectedItem = ItemChecker.NonDefinedChar;
-            cbSearchModpack.SelectedItem = ItemChecker.NonDefinedChar;
+            cbSearchType.SelectedItem = ItemChecker.DefaultName;
+            cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
 
             UpdateItemList(_itemchecker.ItemList);
         }
@@ -237,7 +237,7 @@ namespace MCItemChecker
 
         private void BCalculateReset_Click(object sender, EventArgs e)
         {
-            cbfiltertype.SelectedItem = ItemChecker.NonDefinedChar;
+            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
             numAmount.Value = 1;
 
             CalculateRecipe();
