@@ -10,13 +10,12 @@ namespace MCItemChecker
 {
     public class RecipeExporter
     {
-        private const int MaxRecursionCount = 1024;
-        private StringBuilder sb = new StringBuilder();
+        private const int MaxRecursionCount = 128;
 
         public void WriteToFile(IEnumerable<Item> items)
         {
             //Creates a path with a file name
-            sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append(Path.GetDirectoryName(Properties.Settings.Default.FilePath));
             sb.Append("\\");
             sb.Append(Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath));
@@ -26,27 +25,21 @@ namespace MCItemChecker
 
             sb.Clear();
 
-            //Creates a new list that is sorted by name
-            List<string> textList = new List<string>();
             var sortedList = items.OrderBy(x => x.ItemName);
 
-            int recursionCount = 0;
             foreach (Item item in sortedList)
             {
-                textList.Add(item.ItemName.ToUpper());
+                sb.AppendLine(item.ItemName.ToUpper());
 
                 if (item.Recipe.Count > 0)
-                {
-                    recursionCount = 0;
-                    textList.AddRange(GetSubItems(item, ref recursionCount));
-                }
+                    GetSubItems(sb, item, 0);
 
-                textList.Add("");
+                sb.AppendLine("");
             }
 
             try
             {
-                DataStream.WriteTexttoFile(textList.ToArray(), fulltextpath);
+                DataStream.WriteTextToFile(sb.ToString(), fulltextpath);
             }
             catch (Exception e)
             {
@@ -57,14 +50,13 @@ namespace MCItemChecker
             MessageBox.Show("Exported data to \n" + fulltextpath, "Exporting...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private List<string> GetSubItems(Item item, ref int count, double amount = 1)
+        private void GetSubItems(StringBuilder sb, Item item, int count, double amount = 1)
         {
-            List<string> Recipe = new List<string>();
-
             if (item.Recipe.Count <= 0)
-                return Recipe;
+                return;
 
-            count++;
+            if (count++ >= MaxRecursionCount)
+                return;
 
             //Adds Main item
             foreach (KeyValuePair<Item, double> subitems in item.Recipe)
@@ -75,21 +67,13 @@ namespace MCItemChecker
 
                 sb.Append(subitems.Key.ItemName);
                 sb.Append(" ");
-                sb.Append(Math.Round(subitems.Value * amount, 2).ToString());
-                Recipe.Add(sb.ToString());
-                sb.Clear();
+                sb.AppendLine(Math.Round(subitems.Value * amount, 2).ToString());
 
                 if (subitems.Key.Recipe.Count <= 0)
                     continue;
 
-                if (count >= MaxRecursionCount)
-                    continue;
-
-                Recipe.AddRange(GetSubItems(subitems.Key, ref count, subitems.Value * amount));
-                count--;
+                GetSubItems(sb, subitems.Key, count, subitems.Value * amount);
             }
-
-            return Recipe;
         }
     }
 }

@@ -26,12 +26,22 @@ namespace MCItemChecker.Utils
             }
         }
 
-        public static void WriteTexttoFile(string[] Text, string filepath, bool append = false)
+        public static void WriteTextToFile(string[] text, string filePath, bool append = false)
         {
-            using (StreamWriter sw = new StreamWriter(filepath, append))
+            using (StreamWriter sw = new StreamWriter(filePath, append))
             {
-                foreach (string s in Text)
+                foreach (string s in text)
                     sw.WriteLine(s);
+
+                sw.Close();
+            }
+        }
+
+        public static void WriteTextToFile(string text, string filePath, bool append = false)
+        {
+            using (StreamWriter sw = new StreamWriter(filePath, append))
+            {
+                sw.Write(text);
 
                 sw.Close();
             }
