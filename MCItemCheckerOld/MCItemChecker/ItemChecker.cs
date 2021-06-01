@@ -179,8 +179,8 @@ namespace MCItemChecker
                         continue;
                 }
 
-                amount *= pair.Value;
-                CalculateItemRecipe(pair.Key, amount, isBaseItem, craftingRecipe, recursionCount);
+                double tempAmount = amount * pair.Value;
+                CalculateItemRecipe(pair.Key, tempAmount, isBaseItem, craftingRecipe, recursionCount);
             }
 
             void AddToRecipe(KeyValuePair<Item, double> recipeItem)

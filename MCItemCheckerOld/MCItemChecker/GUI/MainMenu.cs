@@ -254,8 +254,7 @@ namespace MCItemChecker
         {
             Task task = new Task(() =>
             {
-                var exporter = new RecipeExporter();
-                exporter.WriteToFile(_itemchecker.ItemList);
+                RecipeExporter.WriteToFile(_itemchecker.ItemList);
             });
 
             task.Start();

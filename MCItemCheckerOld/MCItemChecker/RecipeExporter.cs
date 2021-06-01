@@ -8,7 +8,7 @@ using MCItemChecker.Utils;
 
 namespace MCItemChecker
 {
-    public class RecipeExporter
+    public static class RecipeExporter
     {
         private const int MaxRecursionCount = 128;
 
