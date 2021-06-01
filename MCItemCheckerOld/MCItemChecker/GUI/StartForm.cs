@@ -21,7 +21,7 @@ namespace MCItemChecker
         {
             InitializeComponent();
 
-            m_defaultDirectory = DataStream.CurrentDir() + "\\MCItemCheckerData";
+            m_defaultDirectory = Directory.GetCurrentDirectory() + "\\MCItemCheckerData";
             m_defaultFilePath = m_defaultDirectory + "\\Data.mci";
 
             if (Properties.Settings.Default.FilePath == null || Properties.Settings.Default.FilePath == "")
@@ -139,7 +139,16 @@ namespace MCItemChecker
             if (result == DialogResult.Cancel)
                 return false;
 
-            return DataStream.SaveFile(ic, Properties.Settings.Default.FilePath);
+            try
+            {
+                DataStream.SaveFile(ic, Properties.Settings.Default.FilePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private bool TryLoadDatabase(string path, out ItemChecker file)

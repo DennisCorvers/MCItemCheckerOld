@@ -44,7 +44,16 @@ namespace MCItemChecker
                 textList.Add("");
             }
 
-            DataStream.WriteTexttoFile(textList.ToArray(), fulltextpath);
+            try
+            {
+                DataStream.WriteTexttoFile(textList.ToArray(), fulltextpath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             MessageBox.Show("Exported data to \n" + fulltextpath, "Exporting...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
