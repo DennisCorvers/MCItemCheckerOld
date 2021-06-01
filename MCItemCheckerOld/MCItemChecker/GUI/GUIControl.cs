@@ -39,20 +39,24 @@ namespace MCItemChecker
             listview.Items.Clear();
             foreach (string s in list)
                 listview.Items.Add(s);
-            listview.Items.RemoveByKey("-");
+
+            listview.Items.RemoveByKey(ItemChecker.DefaultName);
         }
         public static void UpdateControl(IEnumerable<string> list, ListBox listbox)
         {
             listbox.Items.Clear();
             foreach (string s in list)
                 listbox.Items.Add(s);
-            listbox.Items.Remove("-");
+
+            listbox.Items.Remove(ItemChecker.DefaultName);
         }
         public static void UpdateControl(IEnumerable<string> list, ComboBox combobox)
         {
             combobox.Items.Clear();
             foreach (string s in list)
                 combobox.Items.Add(s);
+
+            combobox.SelectedItem = ItemChecker.DefaultName;
         }
 
         public static void InfoMessage(string message)

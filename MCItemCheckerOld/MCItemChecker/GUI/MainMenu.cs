@@ -144,7 +144,14 @@ namespace MCItemChecker
         private void DisplayNewItemForm(string tab)
         {
             var newItemForm = new NewItem(_itemchecker, this, tab);
+
+            Hide();
+
+            newItemForm.Location = Location;
             newItemForm.ShowDialog();
+
+            Show();
+            Location = newItemForm.Location;
 
             UpdateItemList();
         }

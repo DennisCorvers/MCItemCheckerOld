@@ -47,26 +47,27 @@ namespace MCItemChecker
             Show();
         }
 
-        private ItemChecker LoadItemCheckerDatabase()
+        private bool TryLoadItemCheckerDatabase(out ItemChecker file)
         {
             //Checks if the Filename field is empty.
             if (Properties.Settings.Default.FilePath == null || Properties.Settings.Default.FilePath == "")
             {
-                DialogResult dialogResult = MessageBox.Show("No .item file was found!" + Environment.NewLine + "Do tou want to create a new file?", "No File Found!", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show($"No .item file was found!{Environment.NewLine}Do you want to create a new file?",
+                    "No File Found!", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
                 if (dialogResult == DialogResult.Yes)
                 {
-                    var file = new ItemChecker();
-                    if (TrySaveFile(file))
-                        return file;
+                    file = new ItemChecker();
+                    return TrySaveFile(file);
                 }
             }
             else
             {
-                if (TryLoadDatabase(Properties.Settings.Default.FilePath, out ItemChecker file))
-                    return file;
+                return TryLoadFile(Properties.Settings.Default.FilePath, out file);
             }
 
-            return null;
+            file = null;
+            return false;
         }
 
         private void ExitApplication()
@@ -87,7 +88,8 @@ namespace MCItemChecker
 
         private void Bresume_Click(object sender, EventArgs e)
         {
-            GoToMainForm(LoadItemCheckerDatabase());
+            if (TryLoadItemCheckerDatabase(out ItemChecker file))
+                GoToMainForm(file);
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -112,7 +114,7 @@ namespace MCItemChecker
             {
                 if (openfiledialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (TryLoadDatabase(openfiledialog.FileName, out ItemChecker file))
+                    if (TryLoadFile(openfiledialog.FileName, out ItemChecker file))
                     {
                         UpdateFilePath(openfiledialog.FileName);
                         tbpath.Text = Properties.Settings.Default.FilePath;
@@ -151,7 +153,7 @@ namespace MCItemChecker
             }
         }
 
-        private bool TryLoadDatabase(string path, out ItemChecker file)
+        private bool TryLoadFile(string path, out ItemChecker file)
         {
             file = null;
 
