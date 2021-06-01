@@ -49,10 +49,17 @@ namespace MCItemChecker
             if (m_itemTypes.Contains(type))
             {
                 m_itemTypes.Remove(type);
+
+                foreach (var item in m_items.Values)
+                {
+                    if (item.Type == type)
+                        item.Type = NonDefinedChar;
+                }
                 return true;
             }
             return false;
         }
+
 
         public bool AddNewModPack(string modpack)
         {
@@ -70,6 +77,13 @@ namespace MCItemChecker
             if (ModPacks.Contains(modpack))
             {
                 m_modpacks.Remove(modpack);
+
+                foreach (var item in m_items.Values)
+                {
+                    if (item.ModPack == modpack)
+                        item.ModPack = NonDefinedChar;
+                }
+
                 return true;
             }
             return false;
@@ -96,6 +110,9 @@ namespace MCItemChecker
             {
                 m_itemNameLookup.Remove(value.ItemName.ToLower());
                 m_items.Remove(itemId);
+
+                foreach (var item in m_items.Values)
+                    item.Recipe.Remove(value);
             }
 
             return value != null;
@@ -137,6 +154,7 @@ namespace MCItemChecker
 
             return result;
         }
+
 
         private void CalculateItemRecipe(Item item, double amount, bool isBaseItem, Dictionary<Item, double> craftingRecipe, int recursionCount)
         {

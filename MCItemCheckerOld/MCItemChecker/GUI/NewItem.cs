@@ -189,7 +189,8 @@ namespace MCItemChecker
 
         private void DeleteItems(ListView listview)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to delete  the selected item(s)?", "Item Deletion",
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete  the selected item(s)?" +
+                $"{Environment.NewLine}This might affect other items!", "Item Deletion",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
             if (result != DialogResult.Yes)
@@ -443,13 +444,18 @@ namespace MCItemChecker
                 return;
             }
 
-            if (!m_itemchecker.DeleteModPack(lbmodpacks.SelectedItem.ToString()))
-            {
-                GUIControl.InfoMessage("Could not delete selected ModPack.");
-            }
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete the selected modpack?" +
+                $"{Environment.NewLine}This will remove this modpack from all items!", "Modpack Deletion",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
-            UpdateModPackControls();
-            m_mainform.UpdateModPackControls();
+            if (result != DialogResult.Yes)
+                return;
+
+            if (m_itemchecker.DeleteModPack(lbmodpacks.SelectedItem.ToString()))
+            {
+                UpdateModPackControls();
+                m_mainform.UpdateModPackControls();
+            }
         }
         private void BAddType_Click(object sender, EventArgs e)
             => AddType();
@@ -486,13 +492,18 @@ namespace MCItemChecker
                 return;
             }
 
-            if (m_itemchecker.DeleteType(lbtype.SelectedItem.ToString()) == false)
-            {
-                GUIControl.InfoMessage("Could not delete selected type.");
-            }
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete the selected Item Type?" +
+                $"{Environment.NewLine}This will remove this Item Type from all items!", "Item Type Deletion",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
-            UpdateTypeControls();
-            m_mainform.UpdateItemTypeControls();
+            if (result != DialogResult.Yes)
+                return;
+
+            if (m_itemchecker.DeleteType(lbtype.SelectedItem.ToString()))
+            {
+                UpdateTypeControls();
+                m_mainform.UpdateItemTypeControls();
+            }
         }
 
         private void TbModpackName_KeyPress(object sender, KeyPressEventArgs e)

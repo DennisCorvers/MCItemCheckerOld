@@ -12,7 +12,7 @@ namespace MCItemChecker
     {
         private const int MaxRecursionCount = 128;
 
-        public void WriteToFile(IEnumerable<Item> items)
+        public static void WriteToFile(IEnumerable<Item> items)
         {
             //Creates a path with a file name
             StringBuilder sb = new StringBuilder();
@@ -50,7 +50,7 @@ namespace MCItemChecker
             MessageBox.Show("Exported data to \n" + fulltextpath, "Exporting...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void GetSubItems(StringBuilder sb, Item item, int count, double amount = 1)
+        private static void GetSubItems(StringBuilder sb, Item item, int count, double amount = 1)
         {
             if (item.Recipe.Count <= 0)
                 return;

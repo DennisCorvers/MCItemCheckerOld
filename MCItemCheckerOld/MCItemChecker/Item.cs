@@ -28,9 +28,15 @@ namespace MCItemChecker
             private set => m_itemName = value.ToFirstLetterUpperCase();
         }
         public string Type
-            => m_itemType;
+        {
+            get => m_itemType;
+            set => m_itemType = value;
+        }
         public string ModPack
-            => m_modpack;
+        {
+            get => m_modpack;
+            set => m_modpack = value;
+        }
         public Dictionary<Item, double> Recipe
             => m_recipe;
 
