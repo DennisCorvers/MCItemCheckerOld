@@ -175,11 +175,12 @@ namespace MCItemChecker
         }
 
         /// <summary>
-        /// Creates a new dictionary and calls the CraftingList method for filling the dictionary.
+        /// Collects all the required items and their amounts to craft the requested item.
         /// </summary>
-        /// <param name="item">The item that needs to be calculated upon.</param>
-        /// <param name="amount">The amount of the specified item.</param>
-        public Dictionary<Item, double> CalculateRecipe(Item item, double amount, bool returnbase = false)
+        /// <param name="item">The item to find the required items for.</param>
+        /// <param name="amount">The start amount</param>
+        /// <param name="returnbase">TRUE if only the last items in the chain should be collected.</param>
+        public Dictionary<Item, double> CalculateRecipe(Item item, double amount = 1, bool returnbase = false)
         {
             var recipe = new Dictionary<Item, double>();
 
