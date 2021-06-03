@@ -222,6 +222,22 @@ namespace MCItemChecker
         }
 
         private void BAddSubItem_Click(object sender, EventArgs e)
+            => TryAddSubItem();
+        private void TbAddAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                TryAddSubItem();
+        }
+
+        private void BRemoveSubItem_Click(object sender, EventArgs e)
+            => TrySubtractSubItem();
+        private void TbRemoveAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+                TrySubtractSubItem();
+        }
+
+        private void TryAddSubItem()
         {
             if (lvitems.SelectedItems.Count == 0)
             {
@@ -229,44 +245,17 @@ namespace MCItemChecker
                 return;
             }
 
-            AddSubItem(lvitems.GetSelectedMCItem());
-        }
-        private void TbAddAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                BAddSubItem_Click(sender, e);
-        }
-
-        private void BRemoveSubItem_Click(object sender, EventArgs e)
-        {
-            if (lvSubItems.SelectedItems.Count == 0)
-            {
-                GUIControl.InfoMessage("Select an item to remove first.");
-                return;
-            }
-
-            Removesubitem(lvSubItems.GetSelectedMCSubItem());
-        }
-        private void TbRemoveAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                BRemoveSubItem_Click(sender, e);
-        }
-
-        private void AddSubItem(Item item)
-        {
-            if (tbAddAmount.Text == "")
-                tbAddAmount.Text = "1";
+            var item = lvitems.GetSelectedMCItem();
 
             if (!tbAddAmount.Text.FractionToDouble(out double amount))
             {
-                tbAddAmount.Text = "";
+                GUIControl.InfoMessage($"Enter a valid amount to add.{Environment.NewLine}Enter a positive integer, decimal or fraction");
                 return;
             }
 
             if (amount <= 0)
             {
-                GUIControl.InfoMessage("Enter an amount first.");
+                GUIControl.InfoMessage("Amount to add must be greater than zero.");
                 return;
             }
 
@@ -290,22 +279,23 @@ namespace MCItemChecker
             tbAddAmount.Text = "1";
         }
 
-        private void Removesubitem(KeyValuePair<Item, double> subItem)
+        private void TrySubtractSubItem()
         {
-            if (tbAddAmount.Text == "")
-                tbAddAmount.Text = "1";
-
-            if (!tbAddAmount.Text.FractionToDouble(out double amount))
+            if (lvSubItems.SelectedItems.Count == 0)
             {
-                tbAddAmount.Text = "";
+                GUIControl.InfoMessage("Select an item to remove first.");
                 return;
             }
 
-            if (amount <= 0)
+            var subItem = lvSubItems.GetSelectedMCSubItem();
+
+            if (!tbRemoveAmount.Text.FractionToDouble(out double amount))
             {
-                GUIControl.InfoMessage("Enter an amount first.");
+                GUIControl.InfoMessage($"Enter a valid amount to remove.{Environment.NewLine}Enter an integer, decimal or fraction");
                 return;
             }
+
+            amount = Math.Abs(amount);
 
             double newvalue = subItem.Value - amount;
             if (newvalue <= 0)
