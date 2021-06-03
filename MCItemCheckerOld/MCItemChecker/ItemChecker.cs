@@ -126,7 +126,8 @@ namespace MCItemChecker
                     return false;
             }
 
-            if (newItem.ItemName != oldItem.ItemName && m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
+            if (newItem.ItemName.ToLower() != oldItem.ItemName.ToLower() 
+                && m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
                 return false;
 
             m_itemNameLookup.Remove(oldItem.ItemName.ToLower());
