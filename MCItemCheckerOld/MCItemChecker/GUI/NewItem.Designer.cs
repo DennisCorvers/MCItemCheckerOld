@@ -67,7 +67,7 @@
             this.bclearsearch = new System.Windows.Forms.Button();
             this.bsearchitem = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbsearchname = new System.Windows.Forms.TextBox();
+            this.tbsearchname = new MCItemChecker.GUI.Controls.DelayedTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbsearchmodpack = new System.Windows.Forms.ComboBox();
             this.cbsearchtype = new System.Windows.Forms.ComboBox();
@@ -502,10 +502,12 @@
             // 
             // tbsearchname
             // 
+            this.tbsearchname.Delay = 250;
             this.tbsearchname.Location = new System.Drawing.Point(82, 438);
             this.tbsearchname.Name = "tbsearchname";
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 116;
+            this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.Tbsearchname_DelayedTextChanged);
             this.tbsearchname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchName_KeyPress);
             // 
             // label2
@@ -645,7 +647,7 @@
         private System.Windows.Forms.Button bclearsearch;
         private System.Windows.Forms.Button bsearchitem;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbsearchname;
+        private GUI.Controls.DelayedTextBox tbsearchname;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbsearchmodpack;
         private System.Windows.Forms.ComboBox cbsearchtype;

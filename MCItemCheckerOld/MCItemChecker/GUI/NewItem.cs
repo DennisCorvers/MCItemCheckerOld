@@ -211,7 +211,10 @@ namespace MCItemChecker
             => AddNewItem(m_moditem);
         private void BFindItem_Click(object sender, EventArgs e)
         {
-            UpdateItemList(FindItem());
+            if (string.IsNullOrWhiteSpace(tbsearchname.Text))
+                UpdateItemList(m_itemchecker.ItemList);
+            else
+                UpdateItemList(FindItem());
         }
         private void BClearSearch_Click(object sender, EventArgs e)
         {
@@ -356,6 +359,8 @@ namespace MCItemChecker
             if (e.KeyChar == (char)13)
                 BFindItem_Click(sender, e);
         }
+        private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)
+            => BFindItem_Click(sender, e);
 
         private IEnumerable<Item> FindItem()
         {
