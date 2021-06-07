@@ -110,7 +110,7 @@
             this.tbSearchName.Size = new System.Drawing.Size(296, 20);
             this.tbSearchName.TabIndex = 54;
             this.tbSearchName.TextChanged += new System.EventHandler(this.TbSearchName_TextChanged);
-            this.tbSearchName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchNname_KeyPress);
+            this.tbSearchName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbSearchName_KeyDown);
             // 
             // label7
             // 
@@ -349,7 +349,7 @@
             0,
             0,
             0});
-            this.numAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumAmount_KeyPressed);
+            this.numAmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumAmount_KeyDown);
             // 
             // lCalculatedItemName
             // 

@@ -117,7 +117,7 @@
             this.tbAddAmount.Name = "tbAddAmount";
             this.tbAddAmount.Size = new System.Drawing.Size(75, 20);
             this.tbAddAmount.TabIndex = 106;
-            this.tbAddAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbAddAmount_KeyPress);
+            this.tbAddAmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbAddAmount_KeyDown);
             // 
             // tbRemoveAmount
             // 
@@ -125,6 +125,7 @@
             this.tbRemoveAmount.Name = "tbRemoveAmount";
             this.tbRemoveAmount.Size = new System.Drawing.Size(75, 20);
             this.tbRemoveAmount.TabIndex = 105;
+            this.tbRemoveAmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbRemoveAmount_KeyDown);
             // 
             // bRemoveItem
             // 
@@ -210,7 +211,7 @@
             this.tbNewItemName.Name = "tbNewItemName";
             this.tbNewItemName.Size = new System.Drawing.Size(296, 20);
             this.tbNewItemName.TabIndex = 122;
-            this.tbNewItemName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbNewItemName_KeyPress);
+            this.tbNewItemName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbNewItemName_KeyDown);
             // 
             // label7
             // 
@@ -361,7 +362,7 @@
             this.tbmodpackname.Name = "tbmodpackname";
             this.tbmodpackname.Size = new System.Drawing.Size(232, 20);
             this.tbmodpackname.TabIndex = 18;
-            this.tbmodpackname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbModpackName_KeyPress);
+            this.tbmodpackname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbModPackName_KeyDown);
             // 
             // label11
             // 
@@ -428,7 +429,7 @@
             this.tbtype.Name = "tbtype";
             this.tbtype.Size = new System.Drawing.Size(232, 20);
             this.tbtype.TabIndex = 23;
-            this.tbtype.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbType_KeyPress);
+            this.tbtype.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tbtype_KeyDown);
             // 
             // label13
             // 
@@ -508,7 +509,7 @@
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 116;
             this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.Tbsearchname_DelayedTextChanged);
-            this.tbsearchname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchName_KeyPress);
+            this.tbsearchname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Tbsearchname_KeyDown);
             // 
             // label2
             // 

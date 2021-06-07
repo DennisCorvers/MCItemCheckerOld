@@ -226,19 +226,8 @@ namespace MCItemChecker
 
         private void BAddSubItem_Click(object sender, EventArgs e)
             => TryAddSubItem();
-        private void TbAddAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                TryAddSubItem();
-        }
-
         private void BRemoveSubItem_Click(object sender, EventArgs e)
             => TrySubtractSubItem();
-        private void TbRemoveAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                TrySubtractSubItem();
-        }
 
         private void TryAddSubItem()
         {
@@ -281,7 +270,6 @@ namespace MCItemChecker
 
             tbAddAmount.Text = "1";
         }
-
         private void TrySubtractSubItem()
         {
             if (lvSubItems.SelectedItems.Count == 0)
@@ -310,7 +298,6 @@ namespace MCItemChecker
 
             tbRemoveAmount.Text = "1";
         }
-
         private void ClearNewItem()
         {
             cbNewItemModpack.SelectedItem = ItemChecker.DefaultName;
@@ -328,7 +315,6 @@ namespace MCItemChecker
             m_moditem = null;
             bCreateItem.Text = "Create";
         }
-
 
         private void BClear_Click(object sender, EventArgs e)
             => ClearNewItem();
@@ -349,16 +335,6 @@ namespace MCItemChecker
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
             => Close();
 
-        private void TbItemName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                BAdd_Click(sender, e);
-        }
-        private void TbSearchName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                BFindItem_Click(sender, e);
-        }
         private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)
             => BFindItem_Click(sender, e);
 
@@ -447,8 +423,8 @@ namespace MCItemChecker
                 m_mainform.UpdateModPackControls();
             }
         }
-        private void BAddType_Click(object sender, EventArgs e)
-            => AddType();
+        private void BModpackAdd_Click(object sender, EventArgs e)
+            => Addmodpack();
 
         private void AddType()
         {
@@ -495,30 +471,62 @@ namespace MCItemChecker
                 m_mainform.UpdateItemTypeControls();
             }
         }
-
-        private void TbModpackName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                Addmodpack();
-        }
-        private void TbType_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                AddType();
-        }
-        private void BModpackAdd_Click(object sender, EventArgs e)
-            => Addmodpack();
-
-        private void TbNewItemName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                AddNewItem(m_moditem);
-        }
+        private void BAddType_Click(object sender, EventArgs e)
+            => AddType();
 
         private void Lvitems_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (tabControl1.SelectedTab == TabNewItem)
                 BAddSubItem_Click(sender, e);
+        }
+
+        private void Tbsearchname_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                BFindItem_Click(sender, e);
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void TbAddAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                TryAddSubItem();
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void TbRemoveAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                TrySubtractSubItem();
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void TbNewItemName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                AddNewItem(m_moditem);
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void TbModPackName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                Addmodpack();
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void Tbtype_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                AddType();
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

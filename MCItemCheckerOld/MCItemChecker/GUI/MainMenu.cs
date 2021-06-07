@@ -168,17 +168,6 @@ namespace MCItemChecker
         private void BFindItem_Click(object sender, EventArgs e)
             => FindItem();
 
-        private void TbSearchNname_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                FindItem();
-        }
-        private void TbSearchId_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                FindItem();
-        }
-
         private void FindItem()
         {
             string name = tbSearchName.Text;
@@ -236,12 +225,6 @@ namespace MCItemChecker
             LoadItemInfo(item);
         }
 
-        private void NumAmount_KeyPressed(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-                CalculateRecipe();
-        }
-
         private void BCalculateReset_Click(object sender, EventArgs e)
         {
             cbfiltertype.SelectedItem = ItemChecker.DefaultName;
@@ -268,5 +251,23 @@ namespace MCItemChecker
         }
         private void CbBase_CheckStateChanged(object sender, EventArgs e)
             => CalculateRecipe();
+
+        private void TbSearchName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                FindItem();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void NumAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Return)
+            {
+                CalculateRecipe();
+                e.SuppressKeyPress = true;
+            }
+        }
     }
 }
