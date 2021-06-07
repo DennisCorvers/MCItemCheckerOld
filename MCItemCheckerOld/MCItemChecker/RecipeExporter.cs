@@ -14,9 +14,9 @@ namespace MCItemChecker
         {
             //Creates a path with a file name
             StringBuilder sb = new StringBuilder();
-            sb.Append(Path.GetDirectoryName(Properties.Settings.Default.FilePath));
+            sb.Append(Path.GetDirectoryName(MySettings.Properties.FilePath));
             sb.Append("\\");
-            sb.Append(Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath));
+            sb.Append(Path.GetFileNameWithoutExtension(MySettings.Properties.FilePath));
             sb.Append(" Recipes.txt");
 
             string fulltextpath = sb.ToString();

@@ -22,7 +22,7 @@ namespace MCItemChecker
             _itemchecker = ItemC;
 
             InitializeComponent();
-            Text = Path.GetFileName(Properties.Settings.Default.FilePath) + " - MCItemChecker";
+            Text = Path.GetFileName(MySettings.Properties.FilePath) + " - MCItemChecker";
 
             lvItems.ListViewItemSorter = new ListViewComparer();
             lvCalculatedItems.ListViewItemSorter = new ListViewComparer();
@@ -118,7 +118,7 @@ namespace MCItemChecker
         }
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DataStream.SaveFile(_itemchecker, Properties.Settings.Default.FilePath);
+            DataStream.SaveFile(_itemchecker, MySettings.Properties.FilePath);
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
