@@ -357,11 +357,6 @@ namespace MCItemChecker
                 BFindItem_Click(sender, e);
         }
 
-        private void TbSearchName_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tbsearchname.Text))
-                UpdateItemList(FindItem());
-        }
         private IEnumerable<Item> FindItem()
         {
             string itemName = tbsearchname.Text;

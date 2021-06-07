@@ -506,6 +506,7 @@
             this.tbsearchname.Name = "tbsearchname";
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 116;
+            this.tbsearchname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbSearchName_KeyPress);
             // 
             // label2
             // 
