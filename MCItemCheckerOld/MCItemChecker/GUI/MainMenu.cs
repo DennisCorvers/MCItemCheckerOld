@@ -63,7 +63,7 @@ namespace MCItemChecker
             if (item.Recipe != null)
             {
                 lvsubitems.InsertCollection(item.Recipe, (x) =>
-                { return new ListViewItem(new[] { x.Key.ItemName, Math.Round(x.Value, 2).ToString(), x.Key.Type }); });
+                { return new ListViewItem(new[] { x.Key.ItemName, x.Value.ToString(2), x.Key.Type }); });
             }
         }
 
@@ -196,7 +196,7 @@ namespace MCItemChecker
 
             lvCalculatedItems.InsertCollection(calculatedItems, (x) =>
             {
-                return new ListViewItem(new string[] { x.Key.ItemName, Math.Round(x.Value, 2).ToString(), x.Key.Type });
+                return new ListViewItem(new string[] { x.Key.ItemName, x.Value.ToString(2), x.Key.Type });
             });
 
             GUIControl.Sort(lvCalculatedItems, 0, SortOrder.Ascending);
@@ -263,7 +263,7 @@ namespace MCItemChecker
 
         private void NumAmount_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Return)
+            if (e.KeyCode == Keys.Return)
             {
                 CalculateRecipe();
                 e.SuppressKeyPress = true;

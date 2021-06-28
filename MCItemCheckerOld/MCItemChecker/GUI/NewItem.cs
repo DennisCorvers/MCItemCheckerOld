@@ -125,7 +125,7 @@ namespace MCItemChecker
 
             lvSubItems.InsertCollection(subitemlist, (x) =>
             {
-                return new ListViewItem(new[] { x.Key.ItemName, Math.Round(x.Value, 2).ToString(), x.Key.Type });
+                return new ListViewItem(new[] { x.Key.ItemName, x.Value.ToString(2), x.Key.Type });
             });
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MCItemChecker.Utils
@@ -59,6 +61,27 @@ namespace MCItemChecker.Utils
         {
             string name = Regex.Replace(value, @"(^\w)|(\s\w)", m => m.Value.ToUpper());
             return Regex.Replace(name, @"\s+", " ", RegexOptions.Multiline);
+        }
+
+        public static string ToString(this double value, byte precision)
+        {
+            var rounded = Math.Round(value, precision);
+            var format = string.Empty;
+
+            if (precision == 0)
+                format = "{0:#,##0}";
+            else
+            {
+                var sb = new StringBuilder(10 + precision);
+                sb.Append("{0:#,##0.");
+                for (int i = 0; i < precision; i++)
+                    sb.Append('#');
+                sb.Append('}');
+
+                format = sb.ToString();
+            }
+
+            return string.Format(format, rounded);
         }
     }
 }
