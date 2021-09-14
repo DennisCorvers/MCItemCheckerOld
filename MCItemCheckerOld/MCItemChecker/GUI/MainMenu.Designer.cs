@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.lvItems = new System.Windows.Forms.ListView();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbSearchName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbSearchModpack = new System.Windows.Forms.ComboBox();
             this.cbSearchType = new System.Windows.Forms.ComboBox();
@@ -49,6 +48,7 @@
             this.lvsubitems = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.TabCalculate = new System.Windows.Forms.TabPage();
+            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.bcalculateclear = new System.Windows.Forms.Button();
             this.bfilter = new System.Windows.Forms.Button();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +61,7 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
-            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
+            this.tbsearchname = new MCItemChecker.GUI.Controls.DelayedTextBox();
             this.TabItemInfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -95,15 +95,6 @@
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 53;
             this.label5.Text = "Item Name:";
-            // 
-            // tbSearchName
-            // 
-            this.tbSearchName.Location = new System.Drawing.Point(82, 438);
-            this.tbSearchName.Name = "tbSearchName";
-            this.tbSearchName.Size = new System.Drawing.Size(296, 20);
-            this.tbSearchName.TabIndex = 54;
-            this.tbSearchName.TextChanged += new System.EventHandler(this.TbSearchName_TextChanged);
-            this.tbSearchName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbSearchName_KeyDown);
             // 
             // label7
             // 
@@ -293,6 +284,14 @@
             this.TabCalculate.Text = "Calculate";
             this.TabCalculate.UseVisualStyleBackColor = true;
             // 
+            // itemCalculation
+            // 
+            this.itemCalculation.BackColor = System.Drawing.Color.White;
+            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
+            this.itemCalculation.Name = "itemCalculation";
+            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
+            this.itemCalculation.TabIndex = 118;
+            // 
             // bcalculateclear
             // 
             this.bcalculateclear.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -402,13 +401,14 @@
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
-            // itemCalculation
+            // tbsearchname
             // 
-            this.itemCalculation.BackColor = System.Drawing.Color.White;
-            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
-            this.itemCalculation.Name = "itemCalculation";
-            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
-            this.itemCalculation.TabIndex = 118;
+            this.tbsearchname.Delay = 250;
+            this.tbsearchname.Location = new System.Drawing.Point(82, 438);
+            this.tbsearchname.Name = "tbsearchname";
+            this.tbsearchname.Size = new System.Drawing.Size(296, 20);
+            this.tbsearchname.TabIndex = 117;
+            this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.tbsearchname_DelayedTextChanged);
             // 
             // MainMenu
             // 
@@ -417,10 +417,10 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1084, 561);
+            this.Controls.Add(this.tbsearchname);
             this.Controls.Add(this.bClearSearch);
             this.Controls.Add(this.bSearchItem);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbSearchName);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbSearchModpack);
             this.Controls.Add(this.cbSearchType);
@@ -452,7 +452,6 @@
         #endregion
         private System.Windows.Forms.ListView lvItems;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbSearchName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbSearchModpack;
         private System.Windows.Forms.ComboBox cbSearchType;
@@ -483,6 +482,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportToTextToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private GUI.Controls.ItemCalculation itemCalculation;
+        private GUI.Controls.DelayedTextBox tbsearchname;
     }
 }
 

@@ -154,7 +154,7 @@ namespace MCItemChecker
 
         private void FindItem()
         {
-            string name = tbSearchName.Text;
+            string name = tbsearchname.Text;
             string type = cbSearchType.SelectedItem?.ToString();
             string modpack = cbSearchModpack.SelectedItem?.ToString();
 
@@ -163,7 +163,7 @@ namespace MCItemChecker
 
         private void BClearSearch_Click(object sender, EventArgs e)
         {
-            tbSearchName.Text = "";
+            tbsearchname.Text = "";
             cbSearchType.SelectedItem = ItemChecker.DefaultName;
             cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
 
@@ -212,5 +212,8 @@ namespace MCItemChecker
             if (tabControl.SelectedTab == TabCalculate)
                 itemCalculation.CalculateItem(lvItems.GetSelectedItem<Item>());
         }
+
+        private void tbsearchname_DelayedTextChanged(object sender, EventArgs e)
+            => FindItem();
     }
 }
