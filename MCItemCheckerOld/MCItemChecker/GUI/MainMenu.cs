@@ -15,25 +15,25 @@ namespace MCItemChecker
 {
     public partial class MainMenu : Form
     {
-        private ItemChecker _itemchecker;
+        private ItemChecker m_itemChecker;
 
-        public MainMenu(ItemChecker ItemC)
+        public MainMenu(ItemChecker itemChecker)
         {
-            _itemchecker = ItemC;
+            m_itemChecker = itemChecker;
 
             InitializeComponent();
             Text = Path.GetFileName(MySettings.Properties.FilePath) + " - MCItemChecker";
 
             lvItems.ListViewItemSorter = new ListViewComparer();
-            lvCalculatedItems.ListViewItemSorter = new ListViewComparer();
+
+            itemCalculation.Initialize(m_itemChecker);
 
             Initlvitems();
             Initlvsubitems();
-            Initlvcalculateitems();
 
             UpdateModPackControls();
             UpdateItemTypeControls();
-            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
+
             cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
             cbSearchType.SelectedItem = ItemChecker.DefaultName;
 
@@ -41,19 +41,19 @@ namespace MCItemChecker
             litemtype.Text = "";
             lmodpack.Text = "";
 
-            UpdateItemList(_itemchecker.ItemList);
+            UpdateItemList(m_itemChecker.ItemList);
             GUIControl.Sort(lvItems, 0, SortOrder.Ascending);
         }
 
         public void UpdateModPackControls()
         {
-            GUIControl.UpdateControl(_itemchecker.ModPacks, cbSearchModpack);
+            GUIControl.UpdateControl(m_itemChecker.ModPacks, cbSearchModpack);
         }
 
         public void UpdateItemTypeControls()
         {
-            GUIControl.UpdateControl(_itemchecker.Types, cbSearchType);
-            GUIControl.UpdateControl(_itemchecker.Types, cbfiltertype);
+            GUIControl.UpdateControl(m_itemChecker.Types, cbSearchType);
+            itemCalculation.UpdateTypes(m_itemChecker.Types);
         }
 
         private void UpdateSubItems(Item item)
@@ -68,7 +68,7 @@ namespace MCItemChecker
         }
 
         private void UpdateItemList()
-            => UpdateItemList(_itemchecker.ItemList);
+            => UpdateItemList(m_itemChecker.ItemList);
 
         private void UpdateItemList(IEnumerable<Item> items)
         {
@@ -98,16 +98,6 @@ namespace MCItemChecker
             headers.Add("Type", 125, HorizontalAlignment.Left);
             headers.Add("ModPack", 125, HorizontalAlignment.Left);
         }
-        private void Initlvcalculateitems()
-        {
-            lvCalculatedItems.Scrollable = true;
-            lvCalculatedItems.View = View.Details;
-
-            var headers = lvCalculatedItems.Columns;
-            headers.Add("Name", 250, HorizontalAlignment.Left);
-            headers.Add("Amount", 100, HorizontalAlignment.Left);
-            headers.Add("Type", 100, HorizontalAlignment.Left);
-        }
 
         private void LoadItemInfo(Item item)
         {
@@ -117,17 +107,11 @@ namespace MCItemChecker
             UpdateSubItems(item);
         }
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DataStream.SaveFile(_itemchecker, MySettings.Properties.FilePath);
-        }
+            => DataStream.SaveFile(m_itemChecker, MySettings.Properties.FilePath);
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+            => Close();
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveToolStripMenuItem_Click(sender, e);
-        }
+            => SaveToolStripMenuItem_Click(sender, e);
         private void LvItems_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (sender is ListView listView)
@@ -143,7 +127,7 @@ namespace MCItemChecker
 
         private void DisplayNewItemForm(string tab)
         {
-            var newItemForm = new NewItem(_itemchecker, this, tab);
+            var newItemForm = new NewItem(m_itemChecker, this, tab);
 
             Hide();
 
@@ -174,32 +158,7 @@ namespace MCItemChecker
             string type = cbSearchType.SelectedItem?.ToString();
             string modpack = cbSearchModpack.SelectedItem?.ToString();
 
-            UpdateItemList(_itemchecker.FindItem(name, type, modpack));
-        }
-
-        private void CalculateRecipe()
-        {
-            if (lvItems.SelectedItems.Count == 0)
-                return;
-
-            var baseItem = lvItems.GetSelectedMCItem();
-            double amount = numAmount.Value == 0 ? 1 : (double)numAmount.Value;
-
-            lCalculatedItemName.Text = baseItem.ItemName;
-            lvCalculatedItems.Items.Clear();
-
-            var selectedType = cbfiltertype.SelectedItem.ToString();
-            IEnumerable<KeyValuePair<Item, double>> calculatedItems = _itemchecker.CalculateRecipe(baseItem, amount, cbBase.Checked);
-
-            if (selectedType != ItemChecker.DefaultName)
-                calculatedItems = calculatedItems.Where(x => x.Key.Type == selectedType);
-
-            lvCalculatedItems.InsertCollection(calculatedItems, (x) =>
-            {
-                return new ListViewItem(new string[] { x.Key.ItemName, x.Value.ToString(2), x.Key.Type });
-            });
-
-            GUIControl.Sort(lvCalculatedItems, 0, SortOrder.Ascending);
+            UpdateItemList(m_itemChecker.FindItem(name, type, modpack));
         }
 
         private void BClearSearch_Click(object sender, EventArgs e)
@@ -208,64 +167,44 @@ namespace MCItemChecker
             cbSearchType.SelectedItem = ItemChecker.DefaultName;
             cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
 
-            UpdateItemList(_itemchecker.ItemList);
+            UpdateItemList(m_itemChecker.ItemList);
         }
 
         private void TbSearchName_TextChanged(object sender, EventArgs e)
             => FindItem();
+
         private void LvCalculateItems_Click(object sender, EventArgs e)
         {
-            if (lvItems.SelectedItems.Count == 0)
-                return;
-
-            if (tabControl.SelectedTab == TabCalculate)
-                CalculateRecipe();
-
-            var item = lvItems.GetSelectedMCItem();
-            LoadItemInfo(item);
+            if (lvItems.TryGetSelectedItem(out Item i))
+                LoadItemInfo(i);
         }
 
         private void BCalculateReset_Click(object sender, EventArgs e)
-        {
-            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
-            numAmount.Value = 1;
+            => itemCalculation.Reset();
 
-            CalculateRecipe();
-        }
-        private void BFilter_Click(object sender, EventArgs e)
-            => CalculateRecipe();
-
-        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void BCalculate_Click(object sender, EventArgs e)
         {
-            if (tabControl.SelectedTab == TabCalculate && lvItems.SelectedItems.Count > 0)
-                CalculateRecipe();
+            if (lvItems.TryGetSelectedItem(out Item i))
+                itemCalculation.CalculateItem(i);
+            else
+                itemCalculation.CalculateItem();
         }
+
         private void ExportToTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Task task = new Task(() =>
             {
-                RecipeExporter.WriteToFile(_itemchecker.ItemList);
+                RecipeExporter.WriteToFile(m_itemChecker.ItemList);
             });
 
             task.Start();
         }
-        private void CbBase_CheckStateChanged(object sender, EventArgs e)
-            => CalculateRecipe();
 
         private void TbSearchName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
             {
                 FindItem();
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        private void NumAmount_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return)
-            {
-                CalculateRecipe();
                 e.SuppressKeyPress = true;
             }
         }

@@ -49,16 +49,8 @@
             this.lvsubitems = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.TabCalculate = new System.Windows.Forms.TabPage();
-            this.cbBase = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numAmount = new System.Windows.Forms.NumericUpDown();
-            this.lCalculatedItemName = new System.Windows.Forms.Label();
             this.bcalculateclear = new System.Windows.Forms.Button();
-            this.lvCalculatedItems = new System.Windows.Forms.ListView();
             this.bfilter = new System.Windows.Forms.Button();
-            this.cbfiltertype = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,11 +61,11 @@
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.TabItemInfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.TabCalculate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).BeginInit();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -286,20 +278,12 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(511, 521);
             this.tabControl.TabIndex = 7;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // TabCalculate
             // 
-            this.TabCalculate.Controls.Add(this.cbBase);
-            this.TabCalculate.Controls.Add(this.label9);
-            this.TabCalculate.Controls.Add(this.numAmount);
-            this.TabCalculate.Controls.Add(this.lCalculatedItemName);
+            this.TabCalculate.Controls.Add(this.itemCalculation);
             this.TabCalculate.Controls.Add(this.bcalculateclear);
-            this.TabCalculate.Controls.Add(this.lvCalculatedItems);
             this.TabCalculate.Controls.Add(this.bfilter);
-            this.TabCalculate.Controls.Add(this.cbfiltertype);
-            this.TabCalculate.Controls.Add(this.label11);
-            this.TabCalculate.Controls.Add(this.label12);
             this.TabCalculate.Location = new System.Drawing.Point(4, 22);
             this.TabCalculate.Name = "TabCalculate";
             this.TabCalculate.Padding = new System.Windows.Forms.Padding(3);
@@ -307,59 +291,6 @@
             this.TabCalculate.TabIndex = 1;
             this.TabCalculate.Text = "Calculate";
             this.TabCalculate.UseVisualStyleBackColor = true;
-            // 
-            // cbBase
-            // 
-            this.cbBase.AutoSize = true;
-            this.cbBase.Location = new System.Drawing.Point(319, 419);
-            this.cbBase.Name = "cbBase";
-            this.cbBase.Size = new System.Drawing.Size(78, 17);
-            this.cbBase.TabIndex = 124;
-            this.cbBase.Text = "Base Items";
-            this.cbBase.UseVisualStyleBackColor = true;
-            this.cbBase.CheckStateChanged += new System.EventHandler(this.CbBase_CheckStateChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(91, 418);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 13);
-            this.label9.TabIndex = 123;
-            this.label9.Text = "Amount:";
-            // 
-            // numAmount
-            // 
-            this.numAmount.Location = new System.Drawing.Point(140, 416);
-            this.numAmount.Maximum = new decimal(new int[] {
-            -2147483648,
-            0,
-            0,
-            0});
-            this.numAmount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numAmount.Name = "numAmount";
-            this.numAmount.Size = new System.Drawing.Size(117, 20);
-            this.numAmount.TabIndex = 122;
-            this.numAmount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numAmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumAmount_KeyDown);
-            // 
-            // lCalculatedItemName
-            // 
-            this.lCalculatedItemName.AutoSize = true;
-            this.lCalculatedItemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lCalculatedItemName.Location = new System.Drawing.Point(109, 13);
-            this.lCalculatedItemName.Name = "lCalculatedItemName";
-            this.lCalculatedItemName.Size = new System.Drawing.Size(11, 13);
-            this.lCalculatedItemName.TabIndex = 121;
-            this.lCalculatedItemName.Text = " ";
             // 
             // bcalculateclear
             // 
@@ -373,19 +304,6 @@
             this.bcalculateclear.UseVisualStyleBackColor = false;
             this.bcalculateclear.Click += new System.EventHandler(this.BCalculateReset_Click);
             // 
-            // lvCalculatedItems
-            // 
-            this.lvCalculatedItems.FullRowSelect = true;
-            this.lvCalculatedItems.GridLines = true;
-            this.lvCalculatedItems.HideSelection = false;
-            this.lvCalculatedItems.Location = new System.Drawing.Point(23, 36);
-            this.lvCalculatedItems.Name = "lvCalculatedItems";
-            this.lvCalculatedItems.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lvCalculatedItems.Size = new System.Drawing.Size(458, 344);
-            this.lvCalculatedItems.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvCalculatedItems.TabIndex = 120;
-            this.lvCalculatedItems.UseCompatibleStateImageBehavior = false;
-            // 
             // bfilter
             // 
             this.bfilter.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -394,37 +312,9 @@
             this.bfilter.Name = "bfilter";
             this.bfilter.Size = new System.Drawing.Size(75, 23);
             this.bfilter.TabIndex = 116;
-            this.bfilter.Text = "Filter";
+            this.bfilter.Text = "Go";
             this.bfilter.UseVisualStyleBackColor = false;
-            this.bfilter.Click += new System.EventHandler(this.BFilter_Click);
-            // 
-            // cbfiltertype
-            // 
-            this.cbfiltertype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbfiltertype.FormattingEnabled = true;
-            this.cbfiltertype.Location = new System.Drawing.Point(140, 389);
-            this.cbfiltertype.Name = "cbfiltertype";
-            this.cbfiltertype.Size = new System.Drawing.Size(271, 21);
-            this.cbfiltertype.TabIndex = 119;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(78, 393);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 13);
-            this.label11.TabIndex = 118;
-            this.label11.Text = "Filter Type:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(20, 13);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(83, 13);
-            this.label12.TabIndex = 113;
-            this.label12.Text = "Viewing Item:";
+            this.bfilter.Click += new System.EventHandler(this.BCalculate_Click);
             // 
             // fileToolStripMenuItem
             // 
@@ -511,6 +401,14 @@
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
+            // itemCalculation
+            // 
+            this.itemCalculation.BackColor = System.Drawing.Color.White;
+            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
+            this.itemCalculation.Name = "itemCalculation";
+            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
+            this.itemCalculation.TabIndex = 118;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,8 +441,6 @@
             this.panel1.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.TabCalculate.ResumeLayout(false);
-            this.TabCalculate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numAmount)).EndInit();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.ResumeLayout(false);
@@ -572,17 +468,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage TabCalculate;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown numAmount;
-        private System.Windows.Forms.Label lCalculatedItemName;
         private System.Windows.Forms.Button bcalculateclear;
-        private System.Windows.Forms.ListView lvCalculatedItems;
         private System.Windows.Forms.Button bfilter;
-        private System.Windows.Forms.ComboBox cbfiltertype;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.CheckBox cbBase;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -593,6 +481,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToTextToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip2;
+        private GUI.Controls.ItemCalculation itemCalculation;
     }
 }
 

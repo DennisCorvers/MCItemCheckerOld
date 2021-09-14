@@ -170,7 +170,7 @@ namespace MCItemChecker
         {
             ListView lv = (ListView)sender;
 
-            if (lv.SelectedItems.Count == 0)
+            if (!lv.TryGetSelectedItem(out Item item))
                 return;
 
             switch (e.KeyCode)
@@ -181,7 +181,7 @@ namespace MCItemChecker
 
                 case Keys.E:
                     e.SuppressKeyPress = true;
-                    SetModificationItem(lvitems.GetSelectedMCItem());
+                    SetModificationItem(item);
                     tbNewItemName.Select();
                     return;
             }
@@ -189,6 +189,11 @@ namespace MCItemChecker
 
         private void DeleteItems(ListView listview)
         {
+            var listviewItems = listview.GetSelectedListViewItems();
+
+            if (listviewItems.Count < 1)
+                return;
+
             DialogResult result = MessageBox.Show($"Are you sure you want to delete  the selected item(s)?" +
                 $"{Environment.NewLine}This might affect other items!", "Item Deletion",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
@@ -196,7 +201,6 @@ namespace MCItemChecker
             if (result != DialogResult.Yes)
                 return;
 
-            var listviewItems = listview.GetSelectedListViewItems();
             foreach (var lvItem in listviewItems)
             {
                 if (!(lvItem.Tag is Item item))
@@ -209,6 +213,7 @@ namespace MCItemChecker
 
         private void BAdd_Click(object sender, EventArgs e)
             => AddNewItem(m_moditem);
+
         private void BFindItem_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbsearchname.Text))
@@ -216,6 +221,7 @@ namespace MCItemChecker
             else
                 UpdateItemList(FindItem());
         }
+
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
@@ -226,18 +232,17 @@ namespace MCItemChecker
 
         private void BAddSubItem_Click(object sender, EventArgs e)
             => TryAddSubItem();
+
         private void BRemoveSubItem_Click(object sender, EventArgs e)
             => TrySubtractSubItem();
 
         private void TryAddSubItem()
         {
-            if (lvitems.SelectedItems.Count == 0)
+            if (!lvitems.TryGetSelectedItem(out Item item))
             {
                 GUIControl.InfoMessage("Select an item to add first.");
                 return;
             }
-
-            var item = lvitems.GetSelectedMCItem();
 
             if (!tbAddAmount.Text.FractionToDouble(out double amount))
             {
@@ -272,13 +277,11 @@ namespace MCItemChecker
         }
         private void TrySubtractSubItem()
         {
-            if (lvSubItems.SelectedItems.Count == 0)
+            if (!lvSubItems.TryGetSelectedItem(out KeyValuePair<Item, double> subItem))
             {
                 GUIControl.InfoMessage("Select an item to remove first.");
                 return;
             }
-
-            var subItem = lvSubItems.GetSelectedMCSubItem();
 
             if (!tbRemoveAmount.Text.FractionToDouble(out double amount))
             {
@@ -324,11 +327,13 @@ namespace MCItemChecker
             if (e.KeyCode != Keys.Delete)
                 return;
 
-            if (lvSubItems.SelectedItems.Count == 0)
+            if (!lvSubItems.TryGetSelectedItem(out KeyValuePair<Item, double> subItem))
+            {
                 GUIControl.InfoMessage("Select an item for deletion first.");
+                return;
+            }
 
-            var tpair = lvSubItems.GetSelectedMCSubItem();
-            m_subItems.Remove(tpair.Key);
+            m_subItems.Remove(subItem.Key);
             UpdateSubItems(m_subItems);
         }
 
@@ -348,13 +353,13 @@ namespace MCItemChecker
         }
         private void BImportModify_Click(object sender, EventArgs e)
         {
-            if (lvitems.SelectedItems.Count == 0)
+            if (!lvitems.TryGetSelectedItem(out Item item))
             {
                 GUIControl.InfoMessage("Select an item to modify first.");
                 return;
             }
 
-            SetModificationItem(lvitems.GetSelectedMCItem());
+            SetModificationItem(item);
         }
 
         private void SetModificationItem(Item item)

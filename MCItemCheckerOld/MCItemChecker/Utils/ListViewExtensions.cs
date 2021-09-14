@@ -6,22 +6,28 @@ namespace MCItemChecker.Utils
 {
     internal static class ListViewExtensions
     {
-        public static Item GetSelectedMCItem(this ListView listview)
+        public static T GetSelectedItem<T>(this ListView listview)
         {
-            ListView.SelectedListViewItemCollection listviewselect = listview.SelectedItems;
-            return listviewselect[0].Tag as Item;
+            var listviewselect = listview.SelectedItems;
+            return (T)listviewselect[0].Tag;
         }
 
-        public static KeyValuePair<Item, double> GetSelectedMCSubItem(this ListView listview)
+        public static bool TryGetSelectedItem<T>(this ListView listview, out T item)
         {
-            ListView.SelectedListViewItemCollection listviewselect = listview.SelectedItems;
-            return (KeyValuePair<Item, double>)listviewselect[0].Tag;
+            if (listview.SelectedItems.Count == 0)
+            {
+                item = default;
+                return false;
+            }
+
+            item = listview.GetSelectedItem<T>();
+            return true;
         }
 
-        public static IEnumerable<ListViewItem> GetSelectedListViewItems(this ListView listview)
+        public static ICollection<ListViewItem> GetSelectedListViewItems(this ListView listview)
         {
             var selectedItems = listview.SelectedItems;
-            List<ListViewItem> lvItems = new List<ListViewItem>(selectedItems.Count);
+            var lvItems = new List<ListViewItem>(selectedItems.Count);
 
             for (int i = selectedItems.Count - 1; i >= 0; i--)
                 lvItems.Add(selectedItems[i]);

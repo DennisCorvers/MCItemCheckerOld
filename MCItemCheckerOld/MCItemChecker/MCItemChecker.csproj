@@ -72,6 +72,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\Controls\ItemCalculation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Controls\ItemCalculation.Designer.cs">
+      <DependentUpon>ItemCalculation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\AppDataSettings.cs" />
     <Compile Include="GUI\Controls\DelayedTextBox.cs">
@@ -105,6 +111,9 @@
     <Compile Include="Utils\ListViewComparer.cs" />
     <Compile Include="Utils\ListViewExtensions.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
+    <EmbeddedResource Include="GUI\Controls\ItemCalculation.resx">
+      <DependentUpon>ItemCalculation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
