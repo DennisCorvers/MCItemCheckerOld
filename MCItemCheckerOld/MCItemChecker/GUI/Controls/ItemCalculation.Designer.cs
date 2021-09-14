@@ -106,6 +106,7 @@ namespace MCItemChecker.GUI.Controls
             this.lvCalculatedItems.TabIndex = 130;
             this.lvCalculatedItems.UseCompatibleStateImageBehavior = false;
             this.lvCalculatedItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvCalculatedItems_KeyDown);
+            this.lvCalculatedItems.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LvCalculatedItems_MouseClick);
             this.lvCalculatedItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvCalculatedItems_MouseDoubleClick);
             // 
             // cbfiltertype

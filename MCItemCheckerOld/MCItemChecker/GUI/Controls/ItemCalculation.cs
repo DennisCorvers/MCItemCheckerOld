@@ -9,12 +9,25 @@ namespace MCItemChecker.GUI.Controls
 {
     public partial class ItemCalculation : UserControl
     {
+        private readonly ContextMenu m_contextMenu;
+
         private ItemChecker m_itemChecker;
         private CalculationInfo m_lastItem;
 
         public ItemCalculation()
         {
             InitializeComponent();
+
+            var markMenuItem = new MenuItem("Mark");
+            markMenuItem.Click += (object sender, EventArgs e) => MarkItemAsDone();
+
+            var removeMenuItem = new MenuItem("Remove...");
+            removeMenuItem.Click += RemoveItem_Click;
+
+            var removeAllMenuItem = new MenuItem("Remove all");
+            removeAllMenuItem.Click += (object sender, EventArgs e) => RemoveItem();
+
+            m_contextMenu = new ContextMenu(new[] { markMenuItem, removeMenuItem, removeAllMenuItem });
         }
 
         public void Initialize(ItemChecker itemChecker)
@@ -40,7 +53,10 @@ namespace MCItemChecker.GUI.Controls
                 if (m_lastItem.HasValue)
                     baseItem = m_lastItem.Item;
                 else
+                {
                     GUIControl.InfoMessage("Select an item to calculate first.");
+                    return;
+                }
             }
 
             var amount = numAmount.Value == 0 ? 1 : (double)numAmount.Value;
@@ -125,15 +141,20 @@ namespace MCItemChecker.GUI.Controls
             if (!lvCalculatedItems.TryGetSelectedItem(out KeyValuePair<Item, double> subitem))
                 GUIControl.InfoMessage("No item selected for removal.");
 
+            RemoveItem(subitem);
+        }
+
+        private void RemoveItem(KeyValuePair<Item, double> subItem)
+        {
             // Calculate main item.
             var item = m_lastItem.Item;
             var mainRecipe = m_lastItem.Recipe;
 
             // Calculate item marked for deletion.
-            var subRecipe = m_itemChecker.CalculateRecipe(subitem.Key, subitem.Value, cbBase.Checked);
+            var subRecipe = m_itemChecker.CalculateRecipe(subItem.Key, subItem.Value, cbBase.Checked);
 
             // Subtract the main sub item
-            SubtractRecipe(mainRecipe, subitem);
+            SubtractRecipe(mainRecipe, subItem);
 
             // Subtract the sub items
             SubtractRecipes(mainRecipe, subRecipe);
@@ -193,6 +214,51 @@ namespace MCItemChecker.GUI.Controls
                 default:
                     return;
             }
+        }
+
+        private void LvCalculatedItems_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var focusedItem = lvCalculatedItems.FocusedItem;
+                if (focusedItem != null && focusedItem.Bounds.Contains(e.Location))
+                {
+                    m_contextMenu.Show(lvCalculatedItems, e.Location);
+                }
+            }
+        }
+
+        private void RemoveItem_Click(object sender, EventArgs e)
+        {
+            if (!lvCalculatedItems.TryGetSelectedItem(out KeyValuePair<Item, double> kvItem))
+                return;
+
+            var item = kvItem.Key;
+
+            InputBox input = new InputBox("Enter amount...", $"Enter amount of \"{item.ItemName}\" to remove.");
+            double amountToRemove = 0;
+
+            // Keep asking for valid input using the same WinForm...
+            while (input.ShowDialog() == DialogResult.OK)
+            {
+                if (!input.Result.FractionToDouble(out amountToRemove))
+                {
+                    GUIControl.InfoMessage($"Enter a valid amount to add.{Environment.NewLine}Enter a positive integer, decimal or fraction");
+                    continue;
+                }
+
+                // Remove nothing...
+                if (amountToRemove <= 0)
+                    return;
+
+                // Clamp entered amount to original amount.
+                if (amountToRemove >= kvItem.Value)
+                    amountToRemove = kvItem.Value;
+
+                break;
+            }
+
+            RemoveItem(new KeyValuePair<Item, double>(item, amountToRemove));
         }
 
 

@@ -79,6 +79,12 @@
     <Compile Include="GUI\Controls\ItemCalculation.Designer.cs">
       <DependentUpon>ItemCalculation.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\AppDataSettings.cs" />
     <Compile Include="GUI\Controls\DelayedTextBox.cs">
@@ -114,6 +120,9 @@
     <Compile Include="Utils\StringExtensions.cs" />
     <EmbeddedResource Include="GUI\Controls\ItemCalculation.resx">
       <DependentUpon>ItemCalculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
