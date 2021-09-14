@@ -31,15 +31,16 @@ namespace MCItemChecker
             m_itemchecker = IC;
             m_mainform = mainform;
             lvitems.ListViewItemSorter = new ListViewComparer();
+            lvSubItems.ListViewItemSorter = new ListViewComparer();
             tbAddAmount.Text = "1";
             tbRemoveAmount.Text = "1";
 
             Text = m_mainform.Text;
 
             UpdateTypeControls();
-            UpdateModPackControls();
+            UpdateModControls();
 
-            cbsearchmodpack.SelectedItem = ItemChecker.DefaultName;
+            cbsearchmod.SelectedItem = ItemChecker.DefaultName;
             cbsearchtype.SelectedItem = ItemChecker.DefaultName;
 
             ClearNewItem();
@@ -48,14 +49,21 @@ namespace MCItemChecker
             Initlvsubitems();
         }
 
-        public NewItem(ItemChecker IC, MainMenu mainform, string tabname)
+        public NewItem(ItemChecker IC, MainMenu mainform, Tabs tabType)
             : this(IC, mainform)
         {
-            switch (tabname)
+            switch (tabType)
             {
-                case "Items": tabControl1.SelectedTab = TabNewItem; break;
-                case "Modpack": tabControl1.SelectedTab = TabModPack; break;
-                case "Types": tabControl1.SelectedTab = TabType; break;
+                case Tabs.Mods:
+                    tabControl1.SelectedTab = TabMod;
+                    break;
+                case Tabs.ItemTypes:
+                    tabControl1.SelectedTab = TabType;
+                    break;
+
+                default:
+                    tabControl1.SelectedTab = TabNewItem;
+                    break;
             }
         }
 
@@ -67,7 +75,7 @@ namespace MCItemChecker
             var headers = lvitems.Columns;
             headers.Add("Name", 275, HorizontalAlignment.Left);
             headers.Add("Type", 125, HorizontalAlignment.Left);
-            headers.Add("ModPack", 125, HorizontalAlignment.Left);
+            headers.Add("Mod", 125, HorizontalAlignment.Left);
 
             GUIControl.Sort(lvitems, 0, SortOrder.Ascending);
         }
@@ -78,16 +86,16 @@ namespace MCItemChecker
 
             var headers = lvSubItems.Columns;
             headers.Add("Name", 250, HorizontalAlignment.Left);
-            headers.Add("Type", 100, HorizontalAlignment.Left);
-            headers.Add("ModPack", 100, HorizontalAlignment.Left);
+            headers.Add("Amount", 100, HorizontalAlignment.Left);
+            headers.Add("Mod", 100, HorizontalAlignment.Left);
         }
 
-        private void UpdateModPackControls()
+        private void UpdateModControls()
         {
-            var modpacks = m_itemchecker.ModPacks;
-            GUIControl.UpdateControl(modpacks, cbNewItemModpack);
-            GUIControl.UpdateControl(modpacks, cbsearchmodpack);
-            GUIControl.UpdateControl(modpacks, lbmodpacks);
+            var mods = m_itemchecker.Mods;
+            GUIControl.UpdateControl(mods, cbNewItemMod);
+            GUIControl.UpdateControl(mods, cbsearchmod);
+            GUIControl.UpdateControl(mods, lbmods);
         }
         private void UpdateTypeControls()
         {
@@ -116,7 +124,7 @@ namespace MCItemChecker
             lvitems.Items.Clear();
 
             lvitems.InsertCollection(items, (i) =>
-            { return new ListViewItem(new[] { i.ItemName, i.Type, i.ModPack }); });
+            { return new ListViewItem(new[] { i.ItemName, i.Type, i.ModName }); });
         }
 
         private void UpdateSubItems(Dictionary<Item, double> subitemlist)
@@ -142,7 +150,7 @@ namespace MCItemChecker
             Item newItem = new Item(
                 tbNewItemName.Text,
                 cbNewItemType.SelectedItem.ToString(),
-                cbNewItemModpack.SelectedItem.ToString(),
+                cbNewItemMod.SelectedItem.ToString(),
                 subitems);
 
             if (m_modifyingItem == true && item != null)
@@ -226,7 +234,7 @@ namespace MCItemChecker
         {
             tbsearchname.Text = "";
             cbsearchtype.SelectedItem = ItemChecker.DefaultName;
-            cbsearchmodpack.SelectedItem = ItemChecker.DefaultName;
+            cbsearchmod.SelectedItem = ItemChecker.DefaultName;
             UpdateItemList(m_itemchecker.ItemList);
         }
 
@@ -303,7 +311,7 @@ namespace MCItemChecker
         }
         private void ClearNewItem()
         {
-            cbNewItemModpack.SelectedItem = ItemChecker.DefaultName;
+            cbNewItemMod.SelectedItem = ItemChecker.DefaultName;
             cbNewItemType.SelectedItem = ItemChecker.DefaultName;
 
             tbNewItemName.Text = "";
@@ -347,9 +355,9 @@ namespace MCItemChecker
         {
             string itemName = tbsearchname.Text;
             string type = cbsearchtype.SelectedItem?.ToString();
-            string modpack = cbsearchmodpack.SelectedItem?.ToString();
+            string mod = cbsearchmod.SelectedItem?.ToString();
 
-            return m_itemchecker.FindItem(itemName, type, modpack);
+            return m_itemchecker.FindItem(itemName, type, mod);
         }
         private void BImportModify_Click(object sender, EventArgs e)
         {
@@ -371,7 +379,7 @@ namespace MCItemChecker
 
             // Set controls
             tbNewItemName.Text = item.ItemName;
-            cbNewItemModpack.SelectedItem = item.ModPack;
+            cbNewItemMod.SelectedItem = item.ModName;
             cbNewItemType.SelectedItem = item.Type;
             UpdateSubItems(item.Recipe);
 
@@ -382,54 +390,54 @@ namespace MCItemChecker
             bCreateItem.Text = "Save";
         }
 
-        private void Addmodpack()
+        private void Addmod()
         {
 
-            if (string.IsNullOrWhiteSpace(tbmodpackname.Text))
+            if (string.IsNullOrWhiteSpace(tbmodname.Text))
             {
-                GUIControl.InfoMessage("Enter a modpack name first.");
+                GUIControl.InfoMessage("Enter a mod name first.");
                 return;
             }
 
-            if (!m_itemchecker.AddNewModPack(tbmodpackname.Text))
+            if (!m_itemchecker.AddNewMod(tbmodname.Text))
             {
-                GUIControl.InfoMessage("Modpack is already present.");
+                GUIControl.InfoMessage("Mod is already present.");
                 return;
             }
 
-            UpdateModPackControls();
-            tbmodpackname.Text = "";
-            m_mainform.UpdateModPackControls();
+            UpdateModControls();
+            tbmodname.Text = "";
+            m_mainform.UpdateModControls();
         }
-        private void BModPackDelete_Click(object sender, EventArgs e)
+        private void BModDelete_Click(object sender, EventArgs e)
         {
-            if (lbmodpacks.SelectedItems.Count == 0)
+            if (lbmods.SelectedItems.Count == 0)
             {
-                GUIControl.InfoMessage("Select a modpack for deletion first.");
+                GUIControl.InfoMessage("Select a mod for deletion first.");
                 return;
             }
 
-            if (lbmodpacks.SelectedItems[0].ToString() == ItemChecker.DefaultName)
+            if (lbmods.SelectedItems[0].ToString() == ItemChecker.DefaultName)
             {
                 GUIControl.InfoMessage("Cannot delete default value.");
                 return;
             }
 
-            DialogResult result = MessageBox.Show($"Are you sure you want to delete the selected modpack?" +
-                $"{Environment.NewLine}This will remove this modpack from all items!", "Modpack Deletion",
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete the selected mod?" +
+                $"{Environment.NewLine}This will remove this mod from all items!", "Mod Deletion",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
             if (result != DialogResult.Yes)
                 return;
 
-            if (m_itemchecker.DeleteModPack(lbmodpacks.SelectedItem.ToString()))
+            if (m_itemchecker.DeleteMod(lbmods.SelectedItem.ToString()))
             {
-                UpdateModPackControls();
-                m_mainform.UpdateModPackControls();
+                UpdateModControls();
+                m_mainform.UpdateModControls();
             }
         }
-        private void BModpackAdd_Click(object sender, EventArgs e)
-            => Addmodpack();
+        private void BModAdd_Click(object sender, EventArgs e)
+            => Addmod();
 
         private void AddType()
         {
@@ -517,11 +525,11 @@ namespace MCItemChecker
                 e.SuppressKeyPress = true;
             }
         }
-        private void TbModPackName_KeyDown(object sender, KeyEventArgs e)
+        private void TbModName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
             {
-                Addmodpack();
+                Addmod();
                 e.SuppressKeyPress = true;
             }
         }
@@ -532,6 +540,13 @@ namespace MCItemChecker
                 AddType();
                 e.SuppressKeyPress = true;
             }
+        }
+
+        public enum Tabs
+        {
+            Items,
+            ItemTypes,
+            Mods
         }
     }
 }

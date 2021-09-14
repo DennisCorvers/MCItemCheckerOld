@@ -15,13 +15,17 @@ namespace MCItemChecker
 
         public IEnumerable<Item> ItemList
             => m_items.Values;
-        public IEnumerable<string> ModPacks
+        public IEnumerable<string> Mods
             => m_modpacks;
         public IEnumerable<string> Types
             => m_itemTypes;
 
+        private HashSet<string> m_mods       
+            => m_modpacks;
+
         private readonly Dictionary<int, Item> m_items = new Dictionary<int, Item>();
         private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
+        // Name will become deprecated in the future. Breaks binary formatter.
         private readonly HashSet<string> m_modpacks = new HashSet<string>();
         private readonly HashSet<string> m_itemTypes = new HashSet<string>();
 
@@ -29,7 +33,7 @@ namespace MCItemChecker
 
         public ItemChecker()
         {
-            m_modpacks.Add(DefaultName);
+            m_mods.Add(DefaultName);
             m_itemTypes.Add(DefaultName);
         }
 
@@ -61,27 +65,27 @@ namespace MCItemChecker
         }
 
 
-        public bool AddNewModPack(string modpack)
+        public bool AddNewMod(string mod)
         {
-            if (ModPacks.Contains(modpack))
+            if (Mods.Contains(mod))
             {
                 return false;
             }
 
-            m_modpacks.Add(modpack.ToFirstLetterUpperCase());
+            m_mods.Add(mod.ToFirstLetterUpperCase());
             return true;
         }
 
-        public bool DeleteModPack(string modpack)
+        public bool DeleteMod(string mod)
         {
-            if (ModPacks.Contains(modpack))
+            if (Mods.Contains(mod))
             {
-                m_modpacks.Remove(modpack);
+                m_mods.Remove(mod);
 
                 foreach (var item in m_items.Values)
                 {
-                    if (item.ModPack == modpack)
-                        item.ModPack = DefaultName;
+                    if (item.ModName == mod)
+                        item.ModName = DefaultName;
                 }
 
                 return true;
@@ -126,7 +130,7 @@ namespace MCItemChecker
                     return false;
             }
 
-            if (newItem.ItemName.ToLower() != oldItem.ItemName.ToLower() 
+            if (newItem.ItemName.ToLower() != oldItem.ItemName.ToLower()
                 && m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
                 return false;
 
@@ -137,7 +141,7 @@ namespace MCItemChecker
             return true;
         }
 
-        public IEnumerable<Item> FindItem(string itemname = null, string type = null, string modpack = null, Dictionary<Item, double> craftingneed = null)
+        public IEnumerable<Item> FindItem(string itemname = null, string type = null, string mod = null, Dictionary<Item, double> craftingneed = null)
         {
             IEnumerable<Item> result = m_items.Values;
 
@@ -147,8 +151,8 @@ namespace MCItemChecker
             if (!string.IsNullOrWhiteSpace(type) && type != DefaultName)
                 result = result.Where(x => x.Type == type);
 
-            if (!string.IsNullOrWhiteSpace(modpack) && modpack != DefaultName)
-                result = result.Where(x => x.ModPack == modpack);
+            if (!string.IsNullOrWhiteSpace(mod) && mod != DefaultName)
+                result = result.Where(x => x.ModName == mod);
 
             if (craftingneed != null)
                 result = result.Where(x => x.Recipe == craftingneed);

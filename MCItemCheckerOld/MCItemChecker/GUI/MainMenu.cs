@@ -31,23 +31,23 @@ namespace MCItemChecker
             Initlvitems();
             Initlvsubitems();
 
-            UpdateModPackControls();
+            UpdateModControls();
             UpdateItemTypeControls();
 
-            cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
+            cbSearchMod.SelectedItem = ItemChecker.DefaultName;
             cbSearchType.SelectedItem = ItemChecker.DefaultName;
 
             litemname.Text = "";
             litemtype.Text = "";
-            lmodpack.Text = "";
+            lmod.Text = "";
 
             UpdateItemList(m_itemChecker.ItemList);
             GUIControl.Sort(lvItems, 0, SortOrder.Ascending);
         }
 
-        public void UpdateModPackControls()
+        public void UpdateModControls()
         {
-            GUIControl.UpdateControl(m_itemChecker.ModPacks, cbSearchModpack);
+            GUIControl.UpdateControl(m_itemChecker.Mods, cbSearchMod);
         }
 
         public void UpdateItemTypeControls()
@@ -75,7 +75,7 @@ namespace MCItemChecker
             lvItems.Items.Clear();
 
             lvItems.InsertCollection(items, (i) =>
-            { return new ListViewItem(new[] { i.ItemName, i.Type, i.ModPack }); });
+            { return new ListViewItem(new[] { i.ItemName, i.Type, i.ModName }); });
         }
 
         private void Initlvsubitems()
@@ -103,7 +103,7 @@ namespace MCItemChecker
         {
             litemname.Text = item.ItemName;
             litemtype.Text = item.Type;
-            lmodpack.Text = item.ModPack;
+            lmod.Text = item.ModName;
             UpdateSubItems(item);
         }
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,15 +119,15 @@ namespace MCItemChecker
         }
 
         private void ManageItemsToolStripMenuItem_Click(object sender, EventArgs e)
-            => DisplayNewItemForm("Items");
-        private void ManageModPackToolStripMenuItem_Click(object sender, EventArgs e)
-            => DisplayNewItemForm("Modpack");
+            => DisplayNewItemForm(NewItem.Tabs.Items);
+        private void ManageModToolStripMenuItem_Click(object sender, EventArgs e)
+            => DisplayNewItemForm(NewItem.Tabs.Mods);
         private void ManageItemTypeToolStripMenuItem_Click(object sender, EventArgs e)
-            => DisplayNewItemForm("Types");
+            => DisplayNewItemForm(NewItem.Tabs.ItemTypes);
 
-        private void DisplayNewItemForm(string tab)
+        private void DisplayNewItemForm(NewItem.Tabs tabType)
         {
-            var newItemForm = new NewItem(m_itemChecker, this, tab);
+            var newItemForm = new NewItem(m_itemChecker, this, tabType);
 
             Hide();
 
@@ -156,7 +156,7 @@ namespace MCItemChecker
         {
             string name = tbsearchname.Text;
             string type = cbSearchType.SelectedItem?.ToString();
-            string modpack = cbSearchModpack.SelectedItem?.ToString();
+            string modpack = cbSearchMod.SelectedItem?.ToString();
 
             UpdateItemList(m_itemChecker.FindItem(name, type, modpack));
         }
@@ -165,7 +165,7 @@ namespace MCItemChecker
         {
             tbsearchname.Text = "";
             cbSearchType.SelectedItem = ItemChecker.DefaultName;
-            cbSearchModpack.SelectedItem = ItemChecker.DefaultName;
+            cbSearchMod.SelectedItem = ItemChecker.DefaultName;
 
             UpdateItemList(m_itemChecker.ItemList);
         }
@@ -229,10 +229,5 @@ namespace MCItemChecker
 
         private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)
             => FindItem();
-
-        private void tbsearchname_DelayedTextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

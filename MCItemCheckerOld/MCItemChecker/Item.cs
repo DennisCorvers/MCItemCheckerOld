@@ -13,7 +13,7 @@ namespace MCItemChecker
         private int m_itemId;
         private string m_itemName;
         private string m_itemType;
-        private string m_modpack;
+        private string m_mod;
         private Dictionary<Item, double> m_recipe;
 #pragma warning restore
 
@@ -32,30 +32,30 @@ namespace MCItemChecker
             get => m_itemType;
             set => m_itemType = value;
         }
-        public string ModPack
+        public string ModName
         {
-            get => m_modpack;
-            set => m_modpack = value;
+            get => m_mod;
+            set => m_mod = value;
         }
         public Dictionary<Item, double> Recipe
             => m_recipe;
 
-        public Item(string itemname, string type, string modpack)
+        public Item(string itemname, string type, string mod)
         {
             ItemName = itemname;
             m_itemType = type;
-            m_modpack = modpack;
+            m_mod = mod;
             m_recipe = new Dictionary<Item, double>();
         }
 
-        public Item(string itemname, string type, string modpack, Dictionary<Item, double> recipe)
+        public Item(string itemname, string type, string mod, Dictionary<Item, double> recipe)
         {
             if (recipe == null)
                 throw new ArgumentException(nameof(recipe));
 
             ItemName = itemname;
             m_itemType = type;
-            m_modpack = modpack;
+            m_mod = mod;
             m_recipe = new Dictionary<Item, double>(recipe);
         }
 
@@ -66,7 +66,7 @@ namespace MCItemChecker
 
             m_itemName = other.m_itemName;
             m_itemType = other.m_itemType;
-            m_modpack = other.m_modpack;
+            m_mod = other.m_mod;
             m_recipe = other.m_recipe;
         }
 

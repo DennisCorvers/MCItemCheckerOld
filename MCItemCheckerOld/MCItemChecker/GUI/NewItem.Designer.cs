@@ -41,7 +41,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tbNewItemName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbNewItemModpack = new System.Windows.Forms.ComboBox();
+            this.cbNewItemMod = new System.Windows.Forms.ComboBox();
             this.cbNewItemType = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.lmoditem = new System.Windows.Forms.Label();
@@ -49,11 +49,11 @@
             this.bDiscard = new System.Windows.Forms.Button();
             this.bCreateItem = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.TabModPack = new System.Windows.Forms.TabPage();
-            this.bmodpackdelete = new System.Windows.Forms.Button();
-            this.lbmodpacks = new System.Windows.Forms.ListBox();
-            this.bmodpackadd = new System.Windows.Forms.Button();
-            this.tbmodpackname = new System.Windows.Forms.TextBox();
+            this.TabMod = new System.Windows.Forms.TabPage();
+            this.bmoddelete = new System.Windows.Forms.Button();
+            this.lbmods = new System.Windows.Forms.ListBox();
+            this.bmodadd = new System.Windows.Forms.Button();
+            this.tbmodname = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.TabType = new System.Windows.Forms.TabPage();
             this.bdeletetype = new System.Windows.Forms.Button();
@@ -69,14 +69,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbsearchname = new MCItemChecker.GUI.Controls.DelayedTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbsearchmodpack = new System.Windows.Forms.ComboBox();
+            this.cbsearchmod = new System.Windows.Forms.ComboBox();
             this.cbsearchtype = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lvitems = new System.Windows.Forms.ListView();
             this.TabNewItem.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.TabModPack.SuspendLayout();
+            this.TabMod.SuspendLayout();
             this.TabType.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -174,7 +174,7 @@
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.tbNewItemName);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.cbNewItemModpack);
+            this.panel2.Controls.Add(this.cbNewItemMod);
             this.panel2.Controls.Add(this.cbNewItemType);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.lmoditem);
@@ -222,15 +222,15 @@
             this.label7.TabIndex = 123;
             this.label7.Text = "Type:";
             // 
-            // cbNewItemModpack
+            // cbNewItemMod
             // 
-            this.cbNewItemModpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbNewItemModpack.FormattingEnabled = true;
-            this.cbNewItemModpack.Location = new System.Drawing.Point(117, 62);
-            this.cbNewItemModpack.Name = "cbNewItemModpack";
-            this.cbNewItemModpack.Size = new System.Drawing.Size(296, 21);
-            this.cbNewItemModpack.Sorted = true;
-            this.cbNewItemModpack.TabIndex = 126;
+            this.cbNewItemMod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNewItemMod.FormattingEnabled = true;
+            this.cbNewItemMod.Location = new System.Drawing.Point(117, 62);
+            this.cbNewItemMod.Name = "cbNewItemMod";
+            this.cbNewItemMod.Size = new System.Drawing.Size(296, 21);
+            this.cbNewItemMod.Sorted = true;
+            this.cbNewItemMod.TabIndex = 126;
             // 
             // cbNewItemType
             // 
@@ -244,11 +244,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(55, 65);
+            this.label9.Location = new System.Drawing.Point(80, 65);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(56, 13);
+            this.label9.Size = new System.Drawing.Size(31, 13);
             this.label9.TabIndex = 125;
-            this.label9.Text = "ModPack:";
+            this.label9.Text = "Mod:";
             // 
             // lmoditem
             // 
@@ -298,7 +298,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.TabNewItem);
-            this.tabControl1.Controls.Add(this.TabModPack);
+            this.tabControl1.Controls.Add(this.TabMod);
             this.tabControl1.Controls.Add(this.TabType);
             this.tabControl1.Location = new System.Drawing.Point(554, 27);
             this.tabControl1.Name = "tabControl1";
@@ -306,72 +306,72 @@
             this.tabControl1.Size = new System.Drawing.Size(618, 517);
             this.tabControl1.TabIndex = 54;
             // 
-            // TabModPack
+            // TabMod
             // 
-            this.TabModPack.BackColor = System.Drawing.Color.White;
-            this.TabModPack.Controls.Add(this.bmodpackdelete);
-            this.TabModPack.Controls.Add(this.lbmodpacks);
-            this.TabModPack.Controls.Add(this.bmodpackadd);
-            this.TabModPack.Controls.Add(this.tbmodpackname);
-            this.TabModPack.Controls.Add(this.label11);
-            this.TabModPack.Location = new System.Drawing.Point(4, 22);
-            this.TabModPack.Name = "TabModPack";
-            this.TabModPack.Padding = new System.Windows.Forms.Padding(3);
-            this.TabModPack.Size = new System.Drawing.Size(610, 491);
-            this.TabModPack.TabIndex = 2;
-            this.TabModPack.Text = "ModPack";
+            this.TabMod.BackColor = System.Drawing.Color.White;
+            this.TabMod.Controls.Add(this.bmoddelete);
+            this.TabMod.Controls.Add(this.lbmods);
+            this.TabMod.Controls.Add(this.bmodadd);
+            this.TabMod.Controls.Add(this.tbmodname);
+            this.TabMod.Controls.Add(this.label11);
+            this.TabMod.Location = new System.Drawing.Point(4, 22);
+            this.TabMod.Name = "TabMod";
+            this.TabMod.Padding = new System.Windows.Forms.Padding(3);
+            this.TabMod.Size = new System.Drawing.Size(610, 491);
+            this.TabMod.TabIndex = 2;
+            this.TabMod.Text = "Mod";
             // 
-            // bmodpackdelete
+            // bmoddelete
             // 
-            this.bmodpackdelete.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.bmodpackdelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bmodpackdelete.Location = new System.Drawing.Point(264, 341);
-            this.bmodpackdelete.Name = "bmodpackdelete";
-            this.bmodpackdelete.Size = new System.Drawing.Size(75, 23);
-            this.bmodpackdelete.TabIndex = 20;
-            this.bmodpackdelete.Text = "Delete";
-            this.bmodpackdelete.UseVisualStyleBackColor = false;
-            this.bmodpackdelete.Click += new System.EventHandler(this.BModPackDelete_Click);
+            this.bmoddelete.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bmoddelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bmoddelete.Location = new System.Drawing.Point(264, 341);
+            this.bmoddelete.Name = "bmoddelete";
+            this.bmoddelete.Size = new System.Drawing.Size(75, 23);
+            this.bmoddelete.TabIndex = 20;
+            this.bmoddelete.Text = "Delete";
+            this.bmoddelete.UseVisualStyleBackColor = false;
+            this.bmoddelete.Click += new System.EventHandler(this.BModDelete_Click);
             // 
-            // lbmodpacks
+            // lbmods
             // 
-            this.lbmodpacks.FormattingEnabled = true;
-            this.lbmodpacks.Location = new System.Drawing.Point(81, 109);
-            this.lbmodpacks.Name = "lbmodpacks";
-            this.lbmodpacks.ScrollAlwaysVisible = true;
-            this.lbmodpacks.Size = new System.Drawing.Size(427, 212);
-            this.lbmodpacks.Sorted = true;
-            this.lbmodpacks.TabIndex = 16;
+            this.lbmods.FormattingEnabled = true;
+            this.lbmods.Location = new System.Drawing.Point(81, 109);
+            this.lbmods.Name = "lbmods";
+            this.lbmods.ScrollAlwaysVisible = true;
+            this.lbmods.Size = new System.Drawing.Size(427, 212);
+            this.lbmods.Sorted = true;
+            this.lbmods.TabIndex = 16;
             // 
-            // bmodpackadd
+            // bmodadd
             // 
-            this.bmodpackadd.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.bmodpackadd.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.bmodpackadd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bmodpackadd.Location = new System.Drawing.Point(433, 65);
-            this.bmodpackadd.Name = "bmodpackadd";
-            this.bmodpackadd.Size = new System.Drawing.Size(75, 23);
-            this.bmodpackadd.TabIndex = 19;
-            this.bmodpackadd.Text = "Add";
-            this.bmodpackadd.UseVisualStyleBackColor = false;
-            this.bmodpackadd.Click += new System.EventHandler(this.BModpackAdd_Click);
+            this.bmodadd.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.bmodadd.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.bmodadd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bmodadd.Location = new System.Drawing.Point(433, 65);
+            this.bmodadd.Name = "bmodadd";
+            this.bmodadd.Size = new System.Drawing.Size(75, 23);
+            this.bmodadd.TabIndex = 19;
+            this.bmodadd.Text = "Add";
+            this.bmodadd.UseVisualStyleBackColor = false;
+            this.bmodadd.Click += new System.EventHandler(this.BModAdd_Click);
             // 
-            // tbmodpackname
+            // tbmodname
             // 
-            this.tbmodpackname.Location = new System.Drawing.Point(171, 67);
-            this.tbmodpackname.Name = "tbmodpackname";
-            this.tbmodpackname.Size = new System.Drawing.Size(232, 20);
-            this.tbmodpackname.TabIndex = 18;
-            this.tbmodpackname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbModPackName_KeyDown);
+            this.tbmodname.Location = new System.Drawing.Point(171, 67);
+            this.tbmodname.Name = "tbmodname";
+            this.tbmodname.Size = new System.Drawing.Size(232, 20);
+            this.tbmodname.TabIndex = 18;
+            this.tbmodname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbModName_KeyDown);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(78, 70);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(87, 13);
+            this.label11.Size = new System.Drawing.Size(62, 13);
             this.label11.TabIndex = 17;
-            this.label11.Text = "ModPack Name:";
+            this.label11.Text = "Mod Name:";
             // 
             // TabType
             // 
@@ -523,15 +523,15 @@
             this.label2.TabIndex = 117;
             this.label2.Text = "Type:";
             // 
-            // cbsearchmodpack
+            // cbsearchmod
             // 
-            this.cbsearchmodpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbsearchmodpack.FormattingEnabled = true;
-            this.cbsearchmodpack.Location = new System.Drawing.Point(82, 491);
-            this.cbsearchmodpack.Name = "cbsearchmodpack";
-            this.cbsearchmodpack.Size = new System.Drawing.Size(296, 21);
-            this.cbsearchmodpack.Sorted = true;
-            this.cbsearchmodpack.TabIndex = 120;
+            this.cbsearchmod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbsearchmod.FormattingEnabled = true;
+            this.cbsearchmod.Location = new System.Drawing.Point(82, 491);
+            this.cbsearchmod.Name = "cbsearchmod";
+            this.cbsearchmod.Size = new System.Drawing.Size(296, 21);
+            this.cbsearchmod.Sorted = true;
+            this.cbsearchmod.TabIndex = 120;
             // 
             // cbsearchtype
             // 
@@ -548,11 +548,11 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(20, 494);
+            this.label3.Location = new System.Drawing.Point(45, 494);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 119;
-            this.label3.Text = "ModPack:";
+            this.label3.Text = "Mod:";
             // 
             // lvitems
             // 
@@ -582,7 +582,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbsearchname);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.cbsearchmodpack);
+            this.Controls.Add(this.cbsearchmod);
             this.Controls.Add(this.cbsearchtype);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lvitems);
@@ -603,8 +603,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.TabModPack.ResumeLayout(false);
-            this.TabModPack.PerformLayout();
+            this.TabMod.ResumeLayout(false);
+            this.TabMod.PerformLayout();
             this.TabType.ResumeLayout(false);
             this.TabType.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -632,12 +632,12 @@
         private System.Windows.Forms.Button bImportmodify;
         private System.Windows.Forms.Label lmoditem;
         private System.Windows.Forms.Label lmoditemname;
-        private System.Windows.Forms.TabPage TabModPack;
+        private System.Windows.Forms.TabPage TabMod;
         private System.Windows.Forms.TabPage TabType;
-        private System.Windows.Forms.Button bmodpackdelete;
-        private System.Windows.Forms.ListBox lbmodpacks;
-        private System.Windows.Forms.Button bmodpackadd;
-        private System.Windows.Forms.TextBox tbmodpackname;
+        private System.Windows.Forms.Button bmoddelete;
+        private System.Windows.Forms.ListBox lbmods;
+        private System.Windows.Forms.Button bmodadd;
+        private System.Windows.Forms.TextBox tbmodname;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button bdeletetype;
         private System.Windows.Forms.ListBox lbtype;
@@ -649,14 +649,14 @@
         private System.Windows.Forms.Label label1;
         private GUI.Controls.DelayedTextBox tbsearchname;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbsearchmodpack;
+        private System.Windows.Forms.ComboBox cbsearchmod;
         private System.Windows.Forms.ComboBox cbsearchtype;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListView lvitems;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbNewItemName;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbNewItemModpack;
+        private System.Windows.Forms.ComboBox cbNewItemMod;
         private System.Windows.Forms.ComboBox cbNewItemType;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label5;

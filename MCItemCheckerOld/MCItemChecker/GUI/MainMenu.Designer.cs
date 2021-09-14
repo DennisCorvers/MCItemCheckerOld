@@ -32,7 +32,7 @@
             this.lvItems = new System.Windows.Forms.ListView();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbSearchModpack = new System.Windows.Forms.ComboBox();
+            this.cbSearchMod = new System.Windows.Forms.ComboBox();
             this.cbSearchType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.bClearSearch = new System.Windows.Forms.Button();
@@ -40,7 +40,7 @@
             this.TabItemInfo = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.litemtype = new System.Windows.Forms.Label();
-            this.lmodpack = new System.Windows.Forms.Label();
+            this.lmod = new System.Windows.Forms.Label();
             this.litemname = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +48,7 @@
             this.lvsubitems = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.TabCalculate = new System.Windows.Forms.TabPage();
+            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.bcalculateclear = new System.Windows.Forms.Button();
             this.bfilter = new System.Windows.Forms.Button();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,13 +56,12 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageModpacksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageItemTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.tbsearchname = new MCItemChecker.GUI.Controls.DelayedTextBox();
-            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.TabItemInfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -108,16 +108,16 @@
             this.label7.TabIndex = 57;
             this.label7.Text = "Type:";
             // 
-            // cbSearchModpack
+            // cbSearchMod
             // 
-            this.cbSearchModpack.BackColor = System.Drawing.Color.DarkRed;
-            this.cbSearchModpack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSearchModpack.FormattingEnabled = true;
-            this.cbSearchModpack.Location = new System.Drawing.Point(82, 491);
-            this.cbSearchModpack.Name = "cbSearchModpack";
-            this.cbSearchModpack.Size = new System.Drawing.Size(296, 21);
-            this.cbSearchModpack.Sorted = true;
-            this.cbSearchModpack.TabIndex = 60;
+            this.cbSearchMod.BackColor = System.Drawing.Color.DarkRed;
+            this.cbSearchMod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSearchMod.FormattingEnabled = true;
+            this.cbSearchMod.Location = new System.Drawing.Point(82, 491);
+            this.cbSearchMod.Name = "cbSearchMod";
+            this.cbSearchMod.Size = new System.Drawing.Size(296, 21);
+            this.cbSearchMod.Sorted = true;
+            this.cbSearchMod.TabIndex = 60;
             // 
             // cbSearchType
             // 
@@ -133,11 +133,11 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(20, 494);
+            this.label8.Location = new System.Drawing.Point(45, 494);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 13);
+            this.label8.Size = new System.Drawing.Size(31, 13);
             this.label8.TabIndex = 59;
-            this.label8.Text = "ModPack:";
+            this.label8.Text = "Mod:";
             // 
             // bClearSearch
             // 
@@ -181,7 +181,7 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.litemtype);
-            this.panel1.Controls.Add(this.lmodpack);
+            this.panel1.Controls.Add(this.lmod);
             this.panel1.Controls.Add(this.litemname);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label1);
@@ -200,14 +200,14 @@
             this.litemtype.TabIndex = 10;
             this.litemtype.Text = "<item type>";
             // 
-            // lmodpack
+            // lmod
             // 
-            this.lmodpack.AutoSize = true;
-            this.lmodpack.Location = new System.Drawing.Point(80, 29);
-            this.lmodpack.Name = "lmodpack";
-            this.lmodpack.Size = new System.Drawing.Size(63, 13);
-            this.lmodpack.TabIndex = 9;
-            this.lmodpack.Text = "<modpack>";
+            this.lmod.AutoSize = true;
+            this.lmod.Location = new System.Drawing.Point(80, 29);
+            this.lmod.Name = "lmod";
+            this.lmod.Size = new System.Drawing.Size(39, 13);
+            this.lmod.TabIndex = 9;
+            this.lmod.Text = "<mod>";
             // 
             // litemname
             // 
@@ -242,11 +242,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 29);
+            this.label3.Location = new System.Drawing.Point(41, 29);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "ModPack:";
+            this.label3.Text = "Mod:";
             // 
             // lvsubitems
             // 
@@ -284,6 +284,14 @@
             this.TabCalculate.TabIndex = 1;
             this.TabCalculate.Text = "Calculate";
             this.TabCalculate.UseVisualStyleBackColor = true;
+            // 
+            // itemCalculation
+            // 
+            this.itemCalculation.BackColor = System.Drawing.Color.White;
+            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
+            this.itemCalculation.Name = "itemCalculation";
+            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
+            this.itemCalculation.TabIndex = 118;
             // 
             // bcalculateclear
             // 
@@ -338,7 +346,7 @@
             this.itemsToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.itemsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newItemToolStripMenuItem,
-            this.manageModpacksToolStripMenuItem,
+            this.manageModsToolStripMenuItem,
             this.manageItemTypesToolStripMenuItem});
             this.itemsToolStripMenuItem.Name = "itemsToolStripMenuItem";
             this.itemsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
@@ -351,12 +359,12 @@
             this.newItemToolStripMenuItem.Text = "Manage Items";
             this.newItemToolStripMenuItem.Click += new System.EventHandler(this.ManageItemsToolStripMenuItem_Click);
             // 
-            // manageModpacksToolStripMenuItem
+            // manageModsToolStripMenuItem
             // 
-            this.manageModpacksToolStripMenuItem.Name = "manageModpacksToolStripMenuItem";
-            this.manageModpacksToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.manageModpacksToolStripMenuItem.Text = "Manage Modpacks";
-            this.manageModpacksToolStripMenuItem.Click += new System.EventHandler(this.ManageModPackToolStripMenuItem_Click);
+            this.manageModsToolStripMenuItem.Name = "manageModsToolStripMenuItem";
+            this.manageModsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.manageModsToolStripMenuItem.Text = "Manage Mods";
+            this.manageModsToolStripMenuItem.Click += new System.EventHandler(this.ManageModToolStripMenuItem_Click);
             // 
             // manageItemTypesToolStripMenuItem
             // 
@@ -403,14 +411,6 @@
             this.tbsearchname.TabIndex = 117;
             this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.Tbsearchname_DelayedTextChanged);
             // 
-            // itemCalculation
-            // 
-            this.itemCalculation.BackColor = System.Drawing.Color.White;
-            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
-            this.itemCalculation.Name = "itemCalculation";
-            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
-            this.itemCalculation.TabIndex = 118;
-            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,7 +423,7 @@
             this.Controls.Add(this.bSearchItem);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.cbSearchModpack);
+            this.Controls.Add(this.cbSearchMod);
             this.Controls.Add(this.cbSearchType);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lvItems);
@@ -454,7 +454,7 @@
         private System.Windows.Forms.ListView lvItems;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbSearchModpack;
+        private System.Windows.Forms.ComboBox cbSearchMod;
         private System.Windows.Forms.ComboBox cbSearchType;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button bClearSearch;
@@ -462,7 +462,7 @@
         private System.Windows.Forms.TabPage TabItemInfo;
         private System.Windows.Forms.ListView lvsubitems;
         private System.Windows.Forms.Label litemtype;
-        private System.Windows.Forms.Label lmodpack;
+        private System.Windows.Forms.Label lmod;
         private System.Windows.Forms.Label litemname;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
@@ -477,7 +477,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem itemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newItemToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageModpacksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageModsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageItemTypesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToTextToolStripMenuItem;
