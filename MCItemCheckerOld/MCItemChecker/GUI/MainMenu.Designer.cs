@@ -82,8 +82,9 @@
             this.lvItems.TabIndex = 9;
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
-            this.lvItems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
-            this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvItems_MouseDoubleClick);
+            this.lvItems.SelectedIndexChanged += new System.EventHandler(this.LvItems_SelectionChanged);
+            this.lvItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvItems_KeyDown);
+            this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvItems_MouseDoubleClick);
             // 
             // label5
             // 
@@ -408,7 +409,7 @@
             this.tbsearchname.Name = "tbsearchname";
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 117;
-            this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.tbsearchname_DelayedTextChanged);
+            this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.Tbsearchname_DelayedTextChanged);
             // 
             // MainMenu
             // 

@@ -173,7 +173,7 @@ namespace MCItemChecker
         private void TbSearchName_TextChanged(object sender, EventArgs e)
             => FindItem();
 
-        private void LvCalculateItems_Click(object sender, EventArgs e)
+        private void LvItems_SelectionChanged(object sender, EventArgs e)
         {
             if (lvItems.TryGetSelectedItem(out Item i))
                 LoadItemInfo(i);
@@ -207,13 +207,27 @@ namespace MCItemChecker
             }
         }
 
-        private void lvItems_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LvItems_MouseDoubleClick(object sender, MouseEventArgs e)
+            => CalculateItem_Click();
+
+        private void LvItems_KeyDown(object sender, KeyEventArgs e)
         {
-            if (tabControl.SelectedTab == TabCalculate)
-                itemCalculation.CalculateItem(lvItems.GetSelectedItem<Item>());
+            if (e.KeyCode == Keys.Return)
+                CalculateItem_Click();
         }
 
-        private void tbsearchname_DelayedTextChanged(object sender, EventArgs e)
+        private void CalculateItem_Click()
+        {
+            if (tabControl.SelectedTab != TabCalculate)
+                return;
+
+            if (!lvItems.TryGetSelectedItem(out Item i))
+                return;
+
+            itemCalculation.CalculateItem(i);
+        }
+
+        private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)
             => FindItem();
     }
 }
