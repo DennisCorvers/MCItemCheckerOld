@@ -208,5 +208,11 @@ namespace MCItemChecker
                 e.SuppressKeyPress = true;
             }
         }
+
+        private void lvItems_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (tabControl.SelectedTab == TabCalculate)
+                itemCalculation.CalculateItem(lvItems.GetSelectedItem<Item>());
+        }
     }
 }

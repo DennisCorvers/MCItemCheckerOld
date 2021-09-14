@@ -83,6 +83,7 @@
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
             this.lvItems.SelectedIndexChanged += new System.EventHandler(this.LvCalculateItems_Click);
+            this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvItems_MouseDoubleClick);
             // 
             // label5
             // 
