@@ -594,7 +594,6 @@
             this.MaximumSize = new System.Drawing.Size(1200, 600);
             this.MinimumSize = new System.Drawing.Size(1200, 600);
             this.Name = "NewItem";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewItem";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewItem_FormClosed);
