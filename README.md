@@ -38,3 +38,5 @@ Example of when the option "Base Items" is checked for the same recipe as the pr
 # New Features
 ## 1.7
 - Added option to mark calculated items using **return** or **double click**
+- Added option to remove calculated items from the calculated item list using **delete**
+- Added option to partially remove calculated items via a right-click menu
