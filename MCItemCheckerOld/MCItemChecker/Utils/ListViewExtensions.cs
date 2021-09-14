@@ -26,6 +26,17 @@ namespace MCItemChecker.Utils
             return true;
         }
 
+        public static ICollection<T> GetSelectedItems<T>(this ListView listview)
+        {
+            var selectedItems = listview.GetSelectedListViewItems();
+            var retVal = new List<T>(selectedItems.Count);
+
+            foreach (var item in selectedItems)
+                retVal.Add((T)item.Tag);
+
+            return retVal;
+        }
+
         public static ICollection<ListViewItem> GetSelectedListViewItems(this ListView listview)
             => new SelectedListViewItems(listview);
 

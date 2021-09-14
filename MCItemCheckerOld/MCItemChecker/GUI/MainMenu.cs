@@ -184,10 +184,8 @@ namespace MCItemChecker
 
         private void BCalculate_Click(object sender, EventArgs e)
         {
-            if (lvItems.TryGetSelectedItem(out Item i))
-                itemCalculation.CalculateItem(i);
-            else
-                itemCalculation.CalculateItem();
+            lvItems.TryGetSelectedItem(out Item i);
+            itemCalculation.CalculateItem(i);
         }
 
         private void ExportToTextToolStripMenuItem_Click(object sender, EventArgs e)
