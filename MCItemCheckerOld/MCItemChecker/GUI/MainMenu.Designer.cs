@@ -48,7 +48,6 @@
             this.lvsubitems = new System.Windows.Forms.ListView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.TabCalculate = new System.Windows.Forms.TabPage();
-            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.bcalculateclear = new System.Windows.Forms.Button();
             this.bfilter = new System.Windows.Forms.Button();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +61,7 @@
             this.exportToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.tbsearchname = new MCItemChecker.GUI.Controls.DelayedTextBox();
+            this.itemCalculation = new MCItemChecker.GUI.Controls.ItemCalculation();
             this.TabItemInfo.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -285,14 +285,6 @@
             this.TabCalculate.Text = "Calculate";
             this.TabCalculate.UseVisualStyleBackColor = true;
             // 
-            // itemCalculation
-            // 
-            this.itemCalculation.BackColor = System.Drawing.Color.White;
-            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
-            this.itemCalculation.Name = "itemCalculation";
-            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
-            this.itemCalculation.TabIndex = 118;
-            // 
             // bcalculateclear
             // 
             this.bcalculateclear.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -313,7 +305,7 @@
             this.bfilter.Name = "bfilter";
             this.bfilter.Size = new System.Drawing.Size(75, 23);
             this.bfilter.TabIndex = 116;
-            this.bfilter.Text = "Go";
+            this.bfilter.Text = "Calculate";
             this.bfilter.UseVisualStyleBackColor = false;
             this.bfilter.Click += new System.EventHandler(this.BCalculate_Click);
             // 
@@ -410,6 +402,14 @@
             this.tbsearchname.Size = new System.Drawing.Size(296, 20);
             this.tbsearchname.TabIndex = 117;
             this.tbsearchname.DelayedTextChanged += new System.EventHandler(this.Tbsearchname_DelayedTextChanged);
+            // 
+            // itemCalculation
+            // 
+            this.itemCalculation.BackColor = System.Drawing.Color.White;
+            this.itemCalculation.Location = new System.Drawing.Point(3, 6);
+            this.itemCalculation.Name = "itemCalculation";
+            this.itemCalculation.Size = new System.Drawing.Size(493, 441);
+            this.itemCalculation.TabIndex = 118;
             // 
             // MainMenu
             // 

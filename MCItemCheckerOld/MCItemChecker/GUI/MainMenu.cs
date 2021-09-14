@@ -229,5 +229,10 @@ namespace MCItemChecker
 
         private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)
             => FindItem();
+
+        private void tbsearchname_DelayedTextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

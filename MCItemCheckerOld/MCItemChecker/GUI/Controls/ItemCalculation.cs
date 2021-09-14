@@ -136,10 +136,16 @@ namespace MCItemChecker.GUI.Controls
                 return;
 
             if (lvCalculatedItems.SelectedItems.Count > 1)
+            {
                 GUIControl.InfoMessage("Can only remove one item at a time.");
+                return;
+            }
 
             if (!lvCalculatedItems.TryGetSelectedItem(out KeyValuePair<Item, double> subitem))
+            {
                 GUIControl.InfoMessage("No item selected for removal.");
+                return;
+            }
 
             RemoveItem(subitem);
         }
@@ -236,12 +242,11 @@ namespace MCItemChecker.GUI.Controls
             var item = kvItem.Key;
 
             InputBox input = new InputBox("Enter amount...", $"Enter amount of \"{item.ItemName}\" to remove.");
-            double amountToRemove = 0;
 
             // Keep asking for valid input using the same WinForm...
             while (input.ShowDialog() == DialogResult.OK)
             {
-                if (!input.Result.FractionToDouble(out amountToRemove))
+                if (!input.Result.FractionToDouble(out double amountToRemove))
                 {
                     GUIControl.InfoMessage($"Enter a valid amount to add.{Environment.NewLine}Enter a positive integer, decimal or fraction");
                     continue;
@@ -255,10 +260,9 @@ namespace MCItemChecker.GUI.Controls
                 if (amountToRemove >= kvItem.Value)
                     amountToRemove = kvItem.Value;
 
+                RemoveItem(new KeyValuePair<Item, double>(item, amountToRemove));
                 break;
             }
-
-            RemoveItem(new KeyValuePair<Item, double>(item, amountToRemove));
         }
 
 
