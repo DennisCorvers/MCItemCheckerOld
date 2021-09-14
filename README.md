@@ -2,6 +2,7 @@
 
 (Partial) rewrite of an old project that can be used to iteratively calculate the required items to make some item. The context of these items is completely up to the user, meaning that an item can be a "multi-block", fluids, timings, power etc. The application can also be used for other resource/crafting based games, such as Factorio for example.
 
+
 # Usage
 Items and relevant information can be added/edited under the "Item Database" menu option.
 
@@ -33,3 +34,7 @@ Above is an example of all the materials required to craft an "Iron Pickaxe".
 ![Viewing Recipes](https://i.imgur.com/FFIh5Pd.png)
 
 Example of when the option "Base Items" is checked for the same recipe as the previous image.
+
+# New Features
+## 1.7
+- Added option to mark calculated items using **return** or **double click**

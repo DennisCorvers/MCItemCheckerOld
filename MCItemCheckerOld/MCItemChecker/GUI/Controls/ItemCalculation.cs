@@ -69,9 +69,7 @@ namespace MCItemChecker.GUI.Controls
         }
 
         public void UpdateTypes(IEnumerable<string> types)
-        {
-            GUIControl.UpdateControl(types, cbfiltertype);
-        }
+            => GUIControl.UpdateControl(types, cbfiltertype);
 
         public void Reset()
         {
@@ -85,6 +83,64 @@ namespace MCItemChecker.GUI.Controls
             m_lastItem = default;
         }
 
+        private void MarkItemAsDone()
+        {
+            if (lvCalculatedItems.SelectedItems.Count == 0)
+                return;
+
+            var selectedItems = lvCalculatedItems.GetSelectedListViewItems();
+            if (selectedItems.All(x => x.BackColor == Colour.SelectedDone))
+            {
+                PaintItems(Colour.Transparent);
+            }
+            else
+            {
+                PaintItems(Colour.SelectedDone);
+            }
+
+            void PaintItems(Colour newColour)
+            {
+                foreach (var item in selectedItems)
+                    item.BackColor = newColour;
+
+                selectedItems.Clear();
+            }
+        }
+
+        private void CbBase_CheckStateChanged(object sender, EventArgs e)
+            => CalculateItem();
+
+        private void NumAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                CalculateItem();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void LvCalculatedItems_MouseDoubleClick(object sender, MouseEventArgs e)
+            => MarkItemAsDone();
+
+        private void LvCalculatedItems_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Return:
+                    {
+                        MarkItemAsDone();
+                        break;
+                    }
+                case Keys.Delete:
+                    {
+                        break;
+                    }
+                default:
+                    return;
+            }
+        }
+
+
         private struct CalculationInfo
         {
             public Item Item
@@ -96,20 +152,6 @@ namespace MCItemChecker.GUI.Controls
             public CalculationInfo(Item item)
             {
                 Item = item ?? throw new ArgumentNullException(nameof(item));
-            }
-        }
-
-        private void CbBase_CheckStateChanged(object sender, EventArgs e)
-        {
-            CalculateItem();
-        }
-
-        private void NumAmount_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return)
-            {
-                CalculateItem();
-                e.SuppressKeyPress = true;
             }
         }
     }

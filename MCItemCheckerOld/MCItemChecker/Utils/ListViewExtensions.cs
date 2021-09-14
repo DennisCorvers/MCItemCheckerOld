@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListView;
 
 namespace MCItemChecker.Utils
 {
@@ -25,15 +27,7 @@ namespace MCItemChecker.Utils
         }
 
         public static ICollection<ListViewItem> GetSelectedListViewItems(this ListView listview)
-        {
-            var selectedItems = listview.SelectedItems;
-            var lvItems = new List<ListViewItem>(selectedItems.Count);
-
-            for (int i = selectedItems.Count - 1; i >= 0; i--)
-                lvItems.Add(selectedItems[i]);
-
-            return lvItems;
-        }
+            => new SelectedListViewItems(listview);
 
         public static void InsertCollection<T>(this ListView listview, IEnumerable<T> itemlist, Func<T, ListViewItem> listviewFactory)
         {
@@ -47,6 +41,100 @@ namespace MCItemChecker.Utils
 
                 listview.Items.Add(lvItem);
             }
+        }
+
+        public static SelectedListViewItemCollectionEnumerator GetTypedEnumerator(this SelectedListViewItemCollection selectedListViewItems)
+        {
+            return new SelectedListViewItemCollectionEnumerator(selectedListViewItems);
+        }
+
+        internal struct SelectedListViewItemCollectionEnumerator : IEnumerator<ListViewItem>, IEnumerator
+        {
+            private readonly SelectedListViewItemCollection m_collection;
+            private int m_index;
+            private ListViewItem m_current;
+
+            internal SelectedListViewItemCollectionEnumerator(SelectedListViewItemCollection collection)
+            {
+                m_collection = collection;
+                m_index = 0;
+                m_current = default;
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if ((uint)m_index < (uint)m_collection.Count)
+                {
+                    m_current = m_collection[m_index++];
+                    return true;
+                }
+
+                m_index = m_collection.Count + 1;
+                m_current = default;
+
+                return false;
+            }
+
+            public ListViewItem Current
+                => m_current;
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (m_index == 0 || (m_index == m_collection.Count + 1))
+                        throw new InvalidOperationException();
+
+                    return Current;
+                }
+            }
+
+            public void Reset()
+            {
+                m_index = 0;
+                m_current = default;
+            }
+        }
+
+        internal struct SelectedListViewItems : ICollection<ListViewItem>
+        {
+            private readonly ListView m_listview;
+
+            public SelectedListViewItems(ListView listView)
+            {
+                m_listview = listView;
+            }
+
+            public int Count
+                => m_listview.SelectedItems.Count;
+
+            public bool IsReadOnly
+                => false;
+
+            public void Clear()
+                => m_listview.SelectedItems.Clear();
+
+            void ICollection<ListViewItem>.Add(ListViewItem item)
+                => throw new InvalidOperationException();
+
+            public bool Contains(ListViewItem item)
+                => m_listview.SelectedItems.Contains(item);
+
+            public void CopyTo(ListViewItem[] array, int arrayIndex)
+                => m_listview.SelectedItems.CopyTo(array, arrayIndex);
+
+            public IEnumerator<ListViewItem> GetEnumerator()
+                => new SelectedListViewItemCollectionEnumerator(m_listview.SelectedItems);
+
+            public bool Remove(ListViewItem item)
+                => throw new InvalidOperationException();
+
+            IEnumerator IEnumerable.GetEnumerator()
+                => new SelectedListViewItemCollectionEnumerator(m_listview.SelectedItems);
         }
     }
 }
