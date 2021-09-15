@@ -1,12 +1,15 @@
 ﻿using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
+using Newtonsoft.Json;
 
 namespace MCItemChecker.Utils
 {
     static class DataStream
     {
-        public static void SaveFile(object T, string filepath)
+        [Obsolete("BinaryFormatter is obsolete. Use Json instead", false)]
+        public static void SaveFileOld(object T, string filepath)
         {
             IFormatter formatter = new BinaryFormatter();
             using (Stream stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
@@ -16,13 +19,30 @@ namespace MCItemChecker.Utils
             }
         }
 
-        public static T OpenFile<T>(string filepath)
+        [Obsolete("BinaryFormatter is obsolete. Use Json instead", false)]
+        public static T OpenFileOld<T>(string filepath)
         {
             IFormatter formatter = new BinaryFormatter();
             using (Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 T file = (T)formatter.Deserialize(stream);
                 return file;
+            }
+        }
+
+        public static void SaveFile<T>(T data, string filePath)
+        {
+            using (var file = File.Create(filePath))
+            {
+                ProtoBuf.Serializer.Serialize(file, data);
+            }
+        }
+
+        public static T OpenFile<T>(string filepath)
+        {
+            using (var file = File.OpenRead(filepath))
+            {
+                return ProtoBuf.Serializer.Deserialize<T>(file);
             }
         }
 

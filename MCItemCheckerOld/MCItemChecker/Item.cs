@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 using MCItemChecker.Utils;
+using Newtonsoft.Json;
+using ProtoBuf;
 
 namespace MCItemChecker
 {
     [Serializable]
     [DebuggerDisplay("Name = {ItemName}")]
+    [ProtoContract]
     public class Item : IEquatable<Item>
     {
 #pragma warning disable IDE0032
+        [ProtoMember(1)]
         private int m_itemId;
+        [ProtoMember(2)]
         private string m_itemName;
+        [ProtoMember(3)]
         private string m_itemType;
+        [ProtoMember(4)]
         private string m_mod;
+        [ProtoMember(5)]
         private Dictionary<Item, double> m_recipe;
 #pragma warning restore
 
@@ -39,6 +48,13 @@ namespace MCItemChecker
         }
         public Dictionary<Item, double> Recipe
             => m_recipe;
+
+        // Parameterless constructor required for serializers.
+        private Item()
+        {
+            m_mod = ItemChecker.DefaultName;
+            m_itemType = ItemChecker.DefaultName;
+        }
 
         public Item(string itemname, string type, string mod)
         {
@@ -103,6 +119,14 @@ namespace MCItemChecker
         public static bool operator !=(Item left, Item right)
         {
             return !(left == right);
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Ensure an item always has a valid recipe dictionary.
+            if (m_recipe == null)
+                m_recipe = new Dictionary<Item, double>();
         }
     }
 }

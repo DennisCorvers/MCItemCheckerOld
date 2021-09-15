@@ -14,15 +14,9 @@ namespace MCItemChecker
 {
     public partial class StartForm : Form
     {
-        private string m_defaultDirectory;
-        private string m_defaultFilePath;
-
         public StartForm()
         {
             InitializeComponent();
-
-            m_defaultDirectory = Directory.GetCurrentDirectory() + "\\MCItemCheckerData";
-            m_defaultFilePath = m_defaultDirectory + "\\Data.mci";
 
             if (string.IsNullOrEmpty(MySettings.Properties.FilePath))
                 tbpath.Text = "No file selected!";
@@ -155,8 +149,6 @@ namespace MCItemChecker
 
         private bool TryLoadFile(string path, out ItemChecker file)
         {
-            file = null;
-
             try
             {
                 file = DataStream.OpenFile<ItemChecker>(path);
@@ -164,8 +156,33 @@ namespace MCItemChecker
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // To be removed in future iterations...
+                if (TryLoadDeprecated(path, out file))
+                    return true;
+                else
+                    MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            return false;
+        }
+
+        private bool TryLoadDeprecated(string path, out ItemChecker file)
+        {
+            file = null;
+
+            try
+            {
+                file = DataStream.OpenFileOld<ItemChecker>(path);
+
+                // We are still dealing with an old file format.
+                // Rename the old file.
+                var newDir = $"{Path.GetDirectoryName(path)}\\{Path.GetFileNameWithoutExtension(path)}Old{Path.GetExtension(path)}";
+
+                File.Move(path, newDir);
+                return true;
+            }
+            catch
+            { }
 
             return false;
         }

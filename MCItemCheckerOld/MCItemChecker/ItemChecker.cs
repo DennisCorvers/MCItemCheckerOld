@@ -1,13 +1,17 @@
 ﻿using MCItemChecker.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
+using ProtoBuf;
 
 namespace MCItemChecker
 {
     [Serializable]
+    [ProtoContract]
     public class ItemChecker
     {
         internal const string DefaultName = "-";
@@ -20,16 +24,21 @@ namespace MCItemChecker
         public IEnumerable<string> Types
             => m_itemTypes;
 
-        private HashSet<string> m_mods       
+        private HashSet<string> m_mods
             => m_modpacks;
 
-        private readonly Dictionary<int, Item> m_items = new Dictionary<int, Item>();
         private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
-        // Name will become deprecated in the future. Breaks binary formatter.
-        private readonly HashSet<string> m_modpacks = new HashSet<string>();
-        private readonly HashSet<string> m_itemTypes = new HashSet<string>();
 
+#pragma warning disable IDE0044 // Readonly modifier not possible with ProtoBuf
+        [ProtoMember(1)]
+        private HashSet<string> m_modpacks = new HashSet<string>();
+        [ProtoMember(2)]
+        private Dictionary<int, Item> m_items = new Dictionary<int, Item>();
+        [ProtoMember(3)]
+        private HashSet<string> m_itemTypes = new HashSet<string>();
+        [ProtoMember(4)]
         private int m_lastItemId = 0;
+#pragma warning restore IDE0044
 
         public ItemChecker()
         {
@@ -37,6 +46,13 @@ namespace MCItemChecker
             m_itemTypes.Add(DefaultName);
         }
 
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Assemble item name lookup table
+            foreach (var items in m_items)
+                m_itemNameLookup.Add(items.Value.ItemName.ToLower());
+        }
 
         public bool AddNewType(string type)
         {

@@ -88,6 +88,7 @@ namespace MCItemChecker
             headers.Add("Amount", 100, HorizontalAlignment.Left);
             headers.Add("Type", 100, HorizontalAlignment.Left);
         }
+
         private void Initlvitems()
         {
             lvItems.Scrollable = true;
@@ -106,12 +107,16 @@ namespace MCItemChecker
             lmod.Text = item.ModName;
             UpdateSubItems(item);
         }
+
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
             => DataStream.SaveFile(m_itemChecker, MySettings.Properties.FilePath);
+
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
             => Close();
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
             => SaveToolStripMenuItem_Click(sender, e);
+
         private void LvItems_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             if (sender is ListView listView)
@@ -120,8 +125,10 @@ namespace MCItemChecker
 
         private void ManageItemsToolStripMenuItem_Click(object sender, EventArgs e)
             => DisplayNewItemForm(NewItem.Tabs.Items);
+
         private void ManageModToolStripMenuItem_Click(object sender, EventArgs e)
             => DisplayNewItemForm(NewItem.Tabs.Mods);
+
         private void ManageItemTypeToolStripMenuItem_Click(object sender, EventArgs e)
             => DisplayNewItemForm(NewItem.Tabs.ItemTypes);
 
