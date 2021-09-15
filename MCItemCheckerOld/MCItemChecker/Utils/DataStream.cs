@@ -2,7 +2,6 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
-using Newtonsoft.Json;
 
 namespace MCItemChecker.Utils
 {
