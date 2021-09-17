@@ -165,7 +165,7 @@ namespace MCItemChecker
             string type = cbSearchType.SelectedItem?.ToString();
             string modpack = cbSearchMod.SelectedItem?.ToString();
 
-            UpdateItemList(m_itemChecker.FindItem(name, type, modpack));
+            UpdateItemList(m_itemChecker.FindItems(name, type, modpack));
         }
 
         private void BClearSearch_Click(object sender, EventArgs e)

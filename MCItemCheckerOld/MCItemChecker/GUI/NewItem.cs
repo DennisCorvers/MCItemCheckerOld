@@ -357,7 +357,7 @@ namespace MCItemChecker
             string type = cbsearchtype.SelectedItem?.ToString();
             string mod = cbsearchmod.SelectedItem?.ToString();
 
-            return m_itemchecker.FindItem(itemName, type, mod);
+            return m_itemchecker.FindItems(itemName, type, mod);
         }
         private void BImportModify_Click(object sender, EventArgs e)
         {

@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using ProtoBuf;
+using System.Runtime.CompilerServices;
 
 namespace MCItemChecker
 {
@@ -50,8 +51,11 @@ namespace MCItemChecker
         private void OnDeserialized(StreamingContext context)
         {
             // Assemble item name lookup table
-            foreach (var items in m_items)
-                m_itemNameLookup.Add(items.Value.ItemName.ToLower());
+            foreach (var item in m_items)
+            {
+                item.Value.OnDeserializing(this);
+                m_itemNameLookup.Add(item.Value.ItemName.ToLower());
+            }
         }
 
         public bool AddNewType(string type)
@@ -157,7 +161,14 @@ namespace MCItemChecker
             return true;
         }
 
-        public IEnumerable<Item> FindItem(string itemname = null, string type = null, string mod = null, Dictionary<Item, double> craftingneed = null)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Item FindItem(int itemId)
+        {
+            return m_items[itemId];
+        }
+
+
+        public IEnumerable<Item> FindItems(string itemname = null, string type = null, string mod = null, Dictionary<Item, double> craftingneed = null)
         {
             IEnumerable<Item> result = m_items.Values;
 
