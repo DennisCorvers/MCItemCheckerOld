@@ -6,26 +6,28 @@ using System.Text;
 
 namespace MCItemChecker
 {
-    public sealed class MySettings
+    public sealed class Settings
     {
         private const string filename = "settings.json";
-        private static readonly MySettings m_instance = new MySettings();
+        private static readonly Settings m_instance = new Settings();
 
-        static MySettings()
+        static Settings()
         {
             AppDataSettings.LoadSettings(ref m_instance, filename);
         }
 
-        private MySettings()
+        private Settings()
         { }
 
-        public static MySettings Properties
+        public static Settings Properties
             => m_instance;
 
         public static void Save()
         {
             AppDataSettings.SaveSettings(m_instance, filename);
         }
+
+        public const int MaxRecursionCount = 128;
 
         public string FilePath
         { get; set; } = string.Empty;

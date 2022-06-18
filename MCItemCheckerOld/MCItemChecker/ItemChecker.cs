@@ -15,9 +15,6 @@ namespace MCItemChecker
     [ProtoContract]
     public class ItemChecker
     {
-        internal const string DefaultName = "-";
-        internal const int MaxRecursionCount = 128;
-
         public IEnumerable<Item> ItemList
             => m_items.Values;
         public IEnumerable<string> Mods
@@ -43,8 +40,8 @@ namespace MCItemChecker
 
         public ItemChecker()
         {
-            m_mods.Add(DefaultName);
-            m_itemTypes.Add(DefaultName);
+            m_mods.Add(Constants.DefaultName);
+            m_itemTypes.Add(Constants.DefaultName);
             m_itemNameLookup = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -78,7 +75,7 @@ namespace MCItemChecker
                 foreach (var item in m_items.Values)
                 {
                     if (item.Type == type)
-                        item.Type = DefaultName;
+                        item.Type = Constants.DefaultName;
                 }
                 return true;
             }
@@ -106,7 +103,7 @@ namespace MCItemChecker
                 foreach (var item in m_items.Values)
                 {
                     if (item.ModName == mod)
-                        item.ModName = DefaultName;
+                        item.ModName = Constants.DefaultName;
                 }
 
                 return true;
@@ -176,68 +173,16 @@ namespace MCItemChecker
             if (!string.IsNullOrWhiteSpace(itemname))
                 result = result.Where(x => x.ItemName.IndexOf(itemname, StringComparison.OrdinalIgnoreCase) >= 0);
 
-            if (!string.IsNullOrWhiteSpace(type) && type != DefaultName)
+            if (!string.IsNullOrWhiteSpace(type) && type != Constants.DefaultName)
                 result = result.Where(x => x.Type == type);
 
-            if (!string.IsNullOrWhiteSpace(mod) && mod != DefaultName)
+            if (!string.IsNullOrWhiteSpace(mod) && mod != Constants.DefaultName)
                 result = result.Where(x => x.ModName == mod);
 
             if (craftingneed != null)
                 result = result.Where(x => x.Recipe == craftingneed);
 
             return result;
-        }
-
-
-        private void CalculateItemRecipe(Item item, double amount, bool isBaseItem, Dictionary<Item, double> craftingRecipe, int recursionCount)
-        {
-            if (++recursionCount >= MaxRecursionCount)
-                return;
-
-            foreach (var pair in item.Recipe)
-            {
-                if (isBaseItem)
-                {
-                    if (pair.Key.Recipe.Count <= 0)
-                    {
-                        AddToRecipe(pair);
-                        continue;
-                    }
-                }
-                else
-                {
-                    AddToRecipe(pair);
-
-                    if (pair.Key.Recipe.Count <= 0)
-                        continue;
-                }
-
-                double tempAmount = amount * pair.Value;
-                CalculateItemRecipe(pair.Key, tempAmount, isBaseItem, craftingRecipe, recursionCount);
-            }
-
-            void AddToRecipe(KeyValuePair<Item, double> recipeItem)
-            {
-                if (craftingRecipe.ContainsKey(recipeItem.Key))
-                    craftingRecipe[recipeItem.Key] += recipeItem.Value * amount;
-                else
-                    craftingRecipe.Add(recipeItem.Key, recipeItem.Value * amount);
-            }
-        }
-
-        /// <summary>
-        /// Collects all the required items and their amounts to craft the requested item.
-        /// </summary>
-        /// <param name="item">The item to find the required items for.</param>
-        /// <param name="amount">The start amount</param>
-        /// <param name="returnbase">TRUE if only the last items in the chain should be collected.</param>
-        public Dictionary<Item, double> CalculateRecipe(Item item, double amount = 1, bool returnbase = false)
-        {
-            var recipe = new Dictionary<Item, double>();
-
-            CalculateItemRecipe(item, amount, returnbase, recipe, 0);
-
-            return recipe;
         }
     }
 }

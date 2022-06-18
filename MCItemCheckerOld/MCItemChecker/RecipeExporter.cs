@@ -14,9 +14,9 @@ namespace MCItemChecker
         {
             //Creates a path with a file name
             StringBuilder sb = new StringBuilder();
-            sb.Append(Path.GetDirectoryName(MySettings.Properties.FilePath));
+            sb.Append(Path.GetDirectoryName(Settings.Properties.FilePath));
             sb.Append("\\");
-            sb.Append(Path.GetFileNameWithoutExtension(MySettings.Properties.FilePath));
+            sb.Append(Path.GetFileNameWithoutExtension(Settings.Properties.FilePath));
             sb.Append(" Recipes.txt");
 
             string fulltextpath = sb.ToString();
@@ -53,7 +53,7 @@ namespace MCItemChecker
             if (item.Recipe.Count <= 0)
                 return;
 
-            if (count++ >= ItemChecker.MaxRecursionCount)
+            if (count++ >= Settings.MaxRecursionCount)
                 return;
 
             //Adds Main item

@@ -22,7 +22,7 @@ namespace MCItemChecker
             m_itemChecker = itemChecker;
 
             InitializeComponent();
-            Text = Path.GetFileName(MySettings.Properties.FilePath) + " - MCItemChecker";
+            Text = Path.GetFileName(Settings.Properties.FilePath) + " - MCItemChecker";
 
             lvItems.ListViewItemSorter = new ListViewComparer();
 
@@ -34,8 +34,8 @@ namespace MCItemChecker
             UpdateModControls();
             UpdateItemTypeControls();
 
-            cbSearchMod.SelectedItem = ItemChecker.DefaultName;
-            cbSearchType.SelectedItem = ItemChecker.DefaultName;
+            cbSearchMod.SelectedItem = Constants.DefaultName;
+            cbSearchType.SelectedItem = Constants.DefaultName;
 
             litemname.Text = "";
             litemtype.Text = "";
@@ -109,7 +109,7 @@ namespace MCItemChecker
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-            => DataStream.SaveFile(m_itemChecker, MySettings.Properties.FilePath);
+            => DataStream.SaveFile(m_itemChecker, Settings.Properties.FilePath);
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
             => Close();
@@ -171,8 +171,8 @@ namespace MCItemChecker
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
-            cbSearchType.SelectedItem = ItemChecker.DefaultName;
-            cbSearchMod.SelectedItem = ItemChecker.DefaultName;
+            cbSearchType.SelectedItem = Constants.DefaultName;
+            cbSearchMod.SelectedItem = Constants.DefaultName;
 
             UpdateItemList(m_itemChecker.ItemList);
         }

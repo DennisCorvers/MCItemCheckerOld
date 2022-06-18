@@ -18,10 +18,10 @@ namespace MCItemChecker
         {
             InitializeComponent();
 
-            if (string.IsNullOrEmpty(MySettings.Properties.FilePath))
+            if (string.IsNullOrEmpty(Settings.Properties.FilePath))
                 tbpath.Text = "No file selected!";
             else
-                tbpath.Text = MySettings.Properties.FilePath;
+                tbpath.Text = Settings.Properties.FilePath;
         }
 
         private void GoToMainForm(ItemChecker file)
@@ -44,7 +44,7 @@ namespace MCItemChecker
         private bool TryLoadItemCheckerDatabase(out ItemChecker file)
         {
             //Checks if the Filename field is empty.
-            if (string.IsNullOrEmpty(MySettings.Properties.FilePath))
+            if (string.IsNullOrEmpty(Settings.Properties.FilePath))
             {
                 DialogResult dialogResult = MessageBox.Show($"No .item file was found!{Environment.NewLine}Do you want to create a new file?",
                     "No File Found!", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -57,7 +57,7 @@ namespace MCItemChecker
             }
             else
             {
-                return TryLoadFile(MySettings.Properties.FilePath, out file);
+                return TryLoadFile(Settings.Properties.FilePath, out file);
             }
 
             file = null;
@@ -71,8 +71,8 @@ namespace MCItemChecker
 
         private void UpdateFilePath(string FilePath)
         {
-            MySettings.Properties.FilePath = FilePath;
-            MySettings.Save();
+            Settings.Properties.FilePath = FilePath;
+            Settings.Save();
         }
 
         private void BExit_Click(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace MCItemChecker
                     if (TryLoadFile(openfiledialog.FileName, out ItemChecker file))
                     {
                         UpdateFilePath(openfiledialog.FileName);
-                        tbpath.Text = MySettings.Properties.FilePath;
+                        tbpath.Text = Settings.Properties.FilePath;
 
                         GoToMainForm(file);
                     }
@@ -130,14 +130,14 @@ namespace MCItemChecker
             if (result == DialogResult.OK)
             {
                 UpdateFilePath(saveFileDialog.FileName);
-                tbpath.Text = MySettings.Properties.FilePath;
+                tbpath.Text = Settings.Properties.FilePath;
             }
             if (result == DialogResult.Cancel)
                 return false;
 
             try
             {
-                DataStream.SaveFile(ic, MySettings.Properties.FilePath);
+                DataStream.SaveFile(ic, Settings.Properties.FilePath);
                 return true;
             }
             catch (Exception e)

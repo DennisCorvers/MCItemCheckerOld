@@ -34,7 +34,7 @@ namespace MCItemChecker.GUI.Controls
         {
             m_itemChecker = itemChecker;
 
-            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
+            cbfiltertype.SelectedItem = Constants.DefaultName;
 
             lvCalculatedItems.ListViewItemSorter = new ListViewComparer();
             lvCalculatedItems.Scrollable = true;
@@ -62,7 +62,7 @@ namespace MCItemChecker.GUI.Controls
             var amount = numAmount.Value == 0 ? 1 : (double)numAmount.Value;
 
             // Calculate the recipe for the given item.
-            var calculatedItems = m_itemChecker.CalculateRecipe(baseItem, amount, cbBase.Checked);
+            var calculatedItems = RecipeCalculator.CalculateRecipe(baseItem, amount, cbBase.Checked);
 
             SetCalculatedInfo(new CalculationInfo(baseItem, calculatedItems));
         }
@@ -78,7 +78,7 @@ namespace MCItemChecker.GUI.Controls
             Recipe calculatedItems = info.Recipe;
 
             var selectedType = cbfiltertype.SelectedItem.ToString();
-            if (selectedType != ItemChecker.DefaultName)
+            if (selectedType != Constants.DefaultName)
                 calculatedItems = calculatedItems.Where(x => x.Key.Type == selectedType);
 
             // Display the items and sort
@@ -98,7 +98,7 @@ namespace MCItemChecker.GUI.Controls
         {
             lCalculatedItemName.Text = string.Empty;
 
-            cbfiltertype.SelectedItem = ItemChecker.DefaultName;
+            cbfiltertype.SelectedItem = Constants.DefaultName;
             lvCalculatedItems.Items.Clear();
 
             numAmount.Value = 1;
@@ -157,7 +157,7 @@ namespace MCItemChecker.GUI.Controls
             var mainRecipe = m_lastItem.Recipe;
 
             // Calculate item marked for deletion.
-            var subRecipe = m_itemChecker.CalculateRecipe(subItem.Key, subItem.Value, cbBase.Checked);
+            var subRecipe = RecipeCalculator.CalculateRecipe(subItem.Key, subItem.Value, cbBase.Checked);
 
             // Subtract the main sub item
             SubtractRecipe(mainRecipe, subItem);
