@@ -28,7 +28,7 @@ namespace MCItemChecker
         private HashSet<string> m_mods
             => m_modpacks;
 
-        private readonly HashSet<string> m_itemNameLookup = new HashSet<string>();
+        private readonly HashSet<string> m_itemNameLookup;
 
 #pragma warning disable IDE0044 // Readonly modifier not possible with ProtoBuf
         [ProtoMember(1)]
@@ -45,6 +45,7 @@ namespace MCItemChecker
         {
             m_mods.Add(DefaultName);
             m_itemTypes.Add(DefaultName);
+            m_itemNameLookup = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
         [OnDeserialized]
@@ -54,7 +55,7 @@ namespace MCItemChecker
             foreach (var item in m_items)
             {
                 item.Value.OnDeserializing(this);
-                m_itemNameLookup.Add(item.Value.ItemName.ToLower());
+                m_itemNameLookup.Add(item.Value.ItemName);
             }
         }
 
@@ -116,13 +117,13 @@ namespace MCItemChecker
 
         public bool AddNewItem(Item item)
         {
-            if (m_itemNameLookup.Contains(item.ItemName.ToLower()))
+            if (m_itemNameLookup.Contains(item.ItemName))
                 return false;
 
             item.ItemID = m_lastItemId;
             m_items.Add(m_lastItemId, item);
 
-            m_itemNameLookup.Add(item.ItemName.ToLower());
+            m_itemNameLookup.Add(item.ItemName);
 
             m_lastItemId++;
             return true;
@@ -132,7 +133,7 @@ namespace MCItemChecker
         {
             if (m_items.TryGetValue(itemId, out Item value))
             {
-                m_itemNameLookup.Remove(value.ItemName.ToLower());
+                m_itemNameLookup.Remove(value.ItemName);
                 m_items.Remove(itemId);
 
                 foreach (var item in m_items.Values)
@@ -144,18 +145,18 @@ namespace MCItemChecker
 
         public bool EditItem(Item newItem, Item oldItem)
         {
-            if (!m_itemNameLookup.Contains(oldItem.ItemName.ToLower()))
+            if (!m_itemNameLookup.Contains(oldItem.ItemName))
             {
                 if (m_items.ContainsKey(newItem.ItemID))
                     return false;
             }
 
-            if (newItem.ItemName.ToLower() != oldItem.ItemName.ToLower()
-                && m_itemNameLookup.Contains(newItem.ItemName.ToLower()))
+            if (newItem.ItemName.Equals(oldItem.ItemName, StringComparison.OrdinalIgnoreCase) 
+                && m_itemNameLookup.Contains(newItem.ItemName))
                 return false;
 
-            m_itemNameLookup.Remove(oldItem.ItemName.ToLower());
-            m_itemNameLookup.Add(newItem.ItemName.ToLower());
+            m_itemNameLookup.Remove(oldItem.ItemName);
+            m_itemNameLookup.Add(newItem.ItemName);
             oldItem.CopyFrom(newItem);
 
             return true;
@@ -174,7 +175,7 @@ namespace MCItemChecker
 
             if (!string.IsNullOrWhiteSpace(itemname))
                 result = result.Where(x => x.ItemName.IndexOf(itemname, StringComparison.OrdinalIgnoreCase) >= 0);
-            
+
             if (!string.IsNullOrWhiteSpace(type) && type != DefaultName)
                 result = result.Where(x => x.Type == type);
 

@@ -263,8 +263,8 @@ namespace MCItemChecker
                 GUIControl.InfoMessage("Amount to add must be greater than zero.");
                 return;
             }
-
-            if (item.ItemName.ToLower() == tbNewItemName.Text.ToLower())
+            
+            if(string.Equals(item.ItemName, tbNewItemName.Text, StringComparison.OrdinalIgnoreCase))
             {
                 GUIControl.InfoMessage("Can't add an item to itself.");
                 return;
