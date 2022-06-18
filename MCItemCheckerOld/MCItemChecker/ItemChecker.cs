@@ -173,8 +173,8 @@ namespace MCItemChecker
             IEnumerable<Item> result = m_items.Values;
 
             if (!string.IsNullOrWhiteSpace(itemname))
-                result = result.Where(x => x.ItemName.ToLower().Contains(itemname.ToLower()));
-
+                result = result.Where(x => x.ItemName.IndexOf(itemname, StringComparison.OrdinalIgnoreCase) >= 0);
+            
             if (!string.IsNullOrWhiteSpace(type) && type != DefaultName)
                 result = result.Where(x => x.Type == type);
 
