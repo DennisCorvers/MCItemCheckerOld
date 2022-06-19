@@ -14,6 +14,9 @@ namespace MCItemChecker.GUI.Controls
         private ItemChecker m_itemChecker;
         private CalculationInfo m_lastItem;
 
+        private bool HasLastItem
+            => m_lastItem != null;
+
         public ItemCalculation()
         {
             InitializeComponent();
@@ -50,7 +53,7 @@ namespace MCItemChecker.GUI.Controls
         {
             if (baseItem == null)
             {
-                if (m_lastItem.HasValue)
+                if (HasLastItem)
                     baseItem = m_lastItem.Item;
                 else
                 {
@@ -63,19 +66,46 @@ namespace MCItemChecker.GUI.Controls
 
             // Calculate the recipe for the given item.
             var calculatedItems = RecipeCalculator.CalculateRecipe(baseItem, amount, cbBase.Checked);
+            m_lastItem = new CalculationInfo(baseItem, calculatedItems);
 
-            SetCalculatedInfo(new CalculationInfo(baseItem, calculatedItems));
+            SetCalculatedInfo(m_lastItem);
+        }
+
+        public void AddItem(Item item, double amount)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var calcAmount = numAmount.Value == 0 ? 1 : (double)numAmount.Value;
+            var isBaseItem = cbBase.Checked;
+            Item shoppingList;
+
+            if (HasLastItem)
+            {
+                // Re-use recipe, or create new shopping list
+                if (m_lastItem.IsCustomItem)
+                    shoppingList = m_lastItem.Item;
+                else
+                    shoppingList = CreateShoppingList(m_lastItem.Item.Recipe);
+
+                shoppingList.Recipe.AddItem(new KeyValuePair<Item, double>(item, amount));
+            }
+            else
+            {
+                shoppingList = CreateShoppingList(new KeyValuePair<Item, double>(item, amount));
+            }
+
+            var calculatedItems = RecipeCalculator.CalculateRecipe(shoppingList, calcAmount, isBaseItem);
+            m_lastItem = new CalculationInfo(shoppingList, calculatedItems, true);
+
+            SetCalculatedInfo(m_lastItem);
         }
 
         private void SetCalculatedInfo(CalculationInfo info)
         {
-            if (!info.HasValue)
-                throw new ArgumentNullException(nameof(info));
-
-            m_lastItem = info;
             lCalculatedItemName.Text = info.Item.ItemName;
 
-            Recipe calculatedItems = info.Recipe;
+            Recipe calculatedItems = info.CalculatedRecipe;
 
             var selectedType = cbfiltertype.SelectedItem.ToString();
             if (selectedType != Constants.DefaultName)
@@ -132,7 +162,7 @@ namespace MCItemChecker.GUI.Controls
 
         private void RemoveItem()
         {
-            if (!m_lastItem.HasValue)
+            if (!HasLastItem)
                 return;
 
             if (lvCalculatedItems.SelectedItems.Count > 1)
@@ -153,38 +183,34 @@ namespace MCItemChecker.GUI.Controls
         private void RemoveItem(KeyValuePair<Item, double> subItem)
         {
             // Calculate main item.
-            var item = m_lastItem.Item;
-            var mainRecipe = m_lastItem.Recipe;
+            var mainRecipe = m_lastItem.CalculatedRecipe;
 
             // Calculate item marked for deletion.
             var subRecipe = RecipeCalculator.CalculateRecipe(subItem.Key, subItem.Value, cbBase.Checked);
 
             // Subtract the main sub item
-            SubtractRecipe(mainRecipe, subItem);
+            mainRecipe.SubtractItem(subItem);
 
             // Subtract the sub items
-            SubtractRecipes(mainRecipe, subRecipe);
+            mainRecipe.SubtractRecipes(subRecipe);
 
             // Display the results
-            SetCalculatedInfo(new CalculationInfo(item, mainRecipe));
+            SetCalculatedInfo(m_lastItem);
         }
 
-        private void SubtractRecipes(Dictionary<Item, double> original, Dictionary<Item, double> subtraction)
+
+        public static Item CreateShoppingList(KeyValuePair<Item, double> item)
         {
-            foreach (var item in subtraction)
-                SubtractRecipe(original, item);
+            var recipe = new Dictionary<Item, double>(1)
+            {
+                { item.Key, item.Value }
+            };
+            return CreateShoppingList(recipe);
         }
 
-        private void SubtractRecipe(Dictionary<Item, double> original, KeyValuePair<Item, double> subtraction)
+        public static Item CreateShoppingList(Dictionary<Item, double> recipe)
         {
-            if (!original.TryGetValue(subtraction.Key, out double oldValue))
-                return;
-
-            var newValue = oldValue - subtraction.Value;
-            if (newValue <= 0)
-                original.Remove(subtraction.Key);
-            else
-                original[subtraction.Key] = newValue;
+            return new Item("Shopping List", Constants.DefaultName, Constants.DefaultName, recipe.Copy());
         }
 
 
@@ -266,21 +292,22 @@ namespace MCItemChecker.GUI.Controls
         }
 
 
-        private struct CalculationInfo
+        private class CalculationInfo
         {
             public Item Item
             { get; }
 
-            public Dictionary<Item, double> Recipe
+            public Dictionary<Item, double> CalculatedRecipe
             { get; }
 
-            public bool HasValue
-                => Item != null;
+            public bool IsCustomItem
+            { get; }
 
-            public CalculationInfo(Item item, Dictionary<Item, double> recipe)
+            public CalculationInfo(Item item, Dictionary<Item, double> recipe, bool isCustomItem = false)
             {
                 Item = item ?? throw new ArgumentNullException(nameof(item));
-                Recipe = recipe ?? throw new ArgumentNullException(nameof(recipe));
+                CalculatedRecipe = recipe ?? throw new ArgumentNullException(nameof(recipe));
+                IsCustomItem = isCustomItem;
             }
         }
     }

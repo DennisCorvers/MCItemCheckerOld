@@ -40,8 +40,8 @@ namespace MCItemChecker
             UpdateTypeControls();
             UpdateModControls();
 
-            cbsearchmod.SelectedItem = ItemChecker.DefaultName;
-            cbsearchtype.SelectedItem = ItemChecker.DefaultName;
+            cbsearchmod.SelectedItem = Constants.DefaultName;
+            cbsearchtype.SelectedItem = Constants.DefaultName;
 
             ClearNewItem();
 
@@ -233,8 +233,8 @@ namespace MCItemChecker
         private void BClearSearch_Click(object sender, EventArgs e)
         {
             tbsearchname.Text = "";
-            cbsearchtype.SelectedItem = ItemChecker.DefaultName;
-            cbsearchmod.SelectedItem = ItemChecker.DefaultName;
+            cbsearchtype.SelectedItem = Constants.DefaultName;
+            cbsearchmod.SelectedItem = Constants.DefaultName;
             UpdateItemList(m_itemchecker.ItemList);
         }
 
@@ -311,15 +311,15 @@ namespace MCItemChecker
         }
         private void ClearNewItem()
         {
-            cbNewItemMod.SelectedItem = ItemChecker.DefaultName;
-            cbNewItemType.SelectedItem = ItemChecker.DefaultName;
+            cbNewItemMod.SelectedItem = Constants.DefaultName;
+            cbNewItemType.SelectedItem = Constants.DefaultName;
 
             tbNewItemName.Text = "";
             m_subItems.Clear();
             lvSubItems.Items.Clear();
 
             lmoditem.Visible = false;
-            lmoditemname.Text = ItemChecker.DefaultName;
+            lmoditemname.Text = Constants.DefaultName;
             lmoditemname.Visible = false;
 
             m_modifyingItem = false;
@@ -417,7 +417,7 @@ namespace MCItemChecker
                 return;
             }
 
-            if (lbmods.SelectedItems[0].ToString() == ItemChecker.DefaultName)
+            if (lbmods.SelectedItems[0].ToString() == Constants.DefaultName)
             {
                 GUIControl.InfoMessage("Cannot delete default value.");
                 return;
@@ -465,7 +465,7 @@ namespace MCItemChecker
                 return;
             }
 
-            if (lbtype.SelectedItems[0].ToString() == ItemChecker.DefaultName)
+            if (lbtype.SelectedItems[0].ToString() == Constants.DefaultName)
             {
                 GUIControl.InfoMessage("Cannot delete default value.");
                 return;

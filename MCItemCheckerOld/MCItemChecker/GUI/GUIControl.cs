@@ -40,7 +40,7 @@ namespace MCItemChecker
             foreach (string s in list)
                 listview.Items.Add(s);
 
-            listview.Items.RemoveByKey(ItemChecker.DefaultName);
+            listview.Items.RemoveByKey(Constants.DefaultName);
         }
         public static void UpdateControl(IEnumerable<string> list, ListBox listbox)
         {
@@ -48,7 +48,7 @@ namespace MCItemChecker
             foreach (string s in list)
                 listbox.Items.Add(s);
 
-            listbox.Items.Remove(ItemChecker.DefaultName);
+            listbox.Items.Remove(Constants.DefaultName);
         }
         public static void UpdateControl(IEnumerable<string> list, ComboBox combobox)
         {
@@ -56,7 +56,7 @@ namespace MCItemChecker
             foreach (string s in list)
                 combobox.Items.Add(s);
 
-            combobox.SelectedItem = ItemChecker.DefaultName;
+            combobox.SelectedItem = Constants.DefaultName;
         }
 
         public static void InfoMessage(string message)

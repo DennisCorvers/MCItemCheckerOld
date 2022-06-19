@@ -15,7 +15,8 @@ namespace MCItemChecker
 {
     public partial class MainMenu : Form
     {
-        private ItemChecker m_itemChecker;
+        private readonly ItemChecker m_itemChecker;
+        private readonly ContextMenu m_contextMenu;
 
         public MainMenu(ItemChecker itemChecker)
         {
@@ -24,6 +25,7 @@ namespace MCItemChecker
             InitializeComponent();
             Text = Path.GetFileName(Settings.Properties.FilePath) + " - MCItemChecker";
 
+            m_contextMenu = BuildContextMenu();
             lvItems.ListViewItemSorter = new ListViewComparer();
 
             itemCalculation.Initialize(m_itemChecker);
@@ -43,6 +45,20 @@ namespace MCItemChecker
 
             UpdateItemList(m_itemChecker.ItemList);
             GUIControl.Sort(lvItems, 0, SortOrder.Ascending);
+        }
+
+        private ContextMenu BuildContextMenu()
+        {
+            var calculateMenuItem = new MenuItem("Calculate");
+            calculateMenuItem.Click += CalculateItem_Click;
+
+            var addShoplistMenuItem = new MenuItem("Add to shopping list");
+            addShoplistMenuItem.Click += AddShoppingListItem_Click;
+
+            var addXShoplistMenuItem = new MenuItem("Add x to shopping list");
+            addXShoplistMenuItem.Click += AddShoppingListItem_Click;
+
+            return new ContextMenu(new[] { calculateMenuItem, addShoplistMenuItem, addXShoplistMenuItem });
         }
 
         public void UpdateModControls()
@@ -193,6 +209,7 @@ namespace MCItemChecker
         {
             lvItems.TryGetSelectedItem(out Item i);
             itemCalculation.CalculateItem(i);
+            lvItems.SelectedItems.Clear();
         }
 
         private void ExportToTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -215,23 +232,42 @@ namespace MCItemChecker
         }
 
         private void LvItems_MouseDoubleClick(object sender, MouseEventArgs e)
-            => CalculateItem_Click();
+            => CalculateItem_Click(sender, e);
+
+        private void LvItems_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Menu only opens when the Calculate tab is focussed.
+            if (e.Button == MouseButtons.Right && tabControl.SelectedTab == TabCalculate)
+            {
+                var focusedItem = lvItems.FocusedItem;
+                if (focusedItem != null && focusedItem.Bounds.Contains(e.Location))
+                {
+                    m_contextMenu.Show(lvItems, e.Location);
+                }
+            }
+        }
 
         private void LvItems_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
-                CalculateItem_Click();
+                CalculateItem_Click(sender, e);
         }
 
-        private void CalculateItem_Click()
+        private void CalculateItem_Click(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab != TabCalculate)
                 return;
 
+            BCalculate_Click(sender, e);
+        }
+
+        private void AddShoppingListItem_Click(object sender, EventArgs e)
+        {
             if (!lvItems.TryGetSelectedItem(out Item i))
                 return;
 
-            itemCalculation.CalculateItem(i);
+            itemCalculation.AddItem(i, 1);
+            lvItems.SelectedItems.Clear();
         }
 
         private void Tbsearchname_DelayedTextChanged(object sender, EventArgs e)

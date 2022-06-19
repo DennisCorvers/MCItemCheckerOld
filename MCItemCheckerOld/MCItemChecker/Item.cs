@@ -15,9 +15,6 @@ namespace MCItemChecker
     public class Item : IEquatable<Item>
     {
 #pragma warning disable IDE0032
-        // Deprecated. Used for binary formatter compatibility.
-        private Dictionary<Item, double> m_recipe;
-
         [ProtoMember(1)]
         private int m_itemId;
         [ProtoMember(2)]
@@ -50,30 +47,21 @@ namespace MCItemChecker
             get => m_mod;
             set => m_mod = value;
         }
-        public Dictionary<Item, double> Recipe
-            => m_recipe;
+        public Dictionary<Item, double> Recipe { get; private set; }
 
         // Parameterless constructor required for serializers.
-        private Item()
-        {
-            m_mod = ItemChecker.DefaultName;
-            m_itemType = ItemChecker.DefaultName;
-        }
+        private Item() { }
 
         public Item(string itemname, string type, string mod)
-        {
-            ItemName = itemname;
-            m_itemType = type;
-            m_mod = mod;
-            m_recipeReferences = new Dictionary<int, double>();
-        }
+            : this(itemname, type, mod, new Dictionary<Item, double>(0))
+        { }
 
         public Item(string itemname, string type, string mod, Dictionary<Item, double> recipe)
         {
             ItemName = itemname;
             m_itemType = type;
             m_mod = mod;
-            m_recipe = recipe ?? throw new ArgumentException(nameof(recipe));
+            Recipe = recipe ?? throw new ArgumentException(nameof(recipe));
         }
 
         public void CopyFrom(Item other)
@@ -84,7 +72,7 @@ namespace MCItemChecker
             m_itemName = other.m_itemName;
             m_itemType = other.m_itemType;
             m_mod = other.m_mod;
-            m_recipe = new Dictionary<Item, double>(other.m_recipe);
+            Recipe = new Dictionary<Item, double>(other.Recipe);
         }
 
 
@@ -125,15 +113,14 @@ namespace MCItemChecker
         [OnSerializing]
         private void OnSerializing(StreamingContext context)
         {
-            m_recipeReferences = Recipe?.ToDictionary(x => x.Key.m_itemId, x => x.Value);
+            m_recipeReferences = Recipe.ToDictionary(x => x.Key.m_itemId, x => x.Value);
         }
 
         internal void OnDeserializing(ItemChecker itemChecker)
         {
             if (m_recipeReferences != null)
             {
-
-                m_recipe = new Dictionary<Item, double>(m_recipeReferences.Count);
+                Recipe = new Dictionary<Item, double>(m_recipeReferences.Count);
                 foreach (var pair in m_recipeReferences)
                 {
                     Recipe.Add(itemChecker.FindItem(pair.Key), pair.Value);
@@ -141,7 +128,7 @@ namespace MCItemChecker
             }
             else
             {
-                m_recipe = new Dictionary<Item, double>(0);
+                Recipe = new Dictionary<Item, double>(0);
             }
         }
     }

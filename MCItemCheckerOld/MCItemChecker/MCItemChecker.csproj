@@ -278,6 +278,7 @@
     </Compile>
     <Compile Include="Utils\ListViewComparer.cs" />
     <Compile Include="Utils\ListViewExtensions.cs" />
+    <Compile Include="Utils\RecipeExtensions.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <EmbeddedResource Include="GUI\Controls\ItemCalculation.resx">
       <DependentUpon>ItemCalculation.cs</DependentUpon>

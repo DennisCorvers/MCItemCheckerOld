@@ -84,6 +84,7 @@
             this.lvItems.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LvItems_ColumnClick);
             this.lvItems.SelectedIndexChanged += new System.EventHandler(this.LvItems_SelectionChanged);
             this.lvItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvItems_KeyDown);
+            this.lvItems.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LvItems_MouseClick);
             this.lvItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvItems_MouseDoubleClick);
             // 
             // label5
