@@ -1,4 +1,5 @@
-﻿using MCItemChecker.Utils;
+﻿using MCItemChecker.GUI;
+using MCItemChecker.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,25 @@ namespace MCItemChecker
         public static void InfoMessage(string message)
         {
             MessageBox.Show(message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public static bool InputBoxValidation(string title, string message, Func<double, bool> validation)
+        {
+            InputBox input = new InputBox(title, message);
+
+            while (input.ShowDialog() == DialogResult.OK)
+            {
+                if (!input.Result.FractionToDouble(out double amount))
+                {
+                    InfoMessage($"Enter a valid amount to add.{Environment.NewLine}Enter a positive integer, decimal or fraction");
+                    continue;
+                }
+
+                if (validation(amount))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

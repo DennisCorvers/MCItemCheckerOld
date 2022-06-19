@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using MCItemChecker.Utils;
 using System.Threading.Tasks;
+using MCItemChecker.GUI;
 
 namespace MCItemChecker
 {
@@ -56,7 +57,7 @@ namespace MCItemChecker
             addShoplistMenuItem.Click += AddShoppingListItem_Click;
 
             var addXShoplistMenuItem = new MenuItem("Add x to shopping list");
-            addXShoplistMenuItem.Click += AddShoppingListItem_Click;
+            addXShoplistMenuItem.Click += AddXShoppingListItem_Click;
 
             return new ContextMenu(new[] { calculateMenuItem, addShoplistMenuItem, addXShoplistMenuItem });
         }
@@ -259,6 +260,24 @@ namespace MCItemChecker
                 return;
 
             BCalculate_Click(sender, e);
+        }
+
+        private void AddXShoppingListItem_Click(object sender, EventArgs e)
+        {
+            if (!lvItems.TryGetSelectedItem(out Item i))
+                return;
+
+            GUIControl.InputBoxValidation("Enter amount...", $"Enter amount of \"{i.ItemName}\" to add.", validator);
+            lvItems.SelectedItems.Clear();
+
+            bool validator(double amountToAdd)
+            {
+                if (amountToAdd <= 0)
+                    return false;
+
+                itemCalculation.AddItem(i, amountToAdd);
+                return true;
+            }
         }
 
         private void AddShoppingListItem_Click(object sender, EventArgs e)
