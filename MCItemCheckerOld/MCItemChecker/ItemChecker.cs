@@ -140,20 +140,20 @@ namespace MCItemChecker
             return value != null;
         }
 
-        public bool EditItem(Item newItem, Item oldItem)
+        public bool UpdateItem(Item newItem, Item oldItem)
         {
-            if (!m_itemNameLookup.Contains(oldItem.ItemName))
+            // Item has been renamed
+            if (!string.Equals(newItem.ItemName, oldItem.ItemName, StringComparison.OrdinalIgnoreCase))
             {
-                if (m_items.ContainsKey(newItem.ItemID))
+                // New item name already exists
+                if (m_itemNameLookup.Contains(newItem.ItemName))
                     return false;
+
+                // Rename in the item lookup
+                m_itemNameLookup.Remove(oldItem.ItemName);
+                m_itemNameLookup.Add(newItem.ItemName);
             }
 
-            if (newItem.ItemName.Equals(oldItem.ItemName, StringComparison.OrdinalIgnoreCase) 
-                && m_itemNameLookup.Contains(newItem.ItemName))
-                return false;
-
-            m_itemNameLookup.Remove(oldItem.ItemName);
-            m_itemNameLookup.Add(newItem.ItemName);
             oldItem.CopyFrom(newItem);
 
             return true;

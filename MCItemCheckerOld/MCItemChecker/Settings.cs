@@ -27,7 +27,7 @@ namespace MCItemChecker
             AppDataSettings.SaveSettings(m_instance, filename);
         }
 
-        public const int MaxRecursionCount = 128;
+        public const int MaxRecursionCount = 32;
 
         public string FilePath
         { get; set; } = string.Empty;

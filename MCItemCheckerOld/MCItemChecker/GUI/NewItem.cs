@@ -155,7 +155,7 @@ namespace MCItemChecker
 
             if (m_modifyingItem == true && item != null)
             {
-                if (!m_itemchecker.EditItem(newItem, item))
+                if (!m_itemchecker.UpdateItem(newItem, item))
                 {
                     GUIControl.InfoMessage("Unable to edit item. Make sure the name is unique.");
                     return;
@@ -224,10 +224,7 @@ namespace MCItemChecker
 
         private void BFindItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tbsearchname.Text))
-                UpdateItemList(m_itemchecker.ItemList);
-            else
-                UpdateItemList(FindItem());
+            UpdateItemList(FindItem());
         }
 
         private void BClearSearch_Click(object sender, EventArgs e)
@@ -263,8 +260,8 @@ namespace MCItemChecker
                 GUIControl.InfoMessage("Amount to add must be greater than zero.");
                 return;
             }
-            
-            if(string.Equals(item.ItemName, tbNewItemName.Text, StringComparison.OrdinalIgnoreCase))
+
+            if (string.Equals(item.ItemName, tbNewItemName.Text, StringComparison.OrdinalIgnoreCase))
             {
                 GUIControl.InfoMessage("Can't add an item to itself.");
                 return;
@@ -359,6 +356,7 @@ namespace MCItemChecker
 
             return m_itemchecker.FindItems(itemName, type, mod);
         }
+
         private void BImportModify_Click(object sender, EventArgs e)
         {
             if (!lvitems.TryGetSelectedItem(out Item item))
