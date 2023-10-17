@@ -47,9 +47,9 @@ namespace MCItemChecker
 
             var exportData = new ExportData(
                 lastUID: items.Max(x => x.ItemID),
-                items: itemTable.ToDictionary(k => k.ID, v => v),
-                mods: uniqueMods.ToDictionary(k => k.ID, v => v),
-                itemTypes: uniqueTypes.ToDictionary(k => k.ID, v => v));
+                items: itemTable.ToList(),
+                mods: uniqueMods.ToList(),
+                itemTypes: uniqueTypes.ToList());
 
             WriteToFile(exportData, out outputPath);
         }
@@ -80,7 +80,8 @@ namespace MCItemChecker
         [Serializable]
         private class ExportData
         {
-            public ExportData(int lastUID, Dictionary<int, ItemEntity> items, Dictionary<int, ModEntity> mods, Dictionary<int, ItemTypeEntity> itemTypes)
+            [JsonConstructor]
+            public ExportData(int lastUID, List<ItemEntity> items, List<ModEntity> mods, List<ItemTypeEntity> itemTypes)
             {
                 LastUID = lastUID;
                 Items = items;
@@ -90,11 +91,11 @@ namespace MCItemChecker
 
             public int LastUID { get; }
 
-            public Dictionary<int, ItemEntity> Items { get; }
+            public List<ItemEntity> Items { get; }
 
-            public Dictionary<int, ModEntity> Mods { get; }
+            public List<ModEntity> Mods { get; }
 
-            public Dictionary<int, ItemTypeEntity> ItemTypes { get; }
+            public List<ItemTypeEntity> ItemTypes { get; }
         }
 
         [Serializable]
