@@ -21,6 +21,8 @@ namespace MCItemChecker
             => m_modpacks;
         public IEnumerable<string> Types
             => m_itemTypes;
+        public int LastUID
+            => m_lastItemId;
 
         private HashSet<string> m_mods
             => m_modpacks;

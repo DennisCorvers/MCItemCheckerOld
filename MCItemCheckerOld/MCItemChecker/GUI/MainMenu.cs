@@ -217,7 +217,18 @@ namespace MCItemChecker
         {
             Task task = new Task(() =>
             {
-                RecipeExporter.WriteToFile(m_itemChecker.ItemList);
+                string outputPath = string.Empty;
+                try
+                {
+                    RecipeExporter.Export(m_itemChecker, out outputPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                MessageBox.Show("Exported data to \n" + outputPath, "Finished exporting", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
 
             task.Start();
