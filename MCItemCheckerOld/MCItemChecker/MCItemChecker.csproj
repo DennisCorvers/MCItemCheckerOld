@@ -252,7 +252,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\DataStream.cs" />
-    <Compile Include="RecipeExporter.cs" />
+    <Compile Include="Utils\Export\ExportData.cs" />
+    <Compile Include="Utils\Export\Fraction.cs" />
+    <Compile Include="Utils\Export\RecipeExporter.cs" />
     <Compile Include="GUI\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
